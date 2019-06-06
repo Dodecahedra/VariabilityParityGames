@@ -7,7 +7,12 @@
 #define PARSER_LINE_SIZE  16384
 #include <vector>
 #include <tuple>
+#include <unordered_set>
 #include "BDD/bddObj.h"
+
+
+#define target(a) std::get<0>(a)
+#define guard_index(a) std::get<1>(a)
 
 class Game {
 public :
@@ -33,6 +38,8 @@ public :
     void parseVertex(char * line);
 
     void dumpSet(BDD * bdd, BDD t, char * p, int var);
+    void printCV(unordered_set<int> *bigV, vector<BDD> *vc);
+    void printCV(unordered_set<int> *bigV, vector<BDD> *vc, BDD t, char * p, int var);
     int readUntil(const char * line, char delim);
 };
 

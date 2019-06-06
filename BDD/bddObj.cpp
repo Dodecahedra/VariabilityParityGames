@@ -88,6 +88,7 @@ BDD::Restrict(BDD g) {
 
 BDD BDD::Ite(const BDD& g, const BDD& h, unsigned int limit) const
 {
+    cout<< "====" << ptrMgr->compute_table.size() << "\n";
     for(int i = 0; i< ptrMgr->compute_table.size(); i++)
     {
         if(ptrMgr->compute_table[i].firstVar == *this)

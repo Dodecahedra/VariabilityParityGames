@@ -7,9 +7,9 @@
 #include <sstream>
 #include <string>
 #include <cstring>
+#include <unordered_set>
 #include "BDD/bddObj.h"
 #include "Game.h"
-
 
 void Game::set_n_nodes(int nodes) {
     n_nodes = nodes;
@@ -119,7 +119,7 @@ void Game::dumpSet(BDD *bdd, BDD t, char * p, int var) {
     {
         p[var]  = '\0';
         if(!((*bdd & t) == bm->getZero())){
-            cout << p << '\n';
+            cout << p << ',';
         }
     } else {
         BDD t1 = t & bm_vars[var];
@@ -148,9 +148,11 @@ void Game::parseVertex(char *line) {
     line += i + 1;
 
 
-//    cout << "Vertex with index: " << index << " and prio: " << priority[index] << " and owner: " << owner[index] << "\n";
+    cout << "Vertex with index: " << index << " and prio: " << priority[index] << " and owner: " << owner[index] << "\n";
     while(*line != '\0')
     {
+        if(*line == ',')
+            line++;
         i = readUntil(line, '|');
         int target = atoi(line);
         line += i + 1;
@@ -166,9 +168,9 @@ void Game::parseVertex(char *line) {
         int inindex = in_edges[target].size();
         in_edges[target].resize(inindex+1);
         in_edges[target][inindex] = std::make_tuple(index, guardindex);
-        //cout<< "with edge to " << target << " allowing: ";
-        //dumpSet(&edge_guards[guardindex], bm->getOne(), new char[bm_n_vars+1], 0);
-        line += i;
+//        cout<< "with edge to " << target << " allowing: ";
+//        dumpSet(&edge_guards[guardindex], bm->getOne(), new char[bm_n_vars+1], 0);
+        line += i-1;
     }
     declared[index] = true;
 }
@@ -178,4 +180,32 @@ int Game::readUntil(const char * line, char delim){
     while(*(line + i) != delim)
         i++;
     return i;
+}
+
+void Game::printCV(unordered_set<int> *bigV, vector<BDD> *vc, BDD t, char * p, int var) {
+    if(t == bm->getZero()) return;
+    if(var == bm_n_vars)
+    {
+        p[var]  = '\0';
+        cout << "For product " << p << " the following vertices are in: ";
+        int vi = 0;
+        if(!(((*vc)[vi] & t) == bm->getZero())){
+            cout << vi << ',';
+        }
+        cout <<"\n";
+        fflush(stdout);
+
+    } else {
+        BDD t1 = t & bm_vars[var];
+        p[var] = '1';
+        printCV(bigV,vc, t1, p , var + 1);
+        p[var] = '0';
+        BDD t2 = t & ~bm_vars[var];
+        printCV(bigV, vc, t2, p, var + 1);
+    }
+}
+
+
+void Game::printCV(unordered_set<int> *bigV, vector<BDD> *vc) {
+    printCV(bigV, vc, bigC, new char[bm_n_vars+1], 0);
 }
