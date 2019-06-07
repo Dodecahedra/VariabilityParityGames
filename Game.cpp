@@ -8,7 +8,7 @@
 #include <string>
 #include <cstring>
 #include <unordered_set>
-#include "BDD/bddObj.h"
+#include "bdd.h"
 #include "Game.h"
 
 void Game::set_n_nodes(int nodes) {
@@ -70,9 +70,10 @@ void Game::parseConfs(char * line) {
     } while(c != '\0' && c != '+');
     bm_n_vars = i - 7;
     bm_vars.resize(bm_n_vars);
-    bm = new bddMgr(bm_n_vars);
+    bdd_init(100000,100000);
+    bdd_setvarnum(bm_n_vars);
     for(int i = 0;i<bm_n_vars;i++) {
-        bm_vars[i] = bm->bddVar(i);
+        bm_vars[i] = bdd_ithvar(i);
     }
     parseConfSet(line, 6, &bigC);
 }
@@ -86,9 +87,9 @@ void Game::parseInitialiser(char *line) {
 }
 
 
-int Game::parseConfSet(const char *line, int i, BDD *result) {
-    *result = bm->getZero();
-    BDD entry = bm->getOne();
+int Game::parseConfSet(const char *line, int i, bdd *result) {
+    *result = bddfalse;
+    bdd entry = bddtrue;
     int var = 0;
     char c;
     do
@@ -96,7 +97,7 @@ int Game::parseConfSet(const char *line, int i, BDD *result) {
         c = line[i++];
         if(c == '0'){
             if(var > bm_n_vars) throw std::string("Too many bits");
-            entry = entry & ~bm_vars[var];
+            entry = entry & !bm_vars[var];
             var++;
         } else if(c == '1'){
             if(var > bm_n_vars) throw std::string("Too many bits");
@@ -107,27 +108,27 @@ int Game::parseConfSet(const char *line, int i, BDD *result) {
             var++;
         } else {
             *result = *result | entry;
-            entry = bm->getOne();
+            entry = bddtrue;
             var = 0;
         }
     } while(c =='0' || c == '1' || c == '-' || c == '+');
     return i;
 }
 
-void Game::dumpSet(BDD *bdd, BDD t, char * p, int var) {
+void Game::dumpSet(bdd * dumpee, bdd t, char * p, int var) {
     if(var == bm_n_vars)
     {
         p[var]  = '\0';
-        if(!((*bdd & t) == bm->getZero())){
+        if(!((*dumpee & t) == bddfalse)){
             cout << p << ',';
         }
     } else {
-        BDD t1 = t & bm_vars[var];
+        bdd t1 = t & bm_vars[var];
         p[var] = '1';
-        dumpSet(bdd, t1, p , var + 1);
+        dumpSet(dumpee, t1, p , var + 1);
         p[var] = '0';
-        BDD t2 = t & ~bm_vars[var];
-        dumpSet(bdd, t2, p, var + 1);
+        bdd t2 = t & !bm_vars[var];
+        dumpSet(dumpee, t2, p, var + 1);
     }
 }
 
@@ -148,7 +149,7 @@ void Game::parseVertex(char *line) {
     line += i + 1;
 
 
-    cout << "Vertex with index: " << index << " and prio: " << priority[index] << " and owner: " << owner[index] << "\n";
+//    cout << "\nVertex with index: " << index << " and prio: " << priority[index] << " and owner: " << owner[index] << "\n";
     while(*line != '\0')
     {
         if(*line == ',')
@@ -169,7 +170,7 @@ void Game::parseVertex(char *line) {
         in_edges[target].resize(inindex+1);
         in_edges[target][inindex] = std::make_tuple(index, guardindex);
 //        cout<< "with edge to " << target << " allowing: ";
-//        dumpSet(&edge_guards[guardindex], bm->getOne(), new char[bm_n_vars+1], 0);
+//        dumpSet(&edge_guards[guardindex], bddtrue, new char[bm_n_vars+1], 0);
         line += i-1;
     }
     declared[index] = true;
@@ -182,30 +183,33 @@ int Game::readUntil(const char * line, char delim){
     return i;
 }
 
-void Game::printCV(unordered_set<int> *bigV, vector<BDD> *vc, BDD t, char * p, int var) {
-    if(t == bm->getZero()) return;
+void Game::printCV(unordered_set<int> *bigV, vector<bdd> *vc, bdd t, char * p, int var) {
+    if(t == bddfalse) return;
     if(var == bm_n_vars)
     {
         p[var]  = '\0';
         cout << "For product " << p << " the following vertices are in: ";
-        int vi = 0;
-        if(!(((*vc)[vi] & t) == bm->getZero())){
-            cout << vi << ',';
-        }
+//        for(const int& vi : *bigV)
+//        {
+int vi =0;
+            if(!(((*vc)[vi] & t) == bddfalse)){
+                cout << vi << ',';
+            }
+//        }
         cout <<"\n";
         fflush(stdout);
 
     } else {
-        BDD t1 = t & bm_vars[var];
+        bdd t1 = t & bm_vars[var];
         p[var] = '1';
         printCV(bigV,vc, t1, p , var + 1);
         p[var] = '0';
-        BDD t2 = t & ~bm_vars[var];
+        bdd t2 = t & !bm_vars[var];
         printCV(bigV, vc, t2, p, var + 1);
     }
 }
 
 
-void Game::printCV(unordered_set<int> *bigV, vector<BDD> *vc) {
+void Game::printCV(unordered_set<int> *bigV, vector<bdd> *vc) {
     printCV(bigV, vc, bigC, new char[bm_n_vars+1], 0);
 }

@@ -8,25 +8,25 @@
 #include <vector>
 #include <tuple>
 #include <unordered_set>
-#include "BDD/bddObj.h"
+#include "bdd.h"
 
+using namespace std;
 
 #define target(a) std::get<0>(a)
 #define guard_index(a) std::get<1>(a)
 
 class Game {
 public :
-    bddMgr * bm;
-    std::vector<BDD> bm_vars;
+    std::vector<bdd> bm_vars;
     int bm_n_vars;
-    BDD bigC;
+    bdd bigC;
     int n_nodes;
     std::vector<int> priority;
     std::vector<int> owner;
     std::vector<bool> declared;
     std::vector<std::tuple<int,int>> *out_edges;
     std::vector<std::tuple<int,int>> *in_edges;
-    std::vector<BDD> edge_guards;
+    std::vector<bdd> edge_guards;
 
     Game();
     void set_n_nodes(int nodes);
@@ -34,12 +34,12 @@ public :
     void parseGameFromFile(const string& filename);
     void parseConfs(char * line);
     void parseInitialiser(char* line);
-    int parseConfSet(const char * line, int i, BDD * result);
+    int parseConfSet(const char * line, int i, bdd * result);
     void parseVertex(char * line);
 
-    void dumpSet(BDD * bdd, BDD t, char * p, int var);
-    void printCV(unordered_set<int> *bigV, vector<BDD> *vc);
-    void printCV(unordered_set<int> *bigV, vector<BDD> *vc, BDD t, char * p, int var);
+    void dumpSet(bdd * dumpee, bdd t, char * p, int var);
+    void printCV(unordered_set<int> *bigV, vector<bdd> *vc);
+    void printCV(unordered_set<int> *bigV, vector<bdd> *vc, bdd t, char * p, int var);
     int readUntil(const char * line, char delim);
 };
 
