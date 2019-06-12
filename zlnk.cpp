@@ -4,10 +4,11 @@
 
 #include <queue>
 #include "zlnk.h"
+#include <chrono>
 
 zlnk::zlnk(Game *game) {
     unordered_set<int> * bigV = new unordered_set<int>(game->n_nodes);
-    vector<bdd> * vc = new vector<bdd>(game->n_nodes);
+    vector<Subset> * vc = new vector<Subset>(game->n_nodes);
     for(int i = 0;i<game->n_nodes;i++){
         bigV->insert(i);
         (*vc)[i] = game->bigC;
@@ -17,24 +18,39 @@ zlnk::zlnk(Game *game) {
     this->vc = vc;
 }
 
-zlnk::zlnk(Game * game, unordered_set<int> * bigV, vector<bdd> * vc){
+zlnk::zlnk(Game * game, unordered_set<int> * bigV, vector<Subset> * vc){
     this->game = game;
     this->bigV = bigV;
     this->vc = vc;
 }
 
-void zlnk::attr(int player, unordered_set<int> *bigA, vector<bdd> *ac) {
+void zlnk::attr(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
+    auto start = std::chrono::high_resolution_clock::now();
+
+
+
     removeFromBigV(bigA, ac);
     attrQueue(player, bigA, ac);
+    auto end = std::chrono::system_clock::now();
+
+
+
+
+
+    auto elapsed =
+            std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    cout << "Attracting took " << elapsed.count() << "ms.\n";
+    attracting += elapsed.count();
 }
 
+#ifndef subsetexplicit // not compatible with explicit representation
 /**
  *
  * @param player
  * @param bigA
  * @param ac It must hold that (*ac)[i] = bdd0 if i not in bigA
  */
-void zlnk::attrNaive(int player, unordered_set<int> * bigA, vector<bdd> * ac){
+void zlnk::attrNaive(int player, unordered_set<int> * bigA, vector<Subset> * ac){
     bool workdone = true;
     cout << "Attr start, size: " << bigA->size() << "\n";
     fflush(stdout);
@@ -43,13 +59,13 @@ void zlnk::attrNaive(int player, unordered_set<int> * bigA, vector<bdd> * ac){
         cout << "Attr iteration, size: " << bigA->size() << "\n";
         fflush(stdout);
         for (const auto& vi : *bigV) {
-            bdd attracted;
+            Subset attracted;
             if(game->owner[vi] == player){
-                attracted = bddfalse;
+                attracted = emptyset;
                 for(int i = 0;i<game->out_edges[vi].size();i++){
                     int target = target(game->out_edges[vi][i]);
-                    bdd guard = game->edge_guards[guard_index(game->out_edges[vi][i])];
-                    if(guard == bddfalse || bigA->find(target) == bigA->end())
+                    Subset guard = game->edge_guards[guard_index(game->out_edges[vi][i])];
+                    if(guard == emptyset || bigA->find(target) == bigA->end())
                         continue;
                     attracted = attracted | ((*vc)[vi] & (*ac)[target] & guard);
                 }
@@ -57,13 +73,13 @@ void zlnk::attrNaive(int player, unordered_set<int> * bigA, vector<bdd> * ac){
                 attracted = (*vc)[vi];
                 for(int i = 0;i<game->out_edges[vi].size();i++){
                     int target = target(game->out_edges[vi][i]);
-                    bdd guard = game->edge_guards[guard_index(game->out_edges[vi][i])];
-                    if(guard == bddfalse)
+                    Subset guard = game->edge_guards[guard_index(game->out_edges[vi][i])];
+                    if(guard == emptyset)
                         continue;
                     attracted = attracted & ((*ac)[target] | !guard);
                 }
             }
-            if(attracted == bddfalse)
+            if(attracted == emptyset)
                 continue;
             workdone = true;
             if(bigA->find(vi) == bigA->end()){
@@ -74,14 +90,15 @@ void zlnk::attrNaive(int player, unordered_set<int> * bigA, vector<bdd> * ac){
                 (*ac)[vi] = (*ac)[vi] | attracted;
             }
             (*vc)[vi] = (*vc)[vi] & !attracted;
-            if((*vc)[vi] == bddfalse)
+            if((*vc)[vi] == emptyset)
             {
                 bigV->erase(vi);
             }
         }
     }
 }
-void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<bdd> *ac) {
+#endif
+void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
 //    cout << "Attr start, size: " << bigA->size() << "\n";
     queue<int> qq;
     for (const auto& vi : *bigA) {
@@ -98,29 +115,32 @@ void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<bdd> *ac) {
             int gi = guard_index(game->in_edges[vii][i]);
             if(bigV->find(vi) == bigV->end()) // vertex not in the playing area anymore
                 continue;
-            bdd guard = game->edge_guards[gi];
-            bdd attracted;
+            Subset attracted;
             if(game->owner[vi] == player){
-                attracted = (*vc)[vi] & (*ac)[vii] & guard;
+                attracted = (*vc)[vi];
+                attracted &= (*ac)[vii];
+                attracted &= game->edge_guards[gi];
             } else {
                 attracted = (*vc)[vi];
                 for(int i = 0;i<game->out_edges[vi].size();i++){
                     int target = target(game->out_edges[vi][i]);
-                    bdd guard = game->edge_guards[guard_index(game->out_edges[vi][i])];
-                    attracted = attracted & ((*ac)[target] | !guard);
+                    Subset s = game->bigC;
+                    s -= game->edge_guards[guard_index(game->out_edges[vi][i])];
+                    s |= (*ac)[target];
+                    attracted &= s;
                 }
             }
-            if(attracted == bddfalse)
+            if(attracted == emptyset)
                 continue;
             if(bigA->find(vi) == bigA->end()){
                 // add vertex to attracted set
                 bigA->insert(vi);
                 (*ac)[vi] = attracted;
             } else {
-                (*ac)[vi] = (*ac)[vi] | attracted;
+                (*ac)[vi] |= attracted;
             }
-            (*vc)[vi] = (*vc)[vi] & !attracted;
-            if((*vc)[vi] == bddfalse)
+            (*vc)[vi] -= attracted;
+            if((*vc)[vi] == emptyset)
             {
                 bigV->erase(vi);
             }
@@ -132,9 +152,9 @@ void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<bdd> *ac) {
 
 void zlnk::test() {
     auto * bigA = new unordered_set<int>;
-    vector<bdd> * ac = new vector<bdd>(game->n_nodes);
+    vector<Subset> * ac = new vector<Subset>(game->n_nodes);
     for(int i = 0;i<game->n_nodes;i++)
-        (*ac)[i] = bddfalse;
+        (*ac)[i] = emptyset;
     bigA->insert(12);
     (*ac)[12] = game->bigC;
     attr(1, bigA, ac);
@@ -147,7 +167,7 @@ void zlnk::test() {
  * @param W1bigV
  * @param W1vc
  */
-void zlnk::solve(unordered_set<int> *W0bigV, vector<bdd> *W0vc, unordered_set<int> *W1bigV, vector<bdd> *W1vc) {
+void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set<int> *W1bigV, vector<Subset> *W1vc) {
     if(bigV->empty()) return;
 
     auto [h,l] = getHighLowPrio();
@@ -164,9 +184,9 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<bdd> *W0vc, unordered_set<in
     }
 
     unordered_set<int> *WMebigV;
-    vector<bdd> *WMevc;
+    vector<Subset> *WMevc;
     unordered_set<int> *WOpbigV;
-    vector<bdd> *WOpvc;
+    vector<Subset> *WOpvc;
     if(player == 0){
         WMebigV = W0bigV;
         WMevc = W0vc;
@@ -182,13 +202,13 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<bdd> *W0vc, unordered_set<in
 
 
     auto * bigA = new unordered_set<int>;
-    vector<bdd> * ac = new vector<bdd>(game->n_nodes);
+    vector<Subset> * ac = new vector<Subset>(game->n_nodes);
 
     auto * subBigV = new unordered_set<int>;
-    vector<bdd> * subvc = new vector<bdd>(game->n_nodes);
+    vector<Subset> * subvc = new vector<Subset>(game->n_nodes);
 
     for(int i = 0;i<game->n_nodes;i++){
-        (*ac)[i] = bddfalse;
+        (*ac)[i] = emptyset;
     }
     getVCWithPrio(bigA, ac, h);
 
@@ -199,6 +219,7 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<bdd> *W0vc, unordered_set<in
     cout << "\nDown1\n";
     fflush(stdout);
     subgame.solve(W0bigV, W0vc, W1bigV, W1vc);
+    attracting += subgame.attracting;
     cout << "\nUp1\n";
     fflush(stdout);
     if(WOpbigV->empty()){
@@ -211,8 +232,8 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<bdd> *W0vc, unordered_set<in
         W0bigV->clear();
         W1bigV->clear();
         for(int i = 0;i<game->n_nodes;i++){
-            (*W0vc)[i] = bddfalse;
-            (*W1vc)[i] = bddfalse;
+            (*W0vc)[i] = emptyset;
+            (*W1vc)[i] = emptyset;
         }
 
         *subBigV = *bigV;
@@ -222,6 +243,7 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<bdd> *W0vc, unordered_set<in
         cout << "\nDown2\n";
         fflush(stdout);
         subgame2.solve(W0bigV, W0vc, W1bigV, W1vc);
+        attracting += subgame.attracting;
         cout << "\nUp2\n";
         fflush(stdout);
         unify(WOpbigV, WOpvc, bigA, ac);
@@ -239,7 +261,7 @@ tuple<int, int> zlnk::getHighLowPrio() {
     return make_tuple(highest, lowest);
 }
 
-void zlnk::getVCWithPrio(unordered_set<int> *bigA, vector<bdd> *ac, int prio) {
+void zlnk::getVCWithPrio(unordered_set<int> *bigA, vector<Subset> *ac, int prio) {
     for (const auto& vi : *bigV) {
         if(game->priority[vi] == prio){
             bigA->insert(vi);
@@ -248,22 +270,22 @@ void zlnk::getVCWithPrio(unordered_set<int> *bigA, vector<bdd> *ac, int prio) {
     }
 }
 
-void zlnk::unify(unordered_set<int> *bigA, vector<bdd> *ac, unordered_set<int> *bigB, vector<bdd> *bc) {
+void zlnk::unify(unordered_set<int> *bigA, vector<Subset> *ac, unordered_set<int> *bigB, vector<Subset> *bc) {
     for (const auto& vi : *bigB) {
         bigA->insert(vi);
-        (*ac)[vi] = (*ac)[vi] | (*bc)[vi];
+        (*ac)[vi] |= (*bc)[vi];
     }
 }
 
-void zlnk::removeFromBigV(unordered_set<int> * bigA, vector<bdd> *ac){
+void zlnk::removeFromBigV(unordered_set<int> * bigA, vector<Subset> *ac){
     for (const auto& vi : *bigA) {
         removeFromBigV(vi, (*ac)[vi]);
     }
 }
 
-void zlnk::removeFromBigV(int i, bdd c) {
-    (*vc)[i] = (*vc)[i] & !c;
-    if((*vc)[i] == bddfalse)
+void zlnk::removeFromBigV(int i, Subset c) {
+    (*vc)[i] -= c;
+    if((*vc)[i] == emptyset)
     {
         bigV->erase(i);
     }

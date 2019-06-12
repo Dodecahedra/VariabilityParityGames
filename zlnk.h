@@ -11,23 +11,24 @@
 
 class zlnk {
 public:
+    int attracting = 0;
     Game * game;
     unordered_set<int> * bigV;
-    vector<bdd> * vc;
+    vector<Subset> * vc;
 
 
     zlnk(Game * game);
-    zlnk(Game * game, unordered_set<int> * bigV, vector<bdd> * vc);
+    zlnk(Game * game, unordered_set<int> * bigV, vector<Subset> * vc);
 
-    void attr(int player,unordered_set<int> * bigA,vector<bdd> * ac);
-    void attrNaive(int player,unordered_set<int> * bigA,vector<bdd> * ac);
-    void attrQueue(int player,unordered_set<int> * bigA,vector<bdd> * ac);
-    void solve(unordered_set<int> * W0bigV, vector<bdd> * W0vc,unordered_set<int> * W1bigV, vector<bdd> * W1vc);
+    void attr(int player,unordered_set<int> * bigA,vector<Subset> * ac);
+    void attrNaive(int player,unordered_set<int> * bigA,vector<Subset> * ac);
+    void attrQueue(int player,unordered_set<int> * bigA,vector<Subset> * ac);
+    void solve(unordered_set<int> * W0bigV, vector<Subset> * W0vc,unordered_set<int> * W1bigV, vector<Subset> * W1vc);
     tuple<int,int> getHighLowPrio();
-    void getVCWithPrio(unordered_set<int> *bigA, vector<bdd> *ac, int prio);
-    void unify(unordered_set<int> * bigA, vector<bdd> *ac, unordered_set<int> * bigB, vector<bdd> * bc);
-    void removeFromBigV(unordered_set<int> * bigA, vector<bdd> *ac);
-    void removeFromBigV(int i, bdd c);
+    void getVCWithPrio(unordered_set<int> *bigA, vector<Subset> *ac, int prio);
+    void unify(unordered_set<int> * bigA, vector<Subset> *ac, unordered_set<int> * bigB, vector<Subset> * bc);
+    void removeFromBigV(unordered_set<int> * bigA, vector<Subset> *ac);
+    void removeFromBigV(int i, Subset c);
     void test();
 };
 
