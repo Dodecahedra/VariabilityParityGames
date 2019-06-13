@@ -80,7 +80,8 @@ void Game::parseConfs(char * line) {
     bm_n_vars = i - 7;
     bm_vars.resize(bm_n_vars);
 #ifdef subsetbdd
-    bdd_init(100000,100000);
+    bdd_init(2000000,2);
+    bdd_setcacheratio(500000);
     bdd_setvarnum(bm_n_vars);
     vector<int> order;
     order.resize(bm_n_vars);
@@ -91,7 +92,6 @@ void Game::parseConfs(char * line) {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     shuffle (order.begin(), order.end(), default_random_engine(seed));
 #endif
-    order[0] = 7;order[1] = 1;order[2] = 5;order[3] = 3;order[4] = 2;order[5] = 6;order[6] = 9;order[7] = 4;order[8] = 8;order[9] = 0;
     cout << "Bdd order: " ;
     for(i = 0;i<bm_n_vars;i++){
         cout << '[' << i << "]=" << order[i] << ", ";

@@ -21,6 +21,7 @@ int main(int argc, char** argv) {
             g.parseGameFromFile(argv[1]);
         }
         time_t t = time(0);
+
         cout << "\n[" << t << "] Parsed\n";
         fflush(stdout);
 
