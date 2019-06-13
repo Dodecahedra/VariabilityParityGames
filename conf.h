@@ -5,9 +5,10 @@
 #ifndef VPGSOLVER_CONF_H
 #define VPGSOLVER_CONF_H
 
-//#define subsetbdd
-#define subsetexplicit
+#define subsetbdd
+//#define subsetexplicit
 #ifdef subsetbdd
+//#define randombddorder
 #define Subset bdd
 #define fullset bddtrue
 #define emptyset bddfalse

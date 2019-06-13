@@ -8,6 +8,10 @@
 #include <string>
 #include <cstring>
 #include <unordered_set>
+#include <random>       // std::default_random_engine
+#include <chrono>       // std::chrono::system_clock
+#include <algorithm>    // std::shuffle
+
 #include "Game.h"
 
 void Game::set_n_nodes(int nodes) {
@@ -78,8 +82,23 @@ void Game::parseConfs(char * line) {
 #ifdef subsetbdd
     bdd_init(100000,100000);
     bdd_setvarnum(bm_n_vars);
-    for(int i = 0;i<bm_n_vars;i++) {
-        bm_vars[i] = bdd_ithvar(i);
+    vector<int> order;
+    order.resize(bm_n_vars);
+    for(i = 0;i<bm_n_vars;i++){
+        order[i] = i;
+    }
+#ifdef randombddorder
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    shuffle (order.begin(), order.end(), default_random_engine(seed));
+#endif
+    order[0] = 7;order[1] = 1;order[2] = 5;order[3] = 3;order[4] = 2;order[5] = 6;order[6] = 9;order[7] = 4;order[8] = 8;order[9] = 0;
+    cout << "Bdd order: " ;
+    for(i = 0;i<bm_n_vars;i++){
+        cout << '[' << i << "]=" << order[i] << ", ";
+    }
+    cout << "\n";
+    for(i = 0;i<bm_n_vars;i++) {
+        bm_vars[order[i]] = bdd_ithvar(i);
     }
 #endif
 #ifdef subsetexplicit
