@@ -6,6 +6,15 @@
 using namespace std;
 
 int main(int argc, char** argv) {
+#ifdef SINGLEMODE
+    cout << "== Running Single mode == \n";
+#endif
+#ifdef subsetbdd
+    cout << "== Subsets are bdds == \n";
+#endif
+#ifdef subsetexplicit
+    cout << "== Subsets are explicit == \n";
+#endif
     if(argc < 2) {
         cerr << "Incorect params";
         return 2;
@@ -30,15 +39,20 @@ int main(int argc, char** argv) {
 
         zlnk z(&g);
         auto * W0BigV = new unordered_set<int>;
-        vector<Subset> * W0vc = new vector<Subset>(g.n_nodes);
-
         auto * W1BigV = new unordered_set<int>;
-        vector<Subset> * W1vc = new vector<Subset>(g.n_nodes);
 
+#ifdef SINGLEMODE
+        vector<Subset> * W0vc = nullptr;
+        vector<Subset> * W1vc = nullptr;
+#else
+        vector<Subset> * W0vc = new vector<Subset>(g.n_nodes);
+        vector<Subset> * W1vc = new vector<Subset>(g.n_nodes);
         for(int i = 0;i<g.n_nodes;i++){
             (*W0vc)[i] = emptyset;
             (*W1vc)[i] = emptyset;
         }
+#endif
+
         z.solve(W0BigV, W0vc, W1BigV, W1vc);
 
         auto end = std::chrono::system_clock::now();

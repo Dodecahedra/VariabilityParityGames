@@ -39,6 +39,20 @@ void SubsetExplicit::operator&=(SubsetExplicit &other) {
 }
 
 void SubsetExplicit::operator|=(SubsetExplicit &other) {
+    auto thisite = this->items.begin();
+    auto otherite = other.items.begin();
+
+    while(thisite != this->items.end() && otherite != other.items.end()){
+        if(*thisite < *otherite) {
+            thisite++;
+        } else if(*thisite == *otherite) {
+            thisite++;
+            otherite++;
+        } else {
+            this->items.insert(thisite,*otherite);
+            otherite++;
+        }
+    }
     // todo improve
     for(const auto &i : other.items){
         this->items.insert(i);

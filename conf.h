@@ -5,10 +5,16 @@
 #ifndef VPGSOLVER_CONF_H
 #define VPGSOLVER_CONF_H
 
+#define SINGLEMODE
+//#define randombddorder
+
 #define subsetbdd
 //#define subsetexplicit
 #ifdef subsetbdd
-//#define randombddorder
+
+
+
+
 #define Subset bdd
 #define fullset bddtrue
 #define emptyset bddfalse

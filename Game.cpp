@@ -199,13 +199,15 @@ void Game::parseVertex(char *line) {
         edge_guards.resize(guardindex + 1);
         i = parseConfSet(line, 0,&edge_guards[guardindex]);
         edge_guards[guardindex] &= bigC;
-        int outindex = out_edges[index].size();
-        out_edges[index].resize(outindex + 1);
-        out_edges[index][outindex] = std::make_tuple(target, guardindex);
+        if(edge_guards[guardindex] != emptyset){
+            int outindex = out_edges[index].size();
+            out_edges[index].resize(outindex + 1);
+            out_edges[index][outindex] = std::make_tuple(target, guardindex);
 
-        int inindex = in_edges[target].size();
-        in_edges[target].resize(inindex+1);
-        in_edges[target][inindex] = std::make_tuple(index, guardindex);
+            int inindex = in_edges[target].size();
+            in_edges[target].resize(inindex+1);
+            in_edges[target][inindex] = std::make_tuple(index, guardindex);
+        }
 //        cout<< "with edge to " << target << " allowing: ";
 //        dumpSet(&edge_guards[guardindex], fullset, new char[bm_n_vars+1], 0);
         line += i-1;
@@ -252,5 +254,12 @@ void Game::printCV(unordered_set<int> *bigV, vector<Subset> *vc, Subset t, char 
 
 
 void Game::printCV(unordered_set<int> *bigV, vector<Subset> *vc) {
+#ifdef SINGLEMODE
+    if(bigV->find(0) == bigV->end())
+        cout << "Vertex 0 is not in\n";
+    else
+        cout << "Vertex 0 is in\n";
+#else
     printCV(bigV, vc, bigC, new char[bm_n_vars+1], 0);
+#endif
 }
