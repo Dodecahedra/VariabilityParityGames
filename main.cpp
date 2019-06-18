@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
 
         auto elapsed =
                 std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-        cout << "Solving took " << elapsed.count() << "ms.\n";
+        cout << "Solving time: " << elapsed.count() << " ms\n";
         cout << "Attracting time: " << z.attracting << " ms\n";
         time_t t2 = time(0);
         cout << '[' << t2 << "] Solved\n";

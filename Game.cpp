@@ -208,7 +208,7 @@ void Game::parseVertex(char *line) {
             in_edges[target].resize(inindex+1);
             in_edges[target][inindex] = std::make_tuple(index, guardindex);
             cout<< "with edge to " << target << " allowing: ";
-            dumpSet(&edge_guards[guardindex], fullset, new char[bm_n_vars+1], 0);
+//            dumpSet(&edge_guards[guardindex], fullset, new char[bm_n_vars+1], 0);
         }
         line += i-1;
     }
