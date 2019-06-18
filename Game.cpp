@@ -199,7 +199,7 @@ void Game::parseVertex(char *line) {
         edge_guards.resize(guardindex + 1);
         i = parseConfSet(line, 0,&edge_guards[guardindex]);
         edge_guards[guardindex] &= bigC;
-        if(edge_guards[guardindex] != emptyset){
+        if(!(edge_guards[guardindex] == emptyset)){
             int outindex = out_edges[index].size();
             out_edges[index].resize(outindex + 1);
             out_edges[index][outindex] = std::make_tuple(target, guardindex);
@@ -207,9 +207,9 @@ void Game::parseVertex(char *line) {
             int inindex = in_edges[target].size();
             in_edges[target].resize(inindex+1);
             in_edges[target][inindex] = std::make_tuple(index, guardindex);
+            cout<< "with edge to " << target << " allowing: ";
+            dumpSet(&edge_guards[guardindex], fullset, new char[bm_n_vars+1], 0);
         }
-//        cout<< "with edge to " << target << " allowing: ";
-//        dumpSet(&edge_guards[guardindex], fullset, new char[bm_n_vars+1], 0);
         line += i-1;
     }
     declared[index] = true;
@@ -222,21 +222,28 @@ int Game::readUntil(const char * line, char delim){
     return i;
 }
 
-void Game::printCV(unordered_set<int> *bigV, vector<Subset> *vc, Subset t, char * p, int var) {
+void Game::printCV(unordered_set<int> *bigV, vector<Subset> *vc, Subset t, char * p, int var, bool fulloutput) {
     if(t == emptyset) return;
     if(var == bm_n_vars)
     {
         p[var]  = '\0';
         cout << "For product " << p << " the following vertices are in: ";
-//        for(const int& vi : *bigV)
-//        {
-            int vi =0;
+        if(fulloutput){
+            for(const int& vi : *bigV) {
+                Subset result = (*vc)[vi];
+                result &= t;
+                if(!((result) == emptyset)){
+                    cout << vi << ',';
+                }
+            }
+        } else {
+            int vi = 0;
             Subset result = (*vc)[vi];
             result &= t;
             if(!((result) == emptyset)){
                 cout << vi << ',';
             }
-//        }
+        }
         cout <<"\n";
         fflush(stdout);
 
@@ -244,22 +251,29 @@ void Game::printCV(unordered_set<int> *bigV, vector<Subset> *vc, Subset t, char 
         Subset t1 = t;
         t1 &= bm_vars[var];
         p[var] = '1';
-        printCV(bigV,vc, t1, p , var + 1);
+        printCV(bigV,vc, t1, p , var + 1, fulloutput);
         p[var] = '0';
         Subset t2 = t;
         t2 -= bm_vars[var];
-        printCV(bigV, vc, t2, p, var + 1);
+        printCV(bigV, vc, t2, p, var + 1, fulloutput);
     }
 }
 
 
-void Game::printCV(unordered_set<int> *bigV, vector<Subset> *vc) {
+void Game::printCV(unordered_set<int> *bigV, vector<Subset> *vc, bool fulloutput) {
 #ifdef SINGLEMODE
-    if(bigV->find(0) == bigV->end())
-        cout << "Vertex 0 is not in\n";
-    else
-        cout << "Vertex 0 is in\n";
+    cout << "The following vertices are in: ";
+    if(fulloutput){
+        for(const int& vi : *bigV) {
+            cout << vi << ',';
+        }
+    } else {
+        if(bigV->find(0) == bigV->end())
+            cout << "0,";
+    }
+    cout << "\n";
+    fflush(stdout);
 #else
-    printCV(bigV, vc, bigC, new char[bm_n_vars+1], 0);
+    printCV(bigV, vc, bigC, new char[bm_n_vars+1], 0, fulloutput);
 #endif
 }

@@ -24,8 +24,27 @@ int main(int argc, char** argv) {
         cout << "\n[" << t0 << "] Start\n";
 
         Game g;
-        if(argc > 2){
-            g.parseGameFromFile(argv[1],argv[2]);
+        char *specificconf;
+        bool specificconfenabled = false;
+
+        bool fulloutput = false;
+
+        for(int i = 2;i<argc;i++){
+            switch (*argv[i]){
+                case 'c':
+                    specificconfenabled = true;
+                    specificconf = argv[i]+1;
+                    break;
+                case 'f':
+                    fulloutput = true;
+                    break;
+                default:
+                    cerr << "Unknown parameter: " << argv[i];
+                    break;
+            }
+        }
+        if(specificconfenabled){
+            g.parseGameFromFile(argv[1],specificconf);
         } else {
             g.parseGameFromFile(argv[1]);
         }
@@ -64,9 +83,9 @@ int main(int argc, char** argv) {
         time_t t2 = time(0);
         cout << '[' << t2 << "] Solved\n";
         cout << "W0: \n";
-        g.printCV(W0BigV, W0vc);
+        g.printCV(W0BigV, W0vc, fulloutput);
         cout << "W1: \n";
-        g.printCV(W1BigV, W1vc);
+        g.printCV(W1BigV, W1vc, fulloutput);
     } catch(std::string s)
     {
         cerr << s << "\n";

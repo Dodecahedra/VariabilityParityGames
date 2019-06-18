@@ -51,35 +51,43 @@ void zlnk::attr(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
 
 #ifdef SINGLEMODE
 void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
-    cout << "Attr start, size: " << bigA->size() << "\n";
+    cout << "Content of bigV: ";
+    for(const auto& vi : *bigV){
+        cout << vi << ",";
+    }
+    cout << "\n";
+    cout << "Attr start, size: " << bigA->size() << ", player: " << player << "\n";
     queue<int> qq;
     for (const auto& vi : *bigA) {
         qq.push(vi);
+        cout << vi << ",";
     }
+    cout << "\nAttracted: ";
     while(!qq.empty())
     {
         int vii = qq.front();
         qq.pop();
 //        cout << "Attr iteration, size: " << bigA->size() << " qq size: " << qq.size() << " with in edges: " << game->in_edges[vii].size() << " \n";
 
-        for(int i = 0;i<game->in_edges[vii].size();i++){
-            int vi = target(game->in_edges[vii][i]);
+        for(auto & i : game->in_edges[vii]){
+            int vi = target(i);
             if(bigV->find(vi) == bigV->end()) // vertex not in the playing area anymore
                 continue;
             bool attracted = true;
             if(game->owner[vi] != player){
-                for(int i = 0;i<game->out_edges[vi].size();i++){
-                    attracted = (attracted && (bigA->find(target(game->out_edges[vi][i])) != bigA->end()));
+                for(auto & j : game->out_edges[vi]){
+                    attracted = (attracted && (bigV->find(target(j)) == bigV->end()));
                 }
             }
             if(!attracted)
                 continue;
+            cout << vi << ",";
             bigA->insert(vi);
             bigV->erase(vi);
             qq.push(vi);
         }
     }
-    cout << "Attr end, size: " << bigA->size() << "\n";
+    cout << "\nAttr end, size: " << bigA->size() << "\n";
 }
 #else
 void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
@@ -106,11 +114,13 @@ void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
                 attracted &= game->edge_guards[gi];
             } else {
                 attracted = (*vc)[vi];
-                for(int i = 0;i<game->out_edges[vi].size();i++){
-                    int target = target(game->out_edges[vi][i]);
+                for(auto & j : game->out_edges[vi]){
+                    int target = target(j);
                     Subset s = game->bigC;
-                    s -= game->edge_guards[guard_index(game->out_edges[vi][i])];
-                    s |= (*ac)[target];
+                    Subset s2 = game->bigC;
+                    s -= game->edge_guards[guard_index(j)];
+                    s2 -= (*vc)[target];
+                    s |= s2;
                     attracted &= s;
                 }
             }
