@@ -2,12 +2,12 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="VPGSolver" targetName="VPGSolver_bdd_fo" />
       <config projectName="VPGSolver" targetName="VPGSolver_bdd" />
-      <config projectName="VPGSolver" targetName="VPGSolver_explicit" />
-      <config projectName="VPGSolver" targetName="VPGSolver_bdd_single" />
-      <config projectName="VPGSolver" targetName="VPGSolver_explicit_fo" />
       <config projectName="VPGSolver" targetName="VPGSolver_bdd_single_fo" />
+      <config projectName="VPGSolver" targetName="VPGSolver_bdd_single" />
+      <config projectName="VPGSolver" targetName="VPGSolver_bdd_fo" />
+      <config projectName="VPGSolver" targetName="VPGSolver_explicit_fo" />
+      <config projectName="VPGSolver" targetName="VPGSolver_explicit" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -17,11 +17,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="065c0f65-4e45-4bdd-bfb0-047fd78e757c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../testsuite/randomverification/createdgameslog" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Report/Report.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/Report.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Report/Report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/Report.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTSMMC/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../FTSMMC/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTSMMC/src/mmc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../FTSMMC/src/mmc/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTSMMC/src/mmc/SVPG/SVPG.java" beforeDir="false" afterPath="$PROJECT_DIR$/../FTSMMC/src/mmc/SVPG/SVPG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTSMMC/src/mmc/modal/formulas/BoxFormula.java" beforeDir="false" afterPath="$PROJECT_DIR$/../FTSMMC/src/mmc/modal/formulas/BoxFormula.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTSMMC/src/mmc/modal/formulas/DiamondFormula.java" beforeDir="false" afterPath="$PROJECT_DIR$/../FTSMMC/src/mmc/modal/formulas/DiamondFormula.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTSMMC/src/mmc/modal/formulas/LiteralTrue.java" beforeDir="false" afterPath="$PROJECT_DIR$/../FTSMMC/src/mmc/modal/formulas/LiteralTrue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTSMMC/src/mmc/modal/formulas/LogicAndFormula.java" beforeDir="false" afterPath="$PROJECT_DIR$/../FTSMMC/src/mmc/modal/formulas/LogicAndFormula.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTSMMC/src/mmc/modal/formulas/LogicOrFormula.java" beforeDir="false" afterPath="$PROJECT_DIR$/../FTSMMC/src/mmc/modal/formulas/LogicOrFormula.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Game.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/randomverification/creategames.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/randomverification/creategames.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zlnk.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/zlnk.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,7 +46,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Game.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
+            <state relative-caret-position="3165">
               <caret line="211" selection-start-line="211" selection-end-line="211" />
               <folding>
                 <element signature="e#37#55#0" expanded="true" />
@@ -52,14 +59,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/zlnk.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-21">
-              <caret line="280" selection-start-line="280" selection-end-line="281" selection-end-column="17" />
+            <state relative-caret-position="417">
+              <caret line="152" column="28" lean-forward="true" selection-start-line="152" selection-start-column="28" selection-end-line="152" selection-end-column="28" />
               <folding>
                 <element signature="e#37#53#0" expanded="true" />
-                <element signature="e#138#168#0" expanded="true" />
-                <element signature="e#1124#2455#0" expanded="true" />
-                <element signature="e#4599#6301#0" expanded="true" />
-                <element signature="e#9389#9597#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -123,7 +126,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
+            <state relative-caret-position="1200">
               <caret line="80" column="29" selection-start-line="80" selection-start-column="17" selection-end-line="80" selection-end-column="29" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -212,9 +215,9 @@
         <option value="$PROJECT_DIR$/conf.h" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/Game.h" />
-        <option value="$PROJECT_DIR$/zlnk.cpp" />
         <option value="$PROJECT_DIR$/Game.cpp" />
         <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/zlnk.cpp" />
       </list>
     </option>
   </component>
@@ -243,6 +246,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -258,7 +262,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -289,7 +292,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="CMake Application.VPGSolver_explicit">
+  <component name="RunManager" selected="CMake Application.VPGSolver_bdd_single">
     <configuration name="VPGSolver_bdd" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="$PROJECT_DIR$/../WorkingExamples/minepump/formulas/simpleformulas/phi6PGs/SVPG f" PASS_PARENT_ENVS_2="true" PROJECT_NAME="VPGSolver" TARGET_NAME="VPGSolver_bdd" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="VPGSolver" RUN_TARGET_NAME="VPGSolver_bdd">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -330,11 +333,13 @@
       <workItem from="1560496125684" duration="7565000" />
       <workItem from="1560775900331" duration="4716000" />
       <workItem from="1560844083476" duration="5170000" />
+      <workItem from="1560873488277" duration="971000" />
+      <workItem from="1560945846075" duration="661000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87333000" />
+    <option name="totallyTimeSpent" value="88965000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -347,9 +352,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1365" y="0" width="1682" height="1002" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16523868" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16891065" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -591,6 +595,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/a.cpp" />
     <entry file="file://$PROJECT_DIR$/a.h" />
+    <entry file="file://$PROJECT_DIR$/Game.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3165">
+          <caret line="211" selection-start-line="211" selection-end-line="211" />
+          <folding>
+            <element signature="e#37#55#0" expanded="true" />
+            <element signature="e#2016#2610#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -636,6 +651,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1200">
+          <caret line="80" column="29" selection-start-line="80" selection-start-column="17" selection-end-line="80" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Game.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="705">
@@ -646,37 +671,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="80" column="29" selection-start-line="80" selection-start-column="17" selection-end-line="80" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Game.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="211" selection-start-line="211" selection-end-line="211" />
-          <folding>
-            <element signature="e#37#55#0" expanded="true" />
-            <element signature="e#2016#2610#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zlnk.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-21">
-          <caret line="280" selection-start-line="280" selection-end-line="281" selection-end-column="17" />
+        <state relative-caret-position="417">
+          <caret line="152" column="28" lean-forward="true" selection-start-line="152" selection-start-column="28" selection-end-line="152" selection-end-column="28" />
           <folding>
             <element signature="e#37#53#0" expanded="true" />
-            <element signature="e#138#168#0" expanded="true" />
-            <element signature="e#1124#2455#0" expanded="true" />
-            <element signature="e#4599#6301#0" expanded="true" />
-            <element signature="e#9389#9597#0" expanded="true" />
           </folding>
         </state>
       </provider>

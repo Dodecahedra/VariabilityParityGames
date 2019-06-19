@@ -51,16 +51,16 @@ void zlnk::attr(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
 
 #ifdef SINGLEMODE
 void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
-    cout << "Content of bigV: ";
-    for(const auto& vi : *bigV){
-        cout << vi << ",";
-    }
-    cout << "\n";
+//    cout << "Content of bigV: ";
+//    for(const auto& vi : *bigV){
+//        cout << vi << ",";
+//    }
+//    cout << "\n";
     cout << "Attr start, size: " << bigA->size() << ", player: " << player << "\n";
     queue<int> qq;
     for (const auto& vi : *bigA) {
         qq.push(vi);
-        cout << vi << ",";
+//        cout << vi << ",";
     }
     cout << "\nAttracted: ";
     while(!qq.empty())
@@ -81,7 +81,7 @@ void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
             }
             if(!attracted)
                 continue;
-            cout << vi << ",";
+//            cout << vi << ",";
             bigA->insert(vi);
             bigV->erase(vi);
             qq.push(vi);
