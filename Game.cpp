@@ -125,21 +125,37 @@ int Game::parseConfSet(const char *line, int i, Subset *result) {
     Subset entry = fullset;
     int var = 0;
     char c;
+    string * seq;
     do
     {
+        if(var == 0){
+            seq = new string(line+i);
+            *seq = seq->substr(0, bm_n_vars);
+            auto cacheite = parseCache.find(*seq);
+            if(cacheite != parseCache.end())
+            {
+                *result |= cacheite->second;
+                i += bm_n_vars;
+                c = line[i++];
+                continue;
+            }
+        }
         c = line[i++];
-        if(c == '0'){
-            if(var > bm_n_vars) throw std::string("Too many bits");
+        if (c == '0') {
+            if (var > bm_n_vars) throw std::string("Too many bits");
             entry -= bm_vars[var];
             var++;
-        } else if(c == '1'){
-            if(var > bm_n_vars) throw std::string("Too many bits");
+        } else if (c == '1') {
+            if (var > bm_n_vars) throw std::string("Too many bits");
             entry &= bm_vars[var];
             var++;
-        } else if(c == '-'){
-            if(var > bm_n_vars) throw std::string("Too many bits");
+        } else if (c == '-') {
+            if (var > bm_n_vars) throw std::string("Too many bits");
             var++;
         } else {
+            Subset * s = new Subset();
+            *s = entry;
+            parseCache.insert(pair<string, Subset>(*seq, *s));
             *result |= entry;
             entry = fullset;
             var = 0;

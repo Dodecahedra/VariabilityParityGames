@@ -8,6 +8,7 @@
 #include <vector>
 #include <tuple>
 #include <unordered_set>
+#include <map>
 #include "bdd.h"
 #include "conf.h"
 
@@ -28,6 +29,8 @@ public :
     std::vector<std::tuple<int,int>> *out_edges;
     std::vector<std::tuple<int,int>> *in_edges;
     std::vector<Subset> edge_guards;
+
+    map<string, Subset> parseCache;
 
     Game();
     void set_n_nodes(int nodes);
