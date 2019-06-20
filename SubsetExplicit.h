@@ -4,19 +4,19 @@
 
 #ifndef VPGSOLVER_SUBSETEXPLICIT_H
 #define VPGSOLVER_SUBSETEXPLICIT_H
-#include <set>
-#include <unordered_set>
+#include <vector>
 using namespace std;
 
 class SubsetExplicit {
 public:
     SubsetExplicit();
-    SubsetExplicit(int range,int bit);
-    set<int> items;
+    SubsetExplicit(int bit);
+    vector<bool> items;
     static SubsetExplicit SetFullset;
     static SubsetExplicit SetEmptyset;
     static SubsetExplicit *getFullSet();
     static SubsetExplicit *getEmptySet();
+    static int size;
     void operator&=(SubsetExplicit &other);
     void operator|=(SubsetExplicit &other);
     void operator-=(SubsetExplicit &other);

@@ -44,8 +44,8 @@ void zlnk::attr(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
 
 
     auto elapsed =
-            std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    cout << "Attracting took " << elapsed.count() << "ms.\n";
+            std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+    cout << "Attracting took " << elapsed.count() << "ns";
     attracting += elapsed.count();
 }
 

@@ -11,7 +11,7 @@
 
 class zlnk {
 public:
-    int attracting = 0;
+    long attracting = 0;
     Game * game;
     unordered_set<int> * bigV;
     vector<Subset> * vc;

@@ -102,10 +102,15 @@ void Game::parseConfs(char * line) {
     }
 #endif
 #ifdef subsetexplicit
-    for(int i =0;i<1<<bm_n_vars;i++)
-        fullset.items.insert(i);
+    SubsetExplicit::size = (1 << (bm_n_vars));
+    fullset.items.resize(SubsetExplicit::size);
+    emptyset.items.resize(SubsetExplicit::size);
+    for(int i =0;i<1<<bm_n_vars;i++) {
+        fullset.items[i] = true;
+        emptyset.items[i] = false;
+    }
     for(int i = 0;i<bm_n_vars;i++) {
-        bm_vars[i] = SubsetExplicit((1 << (bm_n_vars))-1, bm_n_vars-i-1);
+        bm_vars[i] = SubsetExplicit(bm_n_vars-i-1);
     }
 #endif
     parseConfSet(line, 6, &bigC);

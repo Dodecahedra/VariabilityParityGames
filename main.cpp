@@ -77,9 +77,9 @@ int main(int argc, char** argv) {
         auto end = std::chrono::system_clock::now();
 
         auto elapsed =
-                std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-        cout << "Solving time: " << elapsed.count() << " ms\n";
-        cout << "Attracting time: " << z.attracting << " ms\n";
+                std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+        cout << "Solving time: " << elapsed.count() << " ns";
+        cout << "Attracting time: " << z.attracting << " ns";
         time_t t2 = time(0);
         cout << '[' << t2 << "] Solved\n";
         cout << "W0: \n";
