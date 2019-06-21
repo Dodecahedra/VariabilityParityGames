@@ -18,17 +18,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="065c0f65-4e45-4bdd-bfb0-047fd78e757c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Experimentalresult/minepump_zlnk.ods" beforeDir="false" afterPath="$PROJECT_DIR$/../../Experimentalresult/minepump_zlnk.ods" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Report/Report.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/Report.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Report/recursivezlnk.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/recursivezlnk.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FTSMMC/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../FTSMMC/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Game.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SubsetExplicit.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SubsetExplicit.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SubsetExplicit.h" beforeDir="false" afterPath="$PROJECT_DIR$/SubsetExplicit.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zlnk.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/zlnk.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zlnk.h" beforeDir="false" afterPath="$PROJECT_DIR$/zlnk.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_bdd" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_bdd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_bdd_single" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_bdd_single" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_explicit" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_explicit" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-release/" />
@@ -44,10 +37,10 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Game.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
+            <state relative-caret-position="1560">
               <caret line="104" column="45" selection-start-line="104" selection-start-column="45" selection-end-line="104" selection-end-column="45" />
               <folding>
                 <element signature="e#37#55#0" expanded="true" />
@@ -56,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/zlnk.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="48" column="12" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
+            <state relative-caret-position="253">
+              <caret line="112" column="33" selection-start-line="112" selection-start-column="33" selection-end-line="112" selection-end-column="33" />
               <folding>
                 <element signature="e#37#53#0" expanded="true" />
               </folding>
@@ -71,8 +64,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/zlnk.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+            <state relative-caret-position="315">
+              <caret line="21" selection-start-line="21" selection-end-line="21" />
               <folding>
                 <element signature="e#89#113#0" expanded="true" />
               </folding>
@@ -83,8 +76,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SubsetExplicit.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+            <state relative-caret-position="525">
+              <caret line="35" selection-start-line="35" selection-end-line="35" />
               <folding>
                 <element signature="e#38#58#0" expanded="true" />
               </folding>
@@ -122,7 +115,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="531">
+            <state relative-caret-position="1200">
               <caret line="80" column="29" selection-start-line="80" selection-start-column="17" selection-end-line="80" selection-end-column="29" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -214,8 +207,8 @@
         <option value="$PROJECT_DIR$/SubsetExplicit.h" />
         <option value="$PROJECT_DIR$/SubsetExplicit.cpp" />
         <option value="$PROJECT_DIR$/Game.cpp" />
-        <option value="$PROJECT_DIR$/zlnk.cpp" />
         <option value="$PROJECT_DIR$/zlnk.h" />
+        <option value="$PROJECT_DIR$/zlnk.cpp" />
       </list>
     </option>
   </component>
@@ -244,6 +237,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -259,7 +253,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -335,11 +328,12 @@
       <workItem from="1560945846075" duration="661000" />
       <workItem from="1561017953732" duration="7424000" />
       <workItem from="1561032360559" duration="2467000" />
+      <workItem from="1561126823164" duration="1234000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98856000" />
+    <option name="totallyTimeSpent" value="100090000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -353,7 +347,7 @@
   <component name="ToolWindowManager">
     <frame x="1365" y="0" width="1682" height="1002" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17258263" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1744186" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -596,6 +590,57 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///usr/include/c++/7/bits/stl_bvector.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="681" column="12" selection-start-line="681" selection-start-column="12" selection-end-line="681" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/7/chrono">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="301" column="13" selection-start-line="301" selection-start-column="13" selection-end-line="301" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Game.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1560">
+          <caret line="104" column="45" selection-start-line="104" selection-start-column="45" selection-end-line="104" selection-end-column="45" />
+          <folding>
+            <element signature="e#37#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zlnk.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="e#89#113#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SubsetExplicit.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+          <folding>
+            <element signature="e#38#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SubsetExplicit.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="37" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/conf.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -610,6 +655,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1200">
+          <caret line="80" column="29" selection-start-line="80" selection-start-column="17" selection-end-line="80" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Game.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
@@ -620,73 +675,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/include/c++/7/bits/stl_bvector.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="681" column="12" selection-start-line="681" selection-start-column="12" selection-end-line="681" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SubsetExplicit.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
-          <folding>
-            <element signature="e#38#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SubsetExplicit.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="37" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="531">
-          <caret line="80" column="29" selection-start-line="80" selection-start-column="17" selection-end-line="80" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/c++/7/chrono">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="301" column="13" selection-start-line="301" selection-start-column="13" selection-end-line="301" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zlnk.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="48" column="12" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
+        <state relative-caret-position="253">
+          <caret line="112" column="33" selection-start-line="112" selection-start-column="33" selection-end-line="112" selection-end-column="33" />
           <folding>
             <element signature="e#37#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlnk.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="e#89#113#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Game.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="104" column="45" selection-start-line="104" selection-start-column="45" selection-end-line="104" selection-end-column="45" />
-          <folding>
-            <element signature="e#37#55#0" expanded="true" />
           </folding>
         </state>
       </provider>
