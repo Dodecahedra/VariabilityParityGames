@@ -81,7 +81,7 @@ void Game::parseConfs(char * line) {
     bm_vars.resize(bm_n_vars);
 #ifdef subsetbdd
     bdd_init(2000000,2);
-    bdd_setcacheratio(500000);
+//    bdd_setcacheratio(200);
     bdd_setvarnum(bm_n_vars);
     vector<int> order;
     order.resize(bm_n_vars);

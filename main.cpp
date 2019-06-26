@@ -53,6 +53,11 @@ int main(int argc, char** argv) {
         cout << "\n[" << t << "] Parsed\n";
         fflush(stdout);
 
+#ifdef subsetbdd
+        // enable cache after parsing
+        bdd_setcacheratio(200);
+#endif
+
         auto start = std::chrono::high_resolution_clock::now();
 
 
