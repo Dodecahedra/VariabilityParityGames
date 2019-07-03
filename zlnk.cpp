@@ -56,29 +56,18 @@ void zlnk::attr(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
 
 #ifdef SINGLEMODE
 void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
-//    cout << "Content of bigV: ";
-//    for(const auto& vi : *bigV){
-//        cout << vi << ",";
-//    }
-//    cout << "\n";
     vector<bool> countinitialized;
     vector<int> countincoming;
     countincoming.resize(game->n_nodes);
     countinitialized.resize(game->n_nodes);
-//    for(auto && c : countinitialized)
-//        c = false;
-    cout << "Attr start, size: " << bigA->size() << ", player: " << player << "\n";
     queue<int> qq;
     for (const auto& vi : *bigA) {
         qq.push(vi);
-//        cout << vi << ",";
     }
-    cout << "\nAttracted: ";
     while(!qq.empty())
     {
         int vii = qq.front();
         qq.pop();
-//        cout << "Attr iteration, size: " << bigA->size() << " qq size: " << qq.size() << " with in edges: " << game->in_edges[vii].size() << " \n";
 
         for(auto & i : game->in_edges[vii]){
             int vi = target(i);
@@ -99,17 +88,14 @@ void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
             }
             if(!attracted)
                 continue;
-//            cout << vi << ",";
             bigA->insert(vi);
             bigV->erase(vi);
             qq.push(vi);
         }
     }
-    cout << "\nAttr end, size: " << bigA->size() << "\n";
 }
 #else
 void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
-    cout << "Attr start, size: " << bigA->size() << "\n";
     queue<int> qq;
     for (const auto& vi : *bigA) {
         qq.push(vi);
@@ -118,7 +104,6 @@ void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
     {
         int vii = qq.front();
         qq.pop();
-//        cout << "Attr iteration, size: " << bigA->size() << " qq size: " << qq.size() << " with in edges: " << game->in_edges[vii].size() << " \n";
 
         for(int i = 0;i<game->in_edges[vii].size();i++){
             int vi = target(game->in_edges[vii][i]);
@@ -167,7 +152,6 @@ void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
 #endif
         }
     }
-    cout << "Attr end, size: " << bigA->size() << "\n";
 }
 #endif
 
