@@ -9,7 +9,6 @@
 #include <tuple>
 #include <unordered_set>
 #include <map>
-#include "bdd.h"
 #include "conf.h"
 
 using namespace std;

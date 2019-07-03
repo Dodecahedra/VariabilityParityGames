@@ -54,3 +54,11 @@ SubsetExplicit::SubsetExplicit(int bit) {
     for(int i = 0;i<=SubsetExplicit::size;i++)
         this->items[i] = (i & mask) != 0;
 }
+
+int SubsetExplicit::count() {
+    int c = 0;
+    for(auto b : items)
+        if(b)
+            c++;
+    return c;
+}

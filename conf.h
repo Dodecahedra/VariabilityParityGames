@@ -12,10 +12,10 @@
 //#define subsetexplicit
 
 #ifdef subsetbdd
+#include "bdd.h"
 #define Subset bdd
 #define fullset bddtrue
 #define emptyset bddfalse
-#include "bdd.h"
 #endif
 #ifdef subsetexplicit
 #define Subset SubsetExplicit

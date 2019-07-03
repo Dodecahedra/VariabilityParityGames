@@ -22,6 +22,7 @@ public:
     void operator-=(SubsetExplicit &other);
     int operator==(SubsetExplicit &other);
     void operator=(SubsetExplicit other);
+    int count();
 };
 
 

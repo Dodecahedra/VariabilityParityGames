@@ -11,6 +11,7 @@
 
 class zlnk {
 public:
+    static bool conf_metricoutput;
     long attracting = 0;
     Game * game;
     unordered_set<int> * bigV;

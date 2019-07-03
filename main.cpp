@@ -28,6 +28,7 @@ int main(int argc, char** argv) {
         bool specificconfenabled = false;
 
         bool fulloutput = false;
+        bool metricoutput = false;
 
         for(int i = 2;i<argc;i++){
             switch (*argv[i]){
@@ -38,6 +39,8 @@ int main(int argc, char** argv) {
                 case 'f':
                     fulloutput = true;
                     break;
+                case 'm':
+                    metricoutput = true;
                 default:
                     cerr << "Unknown parameter: " << argv[i];
                     break;
@@ -61,6 +64,7 @@ int main(int argc, char** argv) {
         auto start = std::chrono::high_resolution_clock::now();
 
 
+        zlnk::conf_metricoutput = metricoutput;
         zlnk z(&g);
         auto * W0BigV = new unordered_set<int>;
         auto * W1BigV = new unordered_set<int>;
