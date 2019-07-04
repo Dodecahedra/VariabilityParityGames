@@ -146,7 +146,10 @@ int Game::parseConfSet(const char *line, int i, Subset *result) {
             }
         }
         c = line[i++];
-        if (c == '0') {
+        if(c == 'F'){
+            if(var != 0) throw std::string("Unexpected F");
+            entry = emptyset;
+        } else if (c == '0') {
             if (var > bm_n_vars) throw std::string("Too many bits");
             entry -= bm_vars[var];
             var++;
@@ -165,7 +168,7 @@ int Game::parseConfSet(const char *line, int i, Subset *result) {
             entry = fullset;
             var = 0;
         }
-    } while(c =='0' || c == '1' || c == '-' || c == '+');
+    } while(c =='0' || c == '1' || c == '-' || c == '+' || c == 'F');
     return i;
 }
 
@@ -228,7 +231,7 @@ void Game::parseVertex(char *line) {
             int inindex = in_edges[target].size();
             in_edges[target].resize(inindex+1);
             in_edges[target][inindex] = std::make_tuple(index, guardindex);
-            cout<< "with edge to " << target << " allowing: ";
+//            cout<< "with edge to " << target << " allowing: ";
 //            dumpSet(&edge_guards[guardindex], fullset, new char[bm_n_vars+1], 0);
         }
         line += i-1;

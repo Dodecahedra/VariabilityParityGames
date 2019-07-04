@@ -41,6 +41,7 @@ int main(int argc, char** argv) {
                     break;
                 case 'm':
                     metricoutput = true;
+                    break;
                 default:
                     cerr << "Unknown parameter: " << argv[i];
                     break;
