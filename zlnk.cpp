@@ -229,6 +229,10 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
         cout << "\nUp2\n";
         unify(WOpbigV, nullptr, bigA, nullptr);
     }
+    bigA->clear();
+    subBigV->clear();
+    delete bigA;
+    delete subBigV;
 }
 #else
 /**
@@ -308,6 +312,14 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
         cout << "\nUp2\n";
         unify(WOpbigV, WOpvc, bigA, ac);
     }
+    bigA->clear();
+    ac->clear();
+    subBigV->clear();
+    subvc->clear();
+    delete bigA;
+    delete ac;
+    delete subBigV;
+    delete subvc;
 }
 #endif
 
