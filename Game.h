@@ -29,6 +29,7 @@ public :
     vector<std::tuple<int,int>> *out_edges;
     vector<std::tuple<int,int>> *in_edges;
     vector<Subset> edge_guards;
+    vector<int> edge_origins;
 
     map<string, Subset> parseCache;
 

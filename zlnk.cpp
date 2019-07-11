@@ -216,7 +216,7 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
         unify(WMebigV, nullptr, bigA, nullptr);
         return;
     } else {
-        // clone content and wipe winning sets
+        // clone content and wipe winningConf sets
         *bigA = *WOpbigV;
         W0bigV->clear();
         W1bigV->clear();
@@ -236,7 +236,7 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
 }
 #else
 /**
- * Assume empty winning sets (bigV empty and vc all 0's)
+ * Assume empty winningConf sets (bigV empty and vc all 0's)
  * @param W0bigV
  * @param W0vc
  * @param W1bigV
@@ -296,7 +296,7 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
         unify(WMebigV, WMevc, bigA, ac);
         return;
     } else {
-        // clone content and wipe winning sets
+        // clone content and wipe winningConf sets
         *bigA = *WOpbigV;
         *ac = *WOpvc;
         W0bigV->clear();

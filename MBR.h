@@ -13,18 +13,22 @@ using namespace std;
 
 class MBR {
 public:
-    static vector<tuple<Subset, VertexSet>> winning;
+    static vector<Subset> winningConf;
+    static vector<VertexSet> winningVertices;
     Game * game;
     Subset * conf;
     vector<bool> * edgeenabled;
     VertexSet * P0;
-    VertexSet * P1;
+    VertexSet * VP1;
+    int feature;
 
     MBR(Game * game);
-    MBR(Game * game, Subset * conf, vector<bool> * edgeenabled, VertexSet * P0, VertexSet * P1);
+    MBR(Game * game, Subset * conf, vector<bool> * edgeenabled, VertexSet * P0, VertexSet * P1, int feature);
 
     void solve();
     void parition(Subset * org, Subset * part);
+    void createSubGames(Subset * confP, vector<bool> * edgeenabledP);
+    void createPessimisticGames(vector<bool> * pessimisticedges0, vector<bool> * pessimisticedges1);
 };
 
 

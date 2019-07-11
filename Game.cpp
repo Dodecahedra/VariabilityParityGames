@@ -225,8 +225,10 @@ void Game::parseVertex(char *line) {
 
         int guardindex = edge_guards.size();
         edge_guards.resize(guardindex + 1);
+        edge_origins.resize(guardindex + 1);
         i = parseConfSet(line, 0,&edge_guards[guardindex]);
         edge_guards[guardindex] &= bigC;
+        edge_origins[guardindex] = index;
         if(!(edge_guards[guardindex] == emptyset)){
             int outindex = out_edges[index].size();
             out_edges[index].resize(outindex + 1);

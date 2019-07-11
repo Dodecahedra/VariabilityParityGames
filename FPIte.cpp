@@ -83,3 +83,6 @@ void FPIte::solve() {
         }
     } while (!(i == d-1 && ZZ[d-1] == ZZa[d-1]));
 }
+
+FPIte::~FPIte() {
+}

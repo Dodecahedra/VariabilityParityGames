@@ -22,6 +22,7 @@ public:
     vector<VertexSet> ZZ;
     FPIte(Game * game);
     FPIte(Game * game, VertexSet * P0, VertexSet * VP1,vector<bool> * edgeenabled);
+    ~FPIte();
 
     void init(int i);
     void solve();
