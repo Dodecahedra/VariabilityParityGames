@@ -23,5 +23,5 @@
 #define emptyset SubsetExplicit::SetEmptyset
 #include "SubsetExplicit.h"
 #endif
-
+#define VertexSet vector<bool>
 #endif //VPGSOLVER_CONF_H

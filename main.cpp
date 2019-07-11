@@ -2,7 +2,7 @@
 #include <chrono>
 #include "Game.h"
 #include "zlnk.h"
-
+#include "FPIte.h"
 using namespace std;
 
 int main(int argc, char** argv) {
@@ -29,6 +29,8 @@ int main(int argc, char** argv) {
 
         bool fulloutput = false;
         bool metricoutput = false;
+        bool priocompress = false;
+        bool SolveFPIte = false;
 
         for(int i = 2;i<argc;i++){
             switch (*argv[i]){
@@ -41,6 +43,13 @@ int main(int argc, char** argv) {
                     break;
                 case 'm':
                     metricoutput = true;
+                    break;
+                case 'p':
+                    priocompress = true;
+                    break;
+                case 'F':
+                    SolveFPIte = true;
+                    priocompress = true;
                     break;
                 default:
                     cerr << "Unknown parameter: " << argv[i];
@@ -64,38 +73,62 @@ int main(int argc, char** argv) {
 
         auto start = std::chrono::high_resolution_clock::now();
 
+        if(priocompress)
+            g.compressPriorities();
 
-        zlnk::conf_metricoutput = metricoutput;
-        zlnk z(&g);
-        auto * W0BigV = new unordered_set<int>;
-        auto * W1BigV = new unordered_set<int>;
+        if(SolveFPIte){
+            FPIte fpite(&g);
+            fpite.solve();
+            auto end = std::chrono::system_clock::now();
 
-#ifdef SINGLEMODE
-        vector<Subset> * W0vc = nullptr;
-        vector<Subset> * W1vc = nullptr;
-#else
-        vector<Subset> * W0vc = new vector<Subset>(g.n_nodes);
-        vector<Subset> * W1vc = new vector<Subset>(g.n_nodes);
-        for(int i = 0;i<g.n_nodes;i++){
-            (*W0vc)[i] = emptyset;
-            (*W1vc)[i] = emptyset;
+            auto elapsed =
+                    std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+            cout << "Solving time: " << elapsed.count() << " ns";
+            time_t t2 = time(0);
+            cout << '[' << t2 << "] Solved\n";
+
+            cout << "W0: \n";
+            cout << "The following vertices are in: ";
+            for(int i = 0;i<(*fpite.W0).size();i++){
+                if((*fpite.W0)[i])
+                    cout << i << ",";
+            }
+            cout << "\nW1: \n";
+            cout << "The following vertices are in: ";
+        } else {
+            zlnk::conf_metricoutput = metricoutput;
+            zlnk z(&g);
+            auto * W0BigV = new unordered_set<int>;
+            auto * W1BigV = new unordered_set<int>;
+
+    #ifdef SINGLEMODE
+            vector<Subset> * W0vc = nullptr;
+            vector<Subset> * W1vc = nullptr;
+    #else
+            vector<Subset> * W0vc = new vector<Subset>(g.n_nodes);
+            vector<Subset> * W1vc = new vector<Subset>(g.n_nodes);
+            for(int i = 0;i<g.n_nodes;i++){
+                (*W0vc)[i] = emptyset;
+                (*W1vc)[i] = emptyset;
+            }
+    #endif
+
+            z.solve(W0BigV, W0vc, W1BigV, W1vc);
+
+
+            auto end = std::chrono::system_clock::now();
+
+            auto elapsed =
+                    std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+            cout << "Solving time: " << elapsed.count() << " ns";
+            time_t t2 = time(0);
+            cout << '[' << t2 << "] Solved\n";
+
+            cout << "W0: \n";
+            g.printCV(W0BigV, W0vc, fulloutput);
+            cout << "W1: \n";
+            g.printCV(W1BigV, W1vc, fulloutput);
         }
-#endif
-
-        z.solve(W0BigV, W0vc, W1BigV, W1vc);
-
-        auto end = std::chrono::system_clock::now();
-
-        auto elapsed =
-                std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
-        cout << "Solving time: " << elapsed.count() << " ns";
-        cout << "Attracting time: " << z.attracting << " ns";
-        time_t t2 = time(0);
-        cout << '[' << t2 << "] Solved\n";
-        cout << "W0: \n";
-        g.printCV(W0BigV, W0vc, fulloutput);
-        cout << "W1: \n";
-        g.printCV(W1BigV, W1vc, fulloutput);
     } catch(std::string s)
     {
         cerr << s << "\n";

@@ -22,12 +22,13 @@ public :
     int bm_n_vars;
     Subset bigC;
     int n_nodes;
-    std::vector<int> priority;
-    std::vector<int> owner;
-    std::vector<bool> declared;
-    std::vector<std::tuple<int,int>> *out_edges;
-    std::vector<std::tuple<int,int>> *in_edges;
-    std::vector<Subset> edge_guards;
+    vector<int> priority;
+    vector<unordered_set<int>> priorityI;
+    vector<int> owner;
+    vector<bool> declared;
+    vector<std::tuple<int,int>> *out_edges;
+    vector<std::tuple<int,int>> *in_edges;
+    vector<Subset> edge_guards;
 
     map<string, Subset> parseCache;
 
@@ -45,6 +46,9 @@ public :
     void printCV(unordered_set<int> *bigV, vector<Subset> *vc, bool fulloutut);
     void printCV(unordered_set<int> *bigV, vector<Subset> *vc, Subset t, char * p, int var, bool fulloutput);
     int readUntil(const char * line, char delim);
+
+    void compressPriorities();
+    void movePriorities(int from, int to);
 };
 
 

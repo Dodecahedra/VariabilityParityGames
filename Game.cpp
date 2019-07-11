@@ -203,7 +203,11 @@ void Game::parseVertex(char *line) {
     if(declared[index]) throw std::string("Already declared vertex " + std::to_string(index));
     line += i + 1;
     i = readUntil(line, ' ');
-    priority[index] = atoi(line);
+    int p = atoi(line);
+    priority[index] = p;
+    if(p+1 > priorityI.size())
+        priorityI.resize(p+1);
+    priorityI[p].insert(index);
     line += i + 1;
     i = readUntil(line, ' ');
     owner[index] = atoi(line);
@@ -300,4 +304,43 @@ void Game::printCV(unordered_set<int> *bigV, vector<Subset> *vc, bool fulloutput
 #else
     printCV(bigV, vc, bigC, new char[bm_n_vars+1], 0, fulloutput);
 #endif
+}
+
+void Game::compressPriorities() {
+    int pp = -1;
+    for(int i = 0;i<priorityI.size();i++){
+        if(!priorityI[i].empty())
+        {
+            if(pp == -1){
+                pp = i;
+                continue;
+            }
+            if(i - pp == 1){
+                pp = i;
+                continue;
+            }
+            if((i - pp) % 2 == 1){
+                // odd
+                movePriorities(i, ++pp);
+                cout << "Move prio from " << i << " to " << pp << "\n";
+            } else {
+                // even
+                movePriorities(i, pp);
+                cout << "Move prio from " << i << " to " << pp << "\n";
+            }
+        }
+    }
+    priorityI.resize(pp+1);
+}
+
+void Game::movePriorities(int from, int to) {
+    for(auto &e : priorityI[from]){
+        priority[e] = to;
+    }
+    if(priorityI[to].empty()){
+        priorityI[to] = priorityI[from];
+    } else {
+        priorityI[to].insert(priorityI[from].begin(), priorityI[from].end());
+    }
+    priorityI[from].clear();
 }
