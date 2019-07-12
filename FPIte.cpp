@@ -5,11 +5,12 @@
 #include "FPIte.h"
 
 #define targetIsIn(t) ZZ[game->priority[t]][t]
-FPIte::FPIte(Game *game, VertexSet *P0, VertexSet *VP1, vector<bool> *edgeenabled) {
+FPIte::FPIte(Game *game, VertexSet *P0, VertexSet *VP1, vector<bool> *edgeenabled, VertexSet * W0) {
     this->game = game;
     this->P0 = P0;
     this->VP1 = VP1;
     this->edgeenabled = edgeenabled;
+    this->W0 = W0;
 }
 
 FPIte::FPIte(Game *game) {
@@ -21,6 +22,8 @@ FPIte::FPIte(Game *game) {
     fill(this->VP1->begin(), this->VP1->end(), true);
     this->edgeenabled = new vector<bool>(game->edge_guards.size());
     fill(this->edgeenabled->begin(), this->edgeenabled->end(), true);
+    this->W0 = new VertexSet();
+    this->W0->resize(game->n_nodes);
 }
 
 void FPIte::init(int i) {
@@ -61,7 +64,6 @@ void FPIte::diamondbox(VertexSet *Z) {
 void FPIte::solve() {
     d = game->priorityI.size();
     ZZ.resize(d);
-    W0 = &(ZZ[d-1]);
 
 
     for(int i = 0;i<d;i++){
@@ -70,19 +72,46 @@ void FPIte::solve() {
 
     vector<VertexSet> ZZa;
     ZZa.resize(d);
+    for(int i = 0;i<d;i++)
+        ZZa[i].resize(game->n_nodes);
     int i;
     do {
-        ZZa[0] = ZZ[0];
-        diamondbox(&ZZ[0]);
+        copyWithPrio(&ZZa[0],&ZZ[0],0);
+        diamondbox(W0);
+        copyWithPrio(&ZZ[0],W0,0);
         i = 0;
-        while(ZZ[i] == ZZa[i] && i < d -1){
+        while(compareWithPrio(&ZZ[i], &ZZa[i],i) && i < d -1){
             i++;
-            ZZa[i] = ZZ[i];
-            ZZ[i] = ZZ[i-1];
+            copyWithPrio(&ZZa[i],&ZZ[i],i);
+            copyWithPrio(&ZZ[i], W0,i);
             init(i-1);
         }
-    } while (!(i == d-1 && ZZ[d-1] == ZZa[d-1]));
+    } while (!(i == d-1 && compareWithPrio(&ZZ[d-1],&ZZa[d-1],d-1)));
 }
 
 FPIte::~FPIte() {
+}
+
+void FPIte::copyWithPrio(VertexSet *Z, VertexSet *ZP, int p) {
+    for(auto& v : game->priorityI[p])
+        (*Z)[v] = (*ZP)[v];
+}
+
+bool FPIte::copyAndCompareWithPrio(VertexSet *Z, VertexSet *ZP, int p) {
+    bool equal = true;
+    for(auto& v : game->priorityI[p]) {
+        if((*Z)[v] != (*ZP)[v]) {
+            equal = false;
+            (*Z)[v] = (*ZP)[v];
+        }
+    }
+    return equal;
+}
+
+bool FPIte::compareWithPrio(VertexSet *Z, VertexSet *ZP, int p) {
+    bool equal = true;
+    for(auto& v : game->priorityI[p])
+        if((*Z)[v] != (*ZP)[v])
+            equal = false;
+    return equal;
 }

@@ -151,7 +151,7 @@ int main(int argc, char** argv) {
                 } else if(MBR::winningVertices[i][0]){
                     winningset = "0,";
                 }
-                bdd_allsat(MBR::winningConf[i], * allsatPrintHandler);
+                bdd_allsat(MBR::winningConf[i], allsatPrintHandler);
             }
             cout << "W1: \n";
             for(int i =0;i<MBR::winningConf.size();i++) {
@@ -166,7 +166,7 @@ int main(int argc, char** argv) {
                 } else if(!MBR::winningVertices[i][0]){
                     winningset = "0,";
                 }
-                bdd_allsat(MBR::winningConf[i], * allsatPrintHandler);
+                bdd_allsat(MBR::winningConf[i], allsatPrintHandler);
             }
 #else
             cout << "Can't print output";

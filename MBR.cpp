@@ -36,13 +36,13 @@ MBR::MBR(Game *game) {
 
 void MBR::solve() {
     if(this->feature == game->bm_n_vars){
-        FPIte fpite(game, P0, VP1, edgeenabled);
-        fpite.solve();
         int i = winningConf.size();
         winningConf.resize(i+1);
         winningVertices.resize(i+1);
         winningConf[i] = *conf;
-        winningVertices[i] = *fpite.W0;
+        winningVertices[i].resize(game->n_nodes);
+        FPIte fpite(game, P0, VP1, edgeenabled, &(winningVertices[i]));
+        fpite.solve();
         return;
     }
 
@@ -51,13 +51,13 @@ void MBR::solve() {
 
     createPessimisticGames(&pessimisticedges0, &pessimisticedges1);
 
-    auto * fpite0 = new FPIte(game, P0, VP1, &pessimisticedges0);
-    auto * fpite1 = new FPIte(game, P0, VP1, &pessimisticedges1);
+    VertexSet W0(game->n_nodes);
+    auto * fpite0 = new FPIte(game, P0, VP1, &pessimisticedges0, &W0);
     fpite0->solve();
+    *P0 = W0;
+    auto * fpite1 = new FPIte(game, P0, VP1, &pessimisticedges1, &W0);
     fpite1->solve();
-
-    *P0 = *fpite0->W0;
-    *VP1 = *fpite1->W0;
+    *VP1 = W0;
 
     delete fpite0;
     delete fpite1;
@@ -90,6 +90,9 @@ void MBR::solve() {
     MBR mb(game, confb, edgeenabled, P0b, VP1b, feature+1);
     ma.solve();
     mb.solve();
+
+    delete P0b;
+    delete VP1b;
 }
 
 void MBR::createPessimisticGames(vector<bool> *pessimisticedges0, vector<bool> *pessimisticedges1) {

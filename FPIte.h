@@ -21,12 +21,15 @@ public:
 
     vector<VertexSet> ZZ;
     FPIte(Game * game);
-    FPIte(Game * game, VertexSet * P0, VertexSet * VP1,vector<bool> * edgeenabled);
+    FPIte(Game * game, VertexSet * P0, VertexSet * VP1,vector<bool> * edgeenabled, VertexSet * W0);
     ~FPIte();
 
     void init(int i);
     void solve();
     void diamondbox(VertexSet * Z);
+    void copyWithPrio(VertexSet * Z, VertexSet * ZP, int p);
+    bool copyAndCompareWithPrio(VertexSet * Z, VertexSet * ZP, int p);
+    bool compareWithPrio(VertexSet * Z, VertexSet * ZP, int p);
 };
 
 
