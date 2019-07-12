@@ -3,8 +3,9 @@
 //
 
 #include "FPIte.h"
+#include <algorithm>
 
-#define targetIsIn(t) ZZ[game->priority[t]][t]
+#define targetIsIn(t) ZZ[game->priority[t]][game->reindexedNew[t]]
 FPIte::FPIte(Game *game, VertexSet *P0, VertexSet *VP1, vector<bool> *edgeenabled, VertexSet * W0) {
     this->game = game;
     this->P0 = P0;
@@ -28,9 +29,9 @@ FPIte::FPIte(Game *game) {
 
 void FPIte::init(int i) {
     if(i % 2 == 0)
-        ZZ[i] = *VP1;
+        copyWithPrio(&ZZ[i], VP1, i);
     else
-        ZZ[i] = *P0;
+        copyWithPrio(&ZZ[i], P0, i);
 }
 
 void FPIte::diamondbox(VertexSet *Z) {
@@ -57,7 +58,7 @@ void FPIte::diamondbox(VertexSet *Z) {
                     in = false;
             }
         }
-        (*Z)[i] = in;
+        (*Z)[game->reindexedNew[i]] = in;
     }
 }
 
@@ -66,14 +67,14 @@ void FPIte::solve() {
     ZZ.resize(d);
 
 
+    vector<VertexSet> ZZa;
+    ZZa.resize(d);
     for(int i = 0;i<d;i++){
+        ZZa[i].resize(game->n_nodes);
+        ZZ[i].resize(game->n_nodes);
         init(i);
     }
 
-    vector<VertexSet> ZZa;
-    ZZa.resize(d);
-    for(int i = 0;i<d;i++)
-        ZZa[i].resize(game->n_nodes);
     int i;
     do {
         copyWithPrio(&ZZa[0],&ZZ[0],0);
@@ -87,19 +88,38 @@ void FPIte::solve() {
             init(i-1);
         }
     } while (!(i == d-1 && compareWithPrio(&ZZ[d-1],&ZZa[d-1],d-1)));
+//    do {
+//        ZZa[0] = ZZ[0];
+//        diamondbox(W0);
+//        ZZ[0] = *W0;
+//        i = 0;
+//        while(ZZ[i] == ZZa[i] && i < d - 1){
+//            i++;
+//            ZZa[i] = ZZ[i];
+//            ZZ[i] = ZZ[i-1];
+//            init(i-1);
+//        }
+//    } while (!(i == d-1 && ZZ[d-1] == ZZa[d-1]));
 }
 
 FPIte::~FPIte() {
 }
 
 void FPIte::copyWithPrio(VertexSet *Z, VertexSet *ZP, int p) {
-    for(auto& v : game->priorityI[p])
-        (*Z)[v] = (*ZP)[v];
+//    for(int v : game->priorityI[p]) {
+//        v = game->reindexedNew[v];
+//        (*Z)[v] = (*ZP)[v];
+//    }
+    int start = game->reindexPCutoff[p];
+    copy_n(ZP->begin() + start,
+                    game->reindexPCutoff[p+1] - start,
+                    Z->begin() + start);
 }
 
 bool FPIte::copyAndCompareWithPrio(VertexSet *Z, VertexSet *ZP, int p) {
     bool equal = true;
-    for(auto& v : game->priorityI[p]) {
+    for(int v : game->priorityI[p]) {
+        v = game->reindexedNew[v];
         if((*Z)[v] != (*ZP)[v]) {
             equal = false;
             (*Z)[v] = (*ZP)[v];
@@ -109,9 +129,15 @@ bool FPIte::copyAndCompareWithPrio(VertexSet *Z, VertexSet *ZP, int p) {
 }
 
 bool FPIte::compareWithPrio(VertexSet *Z, VertexSet *ZP, int p) {
-    bool equal = true;
-    for(auto& v : game->priorityI[p])
-        if((*Z)[v] != (*ZP)[v])
-            equal = false;
-    return equal;
+//    bool equal = true;
+//    for(int v : game->priorityI[p]) {
+//        v = game->reindexedNew[v];
+//        if ((*Z)[v] != (*ZP)[v])
+//            equal = false;
+//    }
+//    return equal;
+    int start = game->reindexPCutoff[p];
+    return equal(ZP->begin() + start,
+           ZP->begin() + game->reindexPCutoff[p+1],
+           Z->begin() + start);
 }

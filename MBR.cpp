@@ -64,8 +64,6 @@ void MBR::solve() {
     bool done = *P0 == *VP1;
     if(done){
         int i = winningConf.size();
-
-        cout << "Done" << i << "\n";
         winningConf.resize(i+1);
         winningVertices.resize(i+1);
         winningConf[i] = *conf;

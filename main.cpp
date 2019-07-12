@@ -107,6 +107,7 @@ int main(int argc, char** argv) {
             g.compressPriorities();
 
         if(SolveFPIte){
+            g.reindexVertices();
 #ifdef SINGLEMODE
             FPIte fpite(&g);
             fpite.solve();
@@ -122,7 +123,7 @@ int main(int argc, char** argv) {
             cout << "The following vertices are in: ";
             for(int i = 0;i<(*fpite.W0).size();i++){
                 if((*fpite.W0)[i])
-                    cout << i << ",";
+                    cout << g.reindexedOrg[i] << ",";
             }
             cout << "\nW1: \n";
             cout << "The following vertices are in: ";
@@ -144,7 +145,7 @@ int main(int argc, char** argv) {
                 if(fulloutput){
                     for (int j = 0; j < MBR::winningVertices[i].size(); j++){
                         if (MBR::winningVertices[i][j]) {
-                            winningset.append(std::to_string(j));
+                            winningset.append(std::to_string(g.reindexedOrg[j]));
                             winningset.append(",");
                         }
                     }
@@ -159,7 +160,7 @@ int main(int argc, char** argv) {
                 if(fulloutput){
                     for (int j = 0; j < MBR::winningVertices[i].size(); j++){
                         if (!MBR::winningVertices[i][j]) {
-                            winningset.append(std::to_string(j));
+                            winningset.append(std::to_string(g.reindexedOrg[j]));
                             winningset.append(",");
                         }
                     }

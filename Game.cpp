@@ -346,3 +346,19 @@ void Game::movePriorities(int from, int to) {
     }
     priorityI[from].clear();
 }
+
+void Game::reindexVertices() {
+    reindexedNew.resize(this->n_nodes);
+    reindexedOrg.resize(this->n_nodes);
+    reindexPCutoff.resize(this->priorityI.size() + 1);
+
+    int c = 0;
+    reindexPCutoff[0] = c;
+    for(int i = 0;i < this->priorityI.size();i++){
+        for(auto& v : priorityI[i]){
+            reindexedNew[v] = c;
+            reindexedOrg[c++] = v;
+        }
+        reindexPCutoff[i+1] = c;
+    }
+}
