@@ -350,15 +350,24 @@ void Game::movePriorities(int from, int to) {
 void Game::reindexVertices() {
     reindexedNew.resize(this->n_nodes);
     reindexedOrg.resize(this->n_nodes);
-    reindexPCutoff.resize(this->priorityI.size() + 1);
+    reindexPCutoff.resize(this->priorityI.size() + 2);
 
     int c = 0;
     reindexPCutoff[0] = c;
-    for(int i = 0;i < this->priorityI.size();i++){
+    int i;
+    for(i = 0;i < this->priorityI.size();i+=2){
         for(auto& v : priorityI[i]){
             reindexedNew[v] = c;
             reindexedOrg[c++] = v;
         }
-        reindexPCutoff[i+1] = c;
+        reindexPCutoff[i+2] = c;
+    }
+    reindexPCutoff[1] = c;
+    for(i = 1;i < this->priorityI.size();i+=2){
+        for(auto& v : priorityI[i]){
+            reindexedNew[v] = c;
+            reindexedOrg[c++] = v;
+        }
+        reindexPCutoff[i+2] = c;
     }
 }

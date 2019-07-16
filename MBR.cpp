@@ -5,7 +5,7 @@
 #include "MBR.h"
 #include "FPIte.h"
 #include <iostream>
-
+#include <algorithm>
 vector<Subset> MBR::winningConf;
 vector<VertexSet> MBR::winningVertices;
 
@@ -30,8 +30,7 @@ MBR::MBR(Game *game) {
     fill(this->VP1->begin(), this->VP1->end(), true);
     this->edgeenabled = new vector<bool>(game->edge_guards.size());
     fill(this->edgeenabled->begin(), this->edgeenabled->end(), true);
-    //@TODO feature from up down or down up?
-    this->feature = 0;
+    this->feature =  0;
 }
 
 void MBR::solve() {
@@ -45,6 +44,12 @@ void MBR::solve() {
         fpite.solve();
         return;
     }
+#ifdef subsetbdd
+    int sizeP0 = std::count_if(P0->begin(), P0->end(), [](bool b){return b;});
+    int sizeP1 = game->n_nodes - std::count_if(VP1->begin(), VP1->end(), [](bool b){return b;});
+    cout << "Size P0: " << sizeP0 << "/" << game->n_nodes << endl;
+    cout << "Size P1: " << sizeP1 << "/" << game->n_nodes << endl;
+#endif
 
     vector<bool> pessimisticedges0(edgeenabled->size());
     vector<bool> pessimisticedges1(edgeenabled->size());
@@ -83,6 +88,11 @@ void MBR::solve() {
     auto * VP1b = new VertexSet;
     *P0b = *P0;
     *VP1b = *VP1;
+
+//    fill(P0->begin(), P0->end(), false);
+//    fill(P0b->begin(), P0b->end(), false);
+//    fill(VP1->begin(), VP1->end(), true);
+//    fill(VP1b->begin(), VP1b->end(), true);
 
     MBR ma(game, confa, &pessimisticedges0, P0, VP1, feature+1);
     MBR mb(game, confb, edgeenabled, P0b, VP1b, feature+1);
