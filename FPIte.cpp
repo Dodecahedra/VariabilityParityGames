@@ -74,39 +74,39 @@ void FPIte::diamondbox(VertexSet *Z) {
     targetWasIn.resize(game->n_nodes);
     for(int i = 0;i<game->n_nodes;i++){
         bool in;
-//        if((*P0)[game->reindexedNew[i]]) {
-//            in = true;
-//            targetWasIn[i] = true;
-//        } else if(!(*VP1)[game->reindexedNew[i]])
-//            in = false;
-//        else {
-        targetWasIn[i] = targetIsIn(i);
-        if (game->owner[i] == 0) {
-            in = false;
-            for (int j = 0; j < game->out_edges[i].size(); j++) {
-                auto edge = game->out_edges[i][j];
-                if (!(*edgeenabled)[guard_index(edge)])
-                    continue;
-                int t = target(edge);
-                if (targetIsIn(t)) {
-                    in = true;
-                    edgecount[i]++;
-                }
-            }
-        } else {
+        if((*P0)[game->reindexedNew[i]]) {
             in = true;
-            for (int j = 0; j < game->out_edges[i].size(); j++) {
-                auto edge = game->out_edges[i][j];
-                if (!(*edgeenabled)[guard_index(edge)])
-                    continue;
-                int t = target(edge);
-                if (!targetIsIn(t)) {
-                    in = false;
-                    edgecount[i]++;
+            targetWasIn[i] = true;
+        } else if(!(*VP1)[game->reindexedNew[i]])
+            in = false;
+        else {
+            targetWasIn[i] = targetIsIn(i);
+            if (game->owner[i] == 0) {
+                in = false;
+                for (int j = 0; j < game->out_edges[i].size(); j++) {
+                    auto edge = game->out_edges[i][j];
+                    if (!(*edgeenabled)[guard_index(edge)])
+                        continue;
+                    int t = target(edge);
+                    if (targetIsIn(t)) {
+                        in = true;
+                        edgecount[i]++;
+                    }
+                }
+            } else {
+                in = true;
+                for (int j = 0; j < game->out_edges[i].size(); j++) {
+                    auto edge = game->out_edges[i][j];
+                    if (!(*edgeenabled)[guard_index(edge)])
+                        continue;
+                    int t = target(edge);
+                    if (!targetIsIn(t)) {
+                        in = false;
+                        edgecount[i]++;
+                    }
                 }
             }
         }
-//        }
         (*Z)[game->reindexedNew[i]] = in;
     }
 }

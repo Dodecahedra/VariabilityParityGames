@@ -6,6 +6,8 @@
 #include "FPIte.h"
 #include <iostream>
 #include <algorithm>
+#include <queue>
+
 vector<Subset> MBR::winningConf;
 vector<VertexSet> MBR::winningVertices;
 
@@ -57,9 +59,17 @@ void MBR::solve() {
     createPessimisticGames(&pessimisticedges0, &pessimisticedges1);
 
     VertexSet W0(game->n_nodes);
+    auto * P0b = new VertexSet;
+    auto * VP1b = new VertexSet;
+
+//    attr(0, P0, &pessimisticedges0);
     auto * fpite0 = new FPIte(game, P0, VP1, &pessimisticedges0, &W0);
     fpite0->solve();
     *P0 = W0;
+
+//    *P0b = *P0;
+//    attr(0, P0b, &pessimisticedges1);
+//    auto * fpite1 = new FPIte(game, P0b, VP1, &pessimisticedges1, &W0);
     auto * fpite1 = new FPIte(game, P0, VP1, &pessimisticedges1, &W0);
     fpite1->solve();
     *VP1 = W0;
@@ -84,8 +94,6 @@ void MBR::solve() {
     createSubGames(confa, &pessimisticedges0);
     createSubGames(confb, edgeenabled);
 
-    auto * P0b = new VertexSet;
-    auto * VP1b = new VertexSet;
     *P0b = *P0;
     *VP1b = *VP1;
 
@@ -136,5 +144,47 @@ void MBR::createSubGames(Subset *confP, vector<bool> *edgeenabledP) {
         Subset g = *confP;
         g &= game->edge_guards[i];
         (*edgeenabledP)[i] = !(g == emptyset);
+    }
+}
+
+void MBR::attr(int player, VertexSet *U, vector<bool> * edgeenabledvector) {
+    vector<bool> countinitialized;
+    vector<int> countincoming;
+    countincoming.resize(game->n_nodes);
+    countinitialized.resize(game->n_nodes);
+    queue<int> qq;
+    for(int i = 0;i<game->n_nodes;i++)
+        if((*U)[i])
+            qq.push(i);
+    while(!qq.empty())
+    {
+        int vii = qq.front();
+        qq.pop();
+
+        for(auto & i : game->in_edges[game->reindexedOrg[vii]]){
+            if(!(*edgeenabledvector)[guard_index(i)])
+                continue;
+            int vi = game->reindexedNew[target(i)];
+            if((*U)[vi]) // vertex already attracted
+                continue;
+            bool attracted = true;
+            if(game->owner[game->reindexedOrg[vi]] != player){
+                if(!countinitialized[vi]){
+                    countinitialized[vi] = true;
+                    countincoming[vi] = 0;
+                    for(auto & j : game->out_edges[game->reindexedOrg[vi]])
+                        if((*edgeenabledvector)[guard_index(j)])
+                            countincoming[vi]++;
+                }
+                if((--countincoming[vi]) > 0){
+                    attracted = false;
+                }
+                attracted = false;
+            }
+            if(!attracted)
+                continue;
+            (*U)[vi] = true;
+            qq.push(vi);
+        }
     }
 }

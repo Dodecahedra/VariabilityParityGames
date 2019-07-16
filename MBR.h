@@ -29,6 +29,7 @@ public:
     void parition(Subset * org, Subset * part);
     void createSubGames(Subset * confP, vector<bool> * edgeenabledP);
     void createPessimisticGames(vector<bool> * pessimisticedges0, vector<bool> * pessimisticedges1);
+    void attr(int player, VertexSet * U, vector<bool> * edgeenabledvector);
 };
 
 
