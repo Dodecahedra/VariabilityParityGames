@@ -8,7 +8,9 @@
 
 #include "Game.h"
 #include "conf.h"
+#include "Measurements/bintree.h"
 #include <vector>
+#include <iostream>
 using namespace std;
 
 class MBR {
@@ -21,6 +23,8 @@ public:
     VertexSet * P0;
     VertexSet * VP1;
     int feature;
+    bool metric_output = false;
+    bintree<vector<int>> *measured;
 
     MBR(Game * game);
     MBR(Game * game, Subset * conf, vector<bool> * edgeenabled, VertexSet * P0, VertexSet * P1, int feature);
@@ -30,6 +34,9 @@ public:
     void createSubGames(Subset * confP, vector<bool> * edgeenabledP);
     void createPessimisticGames(vector<bool> * pessimisticedges0, vector<bool> * pessimisticedges1);
     void attr(int player, VertexSet * U, vector<bool> * edgeenabledvector);
+
+    void printMeasurements(ostream * output);
+    int printNode(ostream * output,bintree<vector<int>> * node, int c);
 };
 
 

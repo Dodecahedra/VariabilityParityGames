@@ -129,6 +129,7 @@ int main(int argc, char** argv) {
             cout << "The following vertices are in: ";
 #else
             MBR mbr(&g);
+            mbr.metric_output = metricoutput;
             mbr.solve();
             auto end = std::chrono::system_clock::now();
 
@@ -137,7 +138,8 @@ int main(int argc, char** argv) {
             cout << "Solving time: " << elapsed.count() << " ns";
             time_t t2 = time(0);
             cout << '[' << t2 << "] Solved\n";
-
+            if(metricoutput)
+                mbr.printMeasurements(&cout);
 #ifdef subsetbdd
             cout << "W0: \n";
             for(int i =0;i<MBR::winningConf.size();i++) {

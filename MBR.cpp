@@ -3,10 +3,11 @@
 //
 
 #include "MBR.h"
-#include "FPIte.h"
 #include <iostream>
 #include <algorithm>
 #include <queue>
+#include <chrono>
+#include "FPIte.h"
 
 vector<Subset> MBR::winningConf;
 vector<VertexSet> MBR::winningVertices;
@@ -36,6 +37,16 @@ MBR::MBR(Game *game) {
 }
 
 void MBR::solve() {
+    if(this->metric_output){
+        if(this->measured == nullptr)
+            this->measured = new bintree<vector<int>>();
+        this->measured->value = new vector<int>(4);
+
+#ifdef subsetbdd
+        (*this->measured->value)[0] = std::count_if(P0->begin(), P0->end(), [](bool b){return b;});
+        (*this->measured->value)[1] = game->n_nodes - std::count_if(VP1->begin(), VP1->end(), [](bool b){return b;});
+#endif
+    }
     if(this->feature == game->bm_n_vars){
         int i = winningConf.size();
         winningConf.resize(i+1);
@@ -43,15 +54,18 @@ void MBR::solve() {
         winningConf[i] = *conf;
         winningVertices[i].resize(game->n_nodes);
         FPIte fpite(game, P0, VP1, edgeenabled, &(winningVertices[i]));
-        fpite.solve();
+
+        if(this->metric_output)
+        {
+            auto start = std::chrono::high_resolution_clock::now();
+            fpite.solve();
+            auto end = std::chrono::system_clock::now();
+            (*this->measured->value)[2] = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+        } else {
+            fpite.solve();
+        }
         return;
     }
-#ifdef subsetbdd
-    int sizeP0 = std::count_if(P0->begin(), P0->end(), [](bool b){return b;});
-    int sizeP1 = game->n_nodes - std::count_if(VP1->begin(), VP1->end(), [](bool b){return b;});
-    cout << "Size P0: " << sizeP0 << "/" << game->n_nodes << endl;
-    cout << "Size P1: " << sizeP1 << "/" << game->n_nodes << endl;
-#endif
 
     vector<bool> pessimisticedges0(edgeenabled->size());
     vector<bool> pessimisticedges1(edgeenabled->size());
@@ -62,33 +76,57 @@ void MBR::solve() {
     auto * P0b = new VertexSet;
     auto * VP1b = new VertexSet;
 
+    if(this->feature == 0) {
 //    attr(0, P0, &pessimisticedges0);
-    auto * fpite0 = new FPIte(game, P0, VP1, &pessimisticedges0, &W0);
-    fpite0->solve();
-    *P0 = W0;
+//    attr(1, VP1, this->edgeenabled);
+        auto *fpite0 = new FPIte(game, P0, VP1, &pessimisticedges0, &W0);
+        if (this->metric_output) {
+            auto start = std::chrono::high_resolution_clock::now();
+            fpite0->solve();
+            auto end = std::chrono::system_clock::now();
+            (*this->measured->value)[2] = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+        } else {
+            fpite0->solve();
+        }
+        *P0 = W0;
 
 //    *P0b = *P0;
 //    attr(0, P0b, &pessimisticedges1);
 //    auto * fpite1 = new FPIte(game, P0b, VP1, &pessimisticedges1, &W0);
-    auto * fpite1 = new FPIte(game, P0, VP1, &pessimisticedges1, &W0);
-    fpite1->solve();
-    *VP1 = W0;
+        auto *fpite1 = new FPIte(game, P0, VP1, &pessimisticedges1, &W0);
+        if (this->metric_output) {
+            auto start = std::chrono::high_resolution_clock::now();
+            fpite1->solve();
+            auto end = std::chrono::system_clock::now();
+            (*this->measured->value)[3] = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+        } else {
+            fpite1->solve();
+        }
+        *VP1 = W0;
 
-    delete fpite0;
-    delete fpite1;
-    bool done = *P0 == *VP1;
-    if(done){
-        int i = winningConf.size();
-        winningConf.resize(i+1);
-        winningVertices.resize(i+1);
-        winningConf[i] = *conf;
-        winningVertices[i] = *P0;
-        return;
+        delete fpite0;
+        delete fpite1;
+
+        bool done = *P0 == *VP1;
+        if (done) {
+            int i = winningConf.size();
+            winningConf.resize(i + 1);
+            winningVertices.resize(i + 1);
+            winningConf[i] = *conf;
+            winningVertices[i] = *P0;
+            return;
+        }
     }
 
-    auto * confa = conf;
+    auto * confa = new Subset;
     auto * confb = new Subset;
-    parition(confa,confb);
+    do {
+        *confa = *conf;
+        parition(confa, confb);
+        this->feature++;
+        if(this->feature >  game->bm_n_vars)
+            throw "Empty conf sets found in partitioning";
+    } while (*confa == emptyset || *confb == emptyset);
 
     fill(pessimisticedges0.begin(), pessimisticedges0.end(), false);
     createSubGames(confa, &pessimisticedges0);
@@ -102,8 +140,16 @@ void MBR::solve() {
 //    fill(VP1->begin(), VP1->end(), true);
 //    fill(VP1b->begin(), VP1b->end(), true);
 
-    MBR ma(game, confa, &pessimisticedges0, P0, VP1, feature+1);
-    MBR mb(game, confb, edgeenabled, P0b, VP1b, feature+1);
+    MBR ma(game, confa, &pessimisticedges0, P0, VP1, feature);
+    MBR mb(game, confb, edgeenabled, P0b, VP1b, feature);
+    if(this->metric_output){
+        ma.metric_output = metric_output;
+        mb.metric_output = metric_output;
+        this->measured->left = new bintree<vector<int>>();
+        this->measured->right = new bintree<vector<int>>();
+        ma.measured = this->measured->left;
+        mb.measured = this->measured->right;
+    }
     ma.solve();
     mb.solve();
 
@@ -179,12 +225,48 @@ void MBR::attr(int player, VertexSet *U, vector<bool> * edgeenabledvector) {
                 if((--countincoming[vi]) > 0){
                     attracted = false;
                 }
-                attracted = false;
+//                attracted = false;
             }
             if(!attracted)
                 continue;
             (*U)[vi] = true;
             qq.push(vi);
         }
+    }
+}
+
+void MBR::printMeasurements(ostream * output) {
+    *output << "digraph timetree {" << endl;
+    int nodes = printNode(output, this->measured,0);
+    *output << '}' << endl;
+    cout << "nr of nodes: " << nodes << endl;
+    cout << "Solved " << ((nodes+1)*3/2-2) << " games" << endl;
+}
+
+int MBR::printNode(ostream *output, bintree<vector<int>> *node, int c) {
+    if(node == nullptr)
+        return -1;
+    *output << 'n' << c++ << " [label=\"";
+    *output << "V0: " << (*node->value)[0] << '/' << this->game->n_nodes << endl;
+    *output << "V1: " << (*node->value)[1] << '/' << this->game->n_nodes << endl;
+    *output << "Solve 1: " << (*node->value)[2] << "ns" << endl;
+    *output << "Solve 2: " << (*node->value)[3] << "ns";
+    *output << "\"];" << endl;
+    int l = printNode(output, node->left, c);
+    if(l == -1) {
+        int r = printNode(output, node->right, c);
+        if(r != -1){
+            *output << 'n' << (c-1) << " -> n" << c << ';' << endl;
+            return r;
+        }
+        return c;
+    } else {
+        int r = printNode(output, node->right, l);
+        *output << 'n' << (c-1) << " -> n" << c << ';' << endl;
+        if(r != -1){
+            *output << 'n' << (c-1) << " -> n" << l << ';' << endl;
+            return r;
+        }
+        return l;
     }
 }
