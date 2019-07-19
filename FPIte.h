@@ -12,6 +12,8 @@ using namespace std;
 
 class FPIte {
 public:
+    long verticesconsidered = 0;
+    long dbs_executed = 0;
     Game * game;
     VertexSet * P0;
     VertexSet * VP1;
@@ -34,6 +36,12 @@ public:
     void copyWithPrio(VertexSet * Z, VertexSet * ZP, int sp, int ep);
     bool copyAndCompareWithPrio(VertexSet * Z, VertexSet * ZP, int p);
     bool compareWithPrio(VertexSet * Z, VertexSet * ZP, int p);
+
+    void setP0(char * P0string);
+    void P0IsFull();
+    void setP1(char * P1string);
+
+    void unassist(int n);
 };
 
 

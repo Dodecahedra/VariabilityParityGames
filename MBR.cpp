@@ -59,8 +59,9 @@ void MBR::solve() {
         {
             auto start = std::chrono::high_resolution_clock::now();
             fpite.solve();
-            auto end = std::chrono::system_clock::now();
+            auto end = std::chrono::high_resolution_clock::now();
             (*this->measured->value)[2] = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+            cout << "Assisted " << (*this->measured->value)[0] + (*this->measured->value)[1] << " with time " << (*this->measured->value)[2] << endl;
         } else {
             fpite.solve();
         }
@@ -76,15 +77,16 @@ void MBR::solve() {
     auto * P0b = new VertexSet;
     auto * VP1b = new VertexSet;
 
-    if(this->feature == 0) {
+//    if(this->feature == 0) {
 //    attr(0, P0, &pessimisticedges0);
 //    attr(1, VP1, this->edgeenabled);
         auto *fpite0 = new FPIte(game, P0, VP1, &pessimisticedges0, &W0);
         if (this->metric_output) {
             auto start = std::chrono::high_resolution_clock::now();
             fpite0->solve();
-            auto end = std::chrono::system_clock::now();
+            auto end = std::chrono::high_resolution_clock::now();
             (*this->measured->value)[2] = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+            cout << "Assisted " << (*this->measured->value)[0] + (*this->measured->value)[1] << " with time " << (*this->measured->value)[2] << endl;
         } else {
             fpite0->solve();
         }
@@ -97,8 +99,9 @@ void MBR::solve() {
         if (this->metric_output) {
             auto start = std::chrono::high_resolution_clock::now();
             fpite1->solve();
-            auto end = std::chrono::system_clock::now();
+            auto end = std::chrono::high_resolution_clock::now();
             (*this->measured->value)[3] = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+            cout << "Assisted " << (*this->measured->value)[0] + (*this->measured->value)[1] << " with time " << (*this->measured->value)[3] << endl;
         } else {
             fpite1->solve();
         }
@@ -107,7 +110,10 @@ void MBR::solve() {
         delete fpite0;
         delete fpite1;
 
-        bool done = *P0 == *VP1;
+        //Global:
+//         bool done = *P0 == *VP1;
+        //Local:
+        bool done = (*P0)[game->reindexedNew[0]] || !(*VP1)[game->reindexedNew[0]];
         if (done) {
             int i = winningConf.size();
             winningConf.resize(i + 1);
@@ -116,7 +122,7 @@ void MBR::solve() {
             winningVertices[i] = *P0;
             return;
         }
-    }
+//    }
 
     auto * confa = new Subset;
     auto * confb = new Subset;
@@ -135,6 +141,12 @@ void MBR::solve() {
     *P0b = *P0;
     *VP1b = *VP1;
 
+//    VertexSet dummy(P0->size());
+//
+//    fill(dummy.begin(), dummy.end(), false);
+//    fill(dummy.begin(), dummy.end(), true);
+//    fill(dummy.begin(), dummy.end(), false);
+//    fill(dummy.begin(), dummy.end(), true);
 //    fill(P0->begin(), P0->end(), false);
 //    fill(P0b->begin(), P0b->end(), false);
 //    fill(VP1->begin(), VP1->end(), true);

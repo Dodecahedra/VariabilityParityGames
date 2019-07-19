@@ -61,9 +61,21 @@ int main(int argc, char** argv) {
         bool metricoutput = false;
         bool priocompress = false;
         bool SolveFPIte = false;
+        bool assistedW0 = false;
+        char *assistanceW0;
+        bool assistrandom = false;
+        int assistn;
 
         for(int i = 2;i<argc;i++){
             switch (*argv[i]){
+                case 'P':
+                    assistedW0 = true;
+                    assistanceW0 = argv[i]+1;
+                    break;
+                case 'a':
+                    assistrandom = true;
+                    assistn = atoi(argv[i]+1);
+                    break;
                 case 'c':
                     specificconfenabled = true;
                     specificconf = argv[i]+1;
@@ -110,15 +122,22 @@ int main(int argc, char** argv) {
             g.reindexVertices();
 #ifdef SINGLEMODE
             FPIte fpite(&g);
+            if(assistedW0)
+                fpite.setP0(assistanceW0);
+            if(assistrandom){
+                fpite.P0IsFull();
+                fpite.unassist(g.n_nodes - assistn);
+            }
+            start = std::chrono::high_resolution_clock::now();
             fpite.solve();
-            auto end = std::chrono::system_clock::now();
+            auto end = std::chrono::high_resolution_clock::now();
 
             auto elapsed =
                     std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
             cout << "Solving time: " << elapsed.count() << " ns";
             time_t t2 = time(0);
             cout << '[' << t2 << "] Solved\n";
-
+            cout << "Executed db " << fpite.dbs_executed << ',' << fpite.verticesconsidered << " vertices" << endl;
             cout << "W0: \n";
             cout << "The following vertices are in: ";
             for(int i = 0;i<(*fpite.W0).size();i++){
@@ -131,7 +150,7 @@ int main(int argc, char** argv) {
             MBR mbr(&g);
             mbr.metric_output = metricoutput;
             mbr.solve();
-            auto end = std::chrono::system_clock::now();
+            auto end = std::chrono::high_resolution_clock::now();
 
             auto elapsed =
                     std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
@@ -151,7 +170,7 @@ int main(int argc, char** argv) {
                             winningset.append(",");
                         }
                     }
-                } else if(MBR::winningVertices[i][0]){
+                } else if(MBR::winningVertices[i][g.reindexedNew[0]]){
                     winningset = "0,";
                 }
                 bdd_allsat(MBR::winningConf[i], allsatPrintHandler);
@@ -166,7 +185,7 @@ int main(int argc, char** argv) {
                             winningset.append(",");
                         }
                     }
-                } else if(!MBR::winningVertices[i][0]){
+                } else if(!MBR::winningVertices[i][g.reindexedNew[0]]){
                     winningset = "0,";
                 }
                 bdd_allsat(MBR::winningConf[i], allsatPrintHandler);
@@ -196,7 +215,7 @@ int main(int argc, char** argv) {
             z.solve(W0BigV, W0vc, W1BigV, W1vc);
 
 
-            auto end = std::chrono::system_clock::now();
+            auto end = std::chrono::high_resolution_clock::now();
 
             auto elapsed =
                     std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);

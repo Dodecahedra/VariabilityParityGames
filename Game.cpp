@@ -9,7 +9,7 @@
 #include <cstring>
 #include <unordered_set>
 #include <random>       // std::default_random_engine
-#include <chrono>       // std::chrono::system_clock
+#include <chrono>       // std::chrono::high_resolution_clock
 #include <algorithm>    // std::shuffle
 
 #include "Game.h"
@@ -89,7 +89,7 @@ void Game::parseConfs(char * line) {
         order[i] = i;
     }
 #ifdef randombddorder
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    unsigned seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
     shuffle (order.begin(), order.end(), default_random_engine(seed));
 #endif
     cout << "Bdd order: " ;

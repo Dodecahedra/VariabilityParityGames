@@ -42,7 +42,7 @@ void zlnk::attr(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
 
     removeFromBigV(bigA, ac);
     attrQueue(player, bigA, ac);
-    auto end = std::chrono::system_clock::now();
+    auto end = std::chrono::high_resolution_clock::now();
 
 
 

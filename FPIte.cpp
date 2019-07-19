@@ -1,3 +1,5 @@
+#include <random>
+
 //
 // Created by sjef on 11-7-19.
 //
@@ -5,6 +7,7 @@
 #include "FPIte.h"
 #include <algorithm>
 #include <iostream>
+#include <chrono>
 
 #define targetIsIn(t) ZZ[game->reindexedNew[t]]
 FPIte::FPIte(Game *game, VertexSet *P0, VertexSet *VP1, vector<bool> *edgeenabled, VertexSet * W0) {
@@ -38,6 +41,7 @@ void FPIte::init(int i, int ie) {
 }
 
 void FPIte::diamondbox(VertexSet *Z, int maxprio) {
+    dbs_executed++;
     for(int p = 0;p <= maxprio;p++) {
         for(auto & v : game->priorityI[p]){
             if(targetIsIn(v) != targetWasIn[v]){
@@ -48,6 +52,7 @@ void FPIte::diamondbox(VertexSet *Z, int maxprio) {
                     // Vertices in P0 are always in and vertices in P1 are always out, so we don't need to reconsider them
                     if ((*P0)[game->reindexedNew[t]] || !(*VP1)[game->reindexedNew[t]])
                         continue;
+                    verticesconsidered++;
 
                     if (game->owner[t] == 0) {
                         if (targetIsIn(v))
@@ -109,6 +114,7 @@ void FPIte::diamondbox(VertexSet *Z) {
         }
         (*Z)[game->reindexedNew[i]] = in;
     }
+//    cout << "Size first: " << std::count_if(Z->begin(), Z->end(), [](bool b){return b;}) << endl;
 }
 
 void FPIte::solve() {
@@ -222,4 +228,29 @@ void FPIte::copyWithPrio(VertexSet *Z, VertexSet *ZP, int sp, int ep) {
     copy_n(ZP->begin() + start,
            game->reindexPCutoff[ep+2] - start,
            Z->begin() + start);
+}
+
+void FPIte::setP0(char *P0string) {
+    char * pEnd;
+    do{
+        int v = strtol(P0string, &pEnd, 10);
+        (*P0)[game->reindexedNew[v]] = true;
+        P0string = pEnd+1;
+    } while (*P0string != '\0');
+}
+
+void FPIte::P0IsFull() {
+    *VP1 = *P0;
+}
+
+void FPIte::unassist(int n) {
+    vector<int> r (this->game->n_nodes);
+    for(int i = 0;i<r.size();i++)
+        r[i] = i;
+    shuffle(r.begin(), r.end(), std::mt19937(std::random_device()()));
+    for(int i = 0;i<n;i++)
+        if((*P0)[i])
+            (*P0)[i] = false;
+        else
+            (*VP1)[i] = true;
 }
