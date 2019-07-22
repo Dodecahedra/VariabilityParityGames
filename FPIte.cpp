@@ -129,10 +129,21 @@ void FPIte::solve() {
         init(0,d - 2);
     }
 
-    int i;
+    int i = 0;
     bool equal;
     bool first = true;
     do{
+        if(solvelocal){
+            if(i == d){
+                if((d - 1) % 2 == 0){
+                    if(!(*W0)[game->reindexedNew[0]])
+                        break;
+                } else {
+                    if((*W0)[game->reindexedNew[0]])
+                        break;
+                }
+            }
+        }
         if(first) {
             diamondbox(W0);
             first = false;
@@ -155,7 +166,7 @@ void FPIte::solve() {
                 init(1,i-2);
             }
         }
-    }while(!(i >= d && equal));
+    }while(!(i == d && equal));
 //    int i;
 //    do {
 //        copyWithPrio(&ZZa[0],&ZZ[0],0);

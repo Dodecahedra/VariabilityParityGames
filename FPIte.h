@@ -12,6 +12,7 @@ using namespace std;
 
 class FPIte {
 public:
+    bool solvelocal = false;
     long verticesconsidered = 0;
     long dbs_executed = 0;
     Game * game;

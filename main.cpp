@@ -65,9 +65,13 @@ int main(int argc, char** argv) {
         char *assistanceW0;
         bool assistrandom = false;
         int assistn;
+        bool solvelocal = false;
 
         for(int i = 2;i<argc;i++){
             switch (*argv[i]){
+                case 'l':
+                    solvelocal = true;
+                    break;
                 case 'P':
                     assistedW0 = true;
                     assistanceW0 = argv[i]+1;
@@ -122,6 +126,7 @@ int main(int argc, char** argv) {
             g.reindexVertices();
 #ifdef SINGLEMODE
             FPIte fpite(&g);
+            fpite.solvelocal = solvelocal;
             if(assistedW0)
                 fpite.setP0(assistanceW0);
             if(assistrandom){
@@ -140,14 +145,21 @@ int main(int argc, char** argv) {
             cout << "Executed db " << fpite.dbs_executed << ',' << fpite.verticesconsidered << " vertices" << endl;
             cout << "W0: \n";
             cout << "The following vertices are in: ";
-            for(int i = 0;i<(*fpite.W0).size();i++){
-                if((*fpite.W0)[i])
-                    cout << g.reindexedOrg[i] << ",";
+            if(fulloutput)
+            {
+                for(int i = 0;i<(*fpite.W0).size();i++){
+                    if((*fpite.W0)[i])
+                        cout << g.reindexedOrg[i] << ",";
+                }
+            } else {
+                if((*fpite.W0)[g.reindexedNew[0]])
+                    cout << "0,";
             }
             cout << "\nW1: \n";
             cout << "The following vertices are in: ";
 #else
             MBR mbr(&g);
+            mbr.solvelocal = solvelocal;
             mbr.metric_output = metricoutput;
             mbr.solve();
             auto end = std::chrono::high_resolution_clock::now();

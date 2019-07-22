@@ -54,6 +54,7 @@ void MBR::solve() {
         winningConf[i] = *conf;
         winningVertices[i].resize(game->n_nodes);
         FPIte fpite(game, P0, VP1, edgeenabled, &(winningVertices[i]));
+        fpite.solvelocal = solvelocal;
 
         if(this->metric_output)
         {
@@ -76,8 +77,8 @@ void MBR::solve() {
     VertexSet W0(game->n_nodes);
     auto * P0b = new VertexSet;
     auto * VP1b = new VertexSet;
-
-//    if(this->feature == 0) {
+//
+//    if(this->feature % 2 == 0) {
 //    attr(0, P0, &pessimisticedges0);
 //    attr(1, VP1, this->edgeenabled);
         auto *fpite0 = new FPIte(game, P0, VP1, &pessimisticedges0, &W0);
@@ -110,10 +111,14 @@ void MBR::solve() {
         delete fpite0;
         delete fpite1;
 
-        //Global:
-//         bool done = *P0 == *VP1;
-        //Local:
-        bool done = (*P0)[game->reindexedNew[0]] || !(*VP1)[game->reindexedNew[0]];
+        bool done;
+        if(this->solvelocal){
+            //Local:
+            done = (*P0)[game->reindexedNew[0]] || !(*VP1)[game->reindexedNew[0]];
+        } else {
+            //Global:
+            done = *P0 == *VP1;
+        }
         if (done) {
             int i = winningConf.size();
             winningConf.resize(i + 1);
@@ -162,6 +167,8 @@ void MBR::solve() {
         ma.measured = this->measured->left;
         mb.measured = this->measured->right;
     }
+    ma.solvelocal = solvelocal;
+    mb.solvelocal = solvelocal;
     ma.solve();
     mb.solve();
 

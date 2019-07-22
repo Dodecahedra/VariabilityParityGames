@@ -25,6 +25,7 @@ public:
     int feature;
     bool metric_output = false;
     bintree<vector<int>> *measured;
+    bool solvelocal = false;
 
     MBR(Game * game);
     MBR(Game * game, Subset * conf, vector<bool> * edgeenabled, VertexSet * P0, VertexSet * P1, int feature);
