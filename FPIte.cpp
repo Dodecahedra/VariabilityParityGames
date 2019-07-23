@@ -151,15 +151,16 @@ void FPIte::solve() {
             diamondbox(W0, i - 1);
         }
         i = 1;
-        equal = false;
-        if(!compareWithPrio(&ZZ, W0,0))
-            copyWithPrio(&ZZ,W0,0);
-        else {
-            do {
+        if(!compareWithPrio(&ZZ, W0,0)) {
+            copyWithPrio(&ZZ, W0, 0);
+            equal = false;
+        } else {
+            equal = true;
+            while (equal && i < d) {
                 equal = compareWithPrio(&ZZ, W0, i);
                 copyWithPrio(&ZZ, W0, i);
                 i++;
-            } while (equal && i < d);
+            }
             if(i % 2 == 0){
                 init(0,i-2);
             } else {

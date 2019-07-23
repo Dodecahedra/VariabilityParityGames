@@ -66,9 +66,13 @@ int main(int argc, char** argv) {
         bool assistrandom = false;
         int assistn;
         bool solvelocal = false;
+        bool regulargame = false;
 
         for(int i = 2;i<argc;i++){
             switch (*argv[i]){
+                case 'R':
+                    regulargame = true;
+                    break;
                 case 'l':
                     solvelocal = true;
                     break;
@@ -102,10 +106,14 @@ int main(int argc, char** argv) {
                     break;
             }
         }
-        if(specificconfenabled){
-            g.parseGameFromFile(argv[1],specificconf);
+        if(regulargame){
+            g.parsePGFromFile(argv[1]);
         } else {
-            g.parseGameFromFile(argv[1]);
+            if (specificconfenabled) {
+                g.parseVPGFromFile(argv[1], specificconf);
+            } else {
+                g.parseVPGFromFile(argv[1]);
+            }
         }
         time_t t = time(0);
 

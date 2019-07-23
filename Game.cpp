@@ -21,8 +21,6 @@ void Game::set_n_nodes(int nodes) {
     priority.resize(n_nodes);
     owner.resize(n_nodes);
     declared.resize(n_nodes);
-    for(int i = 0;i<n_nodes;i++)
-        declared[i] = false;
 }
 
 
@@ -31,8 +29,12 @@ Game::Game() {
 }
 
 
-void Game::parseGameFromFile(const string &filename, const char* specificconf) {
+void Game::parseVPGFromFile(const string &filename, const char *specificconf) {
     int c = 0;
+    if(parsePG){
+        c++;
+        parseConfs("confs 1;");
+    }
     std::ifstream infile(filename);
 
     while (infile.good())
@@ -63,8 +65,8 @@ void Game::parseGameFromFile(const string &filename, const char* specificconf) {
     }
 }
 
-void Game::parseGameFromFile(const string& filename) {
-    parseGameFromFile(filename, "");
+void Game::parseVPGFromFile(const string &filename) {
+    parseVPGFromFile(filename, "");
 }
 
 void Game::parseConfs(char * line) {
@@ -76,7 +78,7 @@ void Game::parseConfs(char * line) {
     char c;
     do{
         c = line[i++];
-    } while(c != '\0' && c != '+');
+    } while(c != '\0' && c != '+' && c != ';');
     bm_n_vars = i - 7;
     bm_vars.resize(bm_n_vars);
 #ifdef subsetbdd
@@ -126,6 +128,10 @@ void Game::parseInitialiser(char *line) {
 
 
 int Game::parseConfSet(const char *line, int i, Subset *result) {
+    if(parsePG){
+        *result = fullset;
+        return i+1;
+    }
     *result = emptyset;
     Subset entry = fullset;
     int var = 0;
@@ -219,9 +225,16 @@ void Game::parseVertex(char *line) {
     {
         if(*line == ',')
             line++;
-        i = readUntil(line, '|');
-        int target = atoi(line);
-        line += i + 1;
+        int target;
+        if(parsePG){
+            i = readUntil(line, ',');
+            target = atoi(line);
+            line += i;
+        } else {
+            i = readUntil(line, '|');
+            target = atoi(line);
+            line += i + 1;
+        }
 
         int guardindex = edge_guards.size();
         edge_guards.resize(guardindex + 1);
@@ -247,7 +260,7 @@ void Game::parseVertex(char *line) {
 
 int Game::readUntil(const char * line, char delim){
     int i = 0;
-    while(*(line + i) != delim)
+    while(*(line + i) != delim && *(line + i) != '\0')
         i++;
     return i;
 }
@@ -370,4 +383,9 @@ void Game::reindexVertices() {
         }
         reindexPCutoff[i+2] = c;
     }
+}
+
+void Game::parsePGFromFile(const string &filename) {
+    parsePG = true;
+    parseVPGFromFile(filename);
 }

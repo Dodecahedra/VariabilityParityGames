@@ -34,14 +34,15 @@ public :
     vector<int> reindexedOrg;
     vector<int> reindexPCutoff;
 
+    bool parsePG = false;
 
     map<string, Subset> parseCache;
 
     Game();
     void set_n_nodes(int nodes);
 
-    void parseGameFromFile(const string& filename);
-    void parseGameFromFile(const string& filename, const char* specificconf);
+    void parseVPGFromFile(const string &filename);
+    void parseVPGFromFile(const string &filename, const char *specificconf);
     void parseConfs(char * line);
     void parseInitialiser(char* line);
     int parseConfSet(const char * line, int i, Subset * result);
@@ -55,6 +56,8 @@ public :
     void compressPriorities();
     void movePriorities(int from, int to);
     void reindexVertices();
+
+    void parsePGFromFile(const string &filename);
 };
 
 
