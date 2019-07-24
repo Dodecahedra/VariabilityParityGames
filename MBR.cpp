@@ -212,48 +212,6 @@ void MBR::createSubGames(Subset *confP, vector<bool> *edgeenabledP) {
     }
 }
 
-void MBR::attr(int player, VertexSet *U, vector<bool> * edgeenabledvector) {
-    vector<bool> countinitialized;
-    vector<int> countincoming;
-    countincoming.resize(game->n_nodes);
-    countinitialized.resize(game->n_nodes);
-    queue<int> qq;
-    for(int i = 0;i<game->n_nodes;i++)
-        if((*U)[i])
-            qq.push(i);
-    while(!qq.empty())
-    {
-        int vii = qq.front();
-        qq.pop();
-
-        for(auto & i : game->in_edges[game->reindexedOrg[vii]]){
-            if(!(*edgeenabledvector)[guard_index(i)])
-                continue;
-            int vi = game->reindexedNew[target(i)];
-            if((*U)[vi]) // vertex already attracted
-                continue;
-            bool attracted = true;
-            if(game->owner[game->reindexedOrg[vi]] != player){
-                if(!countinitialized[vi]){
-                    countinitialized[vi] = true;
-                    countincoming[vi] = 0;
-                    for(auto & j : game->out_edges[game->reindexedOrg[vi]])
-                        if((*edgeenabledvector)[guard_index(j)])
-                            countincoming[vi]++;
-                }
-                if((--countincoming[vi]) > 0){
-                    attracted = false;
-                }
-//                attracted = false;
-            }
-            if(!attracted)
-                continue;
-            (*U)[vi] = true;
-            qq.push(vi);
-        }
-    }
-}
-
 void MBR::printMeasurements(ostream * output) {
     *output << "digraph timetree {" << endl;
     int nodes = printNode(output, this->measured,0);

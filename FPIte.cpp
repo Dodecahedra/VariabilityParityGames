@@ -9,14 +9,40 @@
 #include <iostream>
 #include <chrono>
 
-#define targetIsIn(t) ZZ[game->reindexedNew[t]]
+#define targetIsIn(t) ZZ[t]
 FPIte::FPIte(Game *game, VertexSet *P0, VertexSet *VP1, vector<bool> *edgeenabled, VertexSet * W0) {
-    this->game = game;
     this->P0 = P0;
     this->VP1 = VP1;
     this->edgeenabled = edgeenabled;
     this->W0 = W0;
+
+    // don't create subgame
+    this->game = game;
+    // create subgame
+//    this->game = new Game;
+//    (*this->game) = *game;
+//    this->game->out_edges = new vector<std::tuple<int,int>>[game->n_nodes];
+//    this->game->in_edges = new vector<std::tuple<int,int>>[game->n_nodes];
+//    std::copy(game->out_edges, game->out_edges+game->n_nodes,this->game->out_edges);
+//    std::copy(game->in_edges, game->in_edges+game->n_nodes,this->game->in_edges);
+//    for(int i = 0;i<game->n_nodes;i++){
+//        removeDisabledEdge(&this->game->out_edges[i]);
+//        removeDisabledEdge(&this->game->in_edges[i]);
+//    }
 }
+
+//void FPIte::removeDisabledEdge( vector<std::tuple<int,int>> * edge){
+//    auto it = edge->begin();
+//    while(it != edge->end()){
+//        int guard_index = guard_index(*it);
+//        if(!(*edgeenabled)[guard_index]){
+//            it = edge->erase(it);
+//        } else {
+//            ++it;
+//        }
+//    }
+//}
+
 
 FPIte::FPIte(Game *game) {
     this->game = game;
@@ -43,14 +69,14 @@ void FPIte::init(int i, int ie) {
 void FPIte::diamondbox(VertexSet *Z, int maxprio) {
     dbs_executed++;
     for(int p = 0;p <= maxprio;p++) {
-        for(auto & v : game->priorityI[p]){
-            if(targetIsIn(v) != targetWasIn[v]){
+        for (int v = game->reindexPCutoff[p]; v < game->reindexPCutoff[p + 2]; v++) {
+            if (targetIsIn(v) != targetWasIn[v]) {
                 for (auto &edge : game->in_edges[v]) {
                     if (!(*edgeenabled)[guard_index(edge)])
                         continue;
                     int t = target(edge);
                     // Vertices in P0 are always in and vertices in P1 are always out, so we don't need to reconsider them
-                    if ((*P0)[game->reindexedNew[t]] || !(*VP1)[game->reindexedNew[t]])
+                    if ((*P0)[t] || !(*VP1)[t])
                         continue;
                     verticesconsidered++;
 
@@ -59,13 +85,13 @@ void FPIte::diamondbox(VertexSet *Z, int maxprio) {
                             edgecount[t]++;
                         else
                             edgecount[t]--;
-                        (*Z)[game->reindexedNew[t]] = edgecount[t] > 0;
+                        (*Z)[t] = edgecount[t] > 0;
                     } else {
                         if (targetIsIn(v))
                             edgecount[t]--;
                         else
                             edgecount[t]++;
-                        (*Z)[game->reindexedNew[t]] = edgecount[t] == 0;
+                        (*Z)[t] = edgecount[t] == 0;
                     }
                 }
                 targetWasIn[v] = targetIsIn(v);
@@ -79,10 +105,10 @@ void FPIte::diamondbox(VertexSet *Z) {
     targetWasIn.resize(game->n_nodes);
     for(int i = 0;i<game->n_nodes;i++){
         bool in;
-        if((*P0)[game->reindexedNew[i]]) {
+        if((*P0)[i]) {
             in = true;
             targetWasIn[i] = true;
-        } else if(!(*VP1)[game->reindexedNew[i]])
+        } else if(!(*VP1)[i])
             in = false;
         else {
             targetWasIn[i] = targetIsIn(i);
@@ -112,7 +138,7 @@ void FPIte::diamondbox(VertexSet *Z) {
                 }
             }
         }
-        (*Z)[game->reindexedNew[i]] = in;
+        (*Z)[i] = in;
     }
 //    cout << "Size first: " << std::count_if(Z->begin(), Z->end(), [](bool b){return b;}) << endl;
 }
@@ -209,18 +235,6 @@ void FPIte::copyWithPrio(VertexSet *Z, VertexSet *ZP, int p) {
                     Z->begin() + start);
 }
 
-bool FPIte::copyAndCompareWithPrio(VertexSet *Z, VertexSet *ZP, int p) {
-    bool equal = true;
-    for(int v : game->priorityI[p]) {
-        v = game->reindexedNew[v];
-        if((*Z)[v] != (*ZP)[v]) {
-            equal = false;
-            (*Z)[v] = (*ZP)[v];
-        }
-    }
-    return equal;
-}
-
 bool FPIte::compareWithPrio(VertexSet *Z, VertexSet *ZP, int p) {
 //    bool equal = true;
 //    for(int v : game->priorityI[p]) {
@@ -246,7 +260,7 @@ void FPIte::setP0(char *P0string) {
     char * pEnd;
     do{
         int v = strtol(P0string, &pEnd, 10);
-        (*P0)[game->reindexedNew[v]] = true;
+        (*P0)[v] = true;
         P0string = pEnd+1;
     } while (*P0string != '\0');
 }

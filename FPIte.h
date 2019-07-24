@@ -43,6 +43,8 @@ public:
     void setP1(char * P1string);
 
     void unassist(int n);
+
+//    void removeDisabledEdge(vector<tuple<int, int>> *edge);
 };
 
 

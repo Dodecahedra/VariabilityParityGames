@@ -383,6 +383,38 @@ void Game::reindexVertices() {
         }
         reindexPCutoff[i+2] = c;
     }
+    vector<int> priority_old = priority;
+    vector<int> owner_old  = owner;
+    auto *out_edges_old = new vector<std::tuple<int,int>>[n_nodes];
+    auto *in_edges_old = new vector<std::tuple<int,int>>[n_nodes];
+    std::copy(out_edges, out_edges+n_nodes, out_edges_old);
+    std::copy(in_edges, in_edges+n_nodes, in_edges_old);
+    for(i = 0 ;i<n_nodes;i++){
+        int to = reindexedNew[i];
+        owner[to] = owner_old[i];
+        priority[to] = priority_old[i];
+        out_edges[to] = out_edges_old[i];
+        in_edges[to] = in_edges_old[i];
+
+        for(auto & j : out_edges[to]){
+            j = make_tuple(reindexedNew[target(j)], guard_index(j));
+        }
+        for(auto & j : in_edges[to]){
+            j = make_tuple(reindexedNew[target(j)], guard_index(j));
+        }
+    }
+    for(int & edge_origin : edge_origins){
+        edge_origin = reindexedNew[edge_origin];
+    }
+//    unordered_set<int> p_old;
+//    for(auto & p : priorityI){
+//        p_old = p;
+//        p.clear();
+//        for(const auto & pp : p_old)
+//            p.insert(reindexedNew[pp]);
+//    }
+    delete[] out_edges_old;
+    delete[] in_edges_old;
 }
 
 void Game::parsePGFromFile(const string &filename) {
