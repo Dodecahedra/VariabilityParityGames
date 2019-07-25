@@ -10,10 +10,9 @@
 #include <chrono>
 
 #define targetIsIn(t) ZZ[t]
-FPIte::FPIte(Game *game, VertexSet *P0, VertexSet *VP1, vector<bool> *edgeenabled, VertexSet * W0) {
+FPIte::FPIte(Game *game, VertexSet *P0, VertexSet *VP1, VertexSet * W0) {
     this->P0 = P0;
     this->VP1 = VP1;
-    this->edgeenabled = edgeenabled;
     this->W0 = W0;
 
     // don't create subgame
@@ -51,8 +50,6 @@ FPIte::FPIte(Game *game) {
     this->VP1 =  new VertexSet();
     this->VP1->resize(game->n_nodes);
     fill(this->VP1->begin(), this->VP1->end(), true);
-    this->edgeenabled = new vector<bool>(game->edge_guards.size());
-    fill(this->edgeenabled->begin(), this->edgeenabled->end(), true);
     this->W0 = new VertexSet();
     this->W0->resize(game->n_nodes);
 }
@@ -72,8 +69,6 @@ void FPIte::diamondbox(VertexSet *Z, int maxprio) {
         for (int v = game->reindexPCutoff[p]; v < game->reindexPCutoff[p + 2]; v++) {
             if (targetIsIn(v) != targetWasIn[v]) {
                 for (auto &edge : game->in_edges[v]) {
-                    if (!(*edgeenabled)[guard_index(edge)])
-                        continue;
                     int t = target(edge);
                     // Vertices in P0 are always in and vertices in P1 are always out, so we don't need to reconsider them
                     if ((*P0)[t] || !(*VP1)[t])
@@ -116,8 +111,6 @@ void FPIte::diamondbox(VertexSet *Z) {
                 in = false;
                 for (int j = 0; j < game->out_edges[i].size(); j++) {
                     auto edge = game->out_edges[i][j];
-                    if (!(*edgeenabled)[guard_index(edge)])
-                        continue;
                     int t = target(edge);
                     if (targetIsIn(t)) {
                         in = true;
@@ -128,8 +121,6 @@ void FPIte::diamondbox(VertexSet *Z) {
                 in = true;
                 for (int j = 0; j < game->out_edges[i].size(); j++) {
                     auto edge = game->out_edges[i][j];
-                    if (!(*edgeenabled)[guard_index(edge)])
-                        continue;
                     int t = target(edge);
                     if (!targetIsIn(t)) {
                         in = false;

@@ -20,13 +20,12 @@ public:
     VertexSet * VP1;
     int d;
     VertexSet * W0;
-    vector<bool> * edgeenabled;
     vector<int> edgecount;
 
     VertexSet ZZ;
     VertexSet targetWasIn;
     FPIte(Game * game);
-    FPIte(Game * game, VertexSet * P0, VertexSet * VP1,vector<bool> * edgeenabled, VertexSet * W0);
+    FPIte(Game * game, VertexSet * P0, VertexSet * VP1, VertexSet * W0);
     ~FPIte();
 
     void init(int is, int ie);

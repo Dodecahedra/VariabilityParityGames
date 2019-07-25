@@ -12,10 +12,9 @@
 vector<Subset> MBR::winningConf;
 vector<VertexSet> MBR::winningVertices;
 
-MBR::MBR(Game *game, Subset *conf, vector<bool> *edgeenabled, VertexSet *P0, VertexSet *VP1, int feature) {
+MBR::MBR(Game *game, Subset *conf,  VertexSet *P0, VertexSet *VP1, int feature) {
     this->game = game;
     this->conf = conf;
-    this->edgeenabled = edgeenabled;
     this->P0 = P0;
     this->VP1 = VP1;
     this->feature = feature;
@@ -31,12 +30,12 @@ MBR::MBR(Game *game) {
     this->VP1 =  new VertexSet();
     this->VP1->resize(game->n_nodes);
     fill(this->VP1->begin(), this->VP1->end(), true);
-    this->edgeenabled = new vector<bool>(game->edge_guards.size());
-    fill(this->edgeenabled->begin(), this->edgeenabled->end(), true);
     this->feature =  0;
 }
 
 void MBR::solve() {
+    bdd_printset(*this->conf);
+    cout << "\n==========+\n";
     if(this->metric_output){
         if(this->measured == nullptr)
             this->measured = new bintree<vector<int>>();
@@ -53,7 +52,7 @@ void MBR::solve() {
         winningVertices.resize(i+1);
         winningConf[i] = *conf;
         winningVertices[i].resize(game->n_nodes);
-        FPIte fpite(game, P0, VP1, edgeenabled, &(winningVertices[i]));
+        FPIte fpite(game, P0, VP1, &(winningVertices[i]));
         fpite.solvelocal = solvelocal;
 
         if(this->metric_output)
@@ -69,65 +68,72 @@ void MBR::solve() {
         return;
     }
 
-    vector<bool> pessimisticedges0(edgeenabled->size());
-    vector<bool> pessimisticedges1(edgeenabled->size());
 
-    createPessimisticGames(&pessimisticedges0, &pessimisticedges1);
+    auto * subgame_out0 = new vector<std::tuple<int, int>>[game->n_nodes];
+    auto * subgame_in0 = new vector<std::tuple<int, int>>[game->n_nodes];
+    auto * subgame_out1 = new vector<std::tuple<int, int>>[game->n_nodes];
+    auto * subgame_in1 =new vector<std::tuple<int, int>>[game->n_nodes];
+    copyEdges(subgame_out0, subgame_in0);
+    copyEdges(subgame_out1, subgame_in1);
+    vector<std::tuple<int, int>> * orgin, * orgout;
+    orgin = game->in_edges;
+    orgout = game->out_edges;
+
+    createPessimisticGames(subgame_out0, subgame_in0, subgame_out1, subgame_in1);
 
     VertexSet W0(game->n_nodes);
     auto * P0b = new VertexSet;
     auto * VP1b = new VertexSet;
-//
-//    if(this->feature % 2 == 0) {
-//    attr(0, P0, &pessimisticedges0);
-//    attr(1, VP1, this->edgeenabled);
-        auto *fpite0 = new FPIte(game, P0, VP1, &pessimisticedges0, &W0);
-        if (this->metric_output) {
-            auto start = std::chrono::high_resolution_clock::now();
-            fpite0->solve();
-            auto end = std::chrono::high_resolution_clock::now();
-            (*this->measured->value)[2] = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-            cout << "Assisted " << (*this->measured->value)[0] + (*this->measured->value)[1] << " with time " << (*this->measured->value)[2] << endl;
-        } else {
-            fpite0->solve();
-        }
-        *P0 = W0;
+    game->in_edges = subgame_in0;
+    game->out_edges = subgame_out0;
+    auto *fpite0 = new FPIte(game, P0, VP1, &W0);
+    if (this->metric_output) {
+        auto start = std::chrono::high_resolution_clock::now();
+        fpite0->solve();
+        auto end = std::chrono::high_resolution_clock::now();
+        (*this->measured->value)[2] = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+        cout << "Assisted " << (*this->measured->value)[0] + (*this->measured->value)[1] << " with time " << (*this->measured->value)[2] << endl;
+    } else {
+        fpite0->solve();
+    }
+    *P0 = W0;
 
-//    *P0b = *P0;
-//    attr(0, P0b, &pessimisticedges1);
-//    auto * fpite1 = new FPIte(game, P0b, VP1, &pessimisticedges1, &W0);
-        auto *fpite1 = new FPIte(game, P0, VP1, &pessimisticedges1, &W0);
-        if (this->metric_output) {
-            auto start = std::chrono::high_resolution_clock::now();
-            fpite1->solve();
-            auto end = std::chrono::high_resolution_clock::now();
-            (*this->measured->value)[3] = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-            cout << "Assisted " << (*this->measured->value)[0] + (*this->measured->value)[1] << " with time " << (*this->measured->value)[3] << endl;
-        } else {
-            fpite1->solve();
-        }
-        *VP1 = W0;
+    game->in_edges = subgame_in1;
+    game->out_edges = subgame_out1;
+    auto *fpite1 = new FPIte(game, P0, VP1, &W0);
+    if (this->metric_output) {
+        auto start = std::chrono::high_resolution_clock::now();
+        fpite1->solve();
+        auto end = std::chrono::high_resolution_clock::now();
+        (*this->measured->value)[3] = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+        cout << "Assisted " << (*this->measured->value)[0] + (*this->measured->value)[1] << " with time " << (*this->measured->value)[3] << endl;
+    } else {
+        fpite1->solve();
+    }
+    *VP1 = W0;
+    game->in_edges = orgin;
+    game->out_edges = orgout;
+    delete[] subgame_in1;
+    delete[] subgame_out1;
+    delete fpite0;
+    delete fpite1;
 
-        delete fpite0;
-        delete fpite1;
-
-        bool done;
-        if(this->solvelocal){
-            //Local:
-            done = (*P0)[game->reindexedNew[0]] || !(*VP1)[game->reindexedNew[0]];
-        } else {
-            //Global:
-            done = *P0 == *VP1;
-        }
-        if (done) {
-            int i = winningConf.size();
-            winningConf.resize(i + 1);
-            winningVertices.resize(i + 1);
-            winningConf[i] = *conf;
-            winningVertices[i] = *P0;
-            return;
-        }
-//    }
+    bool done;
+    if(this->solvelocal){
+        //Local:
+        done = (*P0)[game->reindexedNew[0]] || !(*VP1)[game->reindexedNew[0]];
+    } else {
+        //Global:
+        done = *P0 == *VP1;
+    }
+    if (done) {
+        int i = winningConf.size();
+        winningConf.resize(i + 1);
+        winningVertices.resize(i + 1);
+        winningConf[i] = *conf;
+        winningVertices[i] = *P0;
+        return;
+    }
 
     auto * confa = new Subset;
     auto * confb = new Subset;
@@ -139,26 +145,14 @@ void MBR::solve() {
             throw "Empty conf sets found in partitioning";
     } while (*confa == emptyset || *confb == emptyset);
 
-    fill(pessimisticedges0.begin(), pessimisticedges0.end(), false);
-    createSubGames(confa, &pessimisticedges0);
-    createSubGames(confb, edgeenabled);
+    copyEdges(subgame_out0, subgame_in0);
+    createSubGames(confa, subgame_out0, subgame_in0);
+    createSubGames(confb, orgout, orgin);
 
     *P0b = *P0;
     *VP1b = *VP1;
-
-//    VertexSet dummy(P0->size());
-//
-//    fill(dummy.begin(), dummy.end(), false);
-//    fill(dummy.begin(), dummy.end(), true);
-//    fill(dummy.begin(), dummy.end(), false);
-//    fill(dummy.begin(), dummy.end(), true);
-//    fill(P0->begin(), P0->end(), false);
-//    fill(P0b->begin(), P0b->end(), false);
-//    fill(VP1->begin(), VP1->end(), true);
-//    fill(VP1b->begin(), VP1b->end(), true);
-
-    MBR ma(game, confa, &pessimisticedges0, P0, VP1, feature);
-    MBR mb(game, confb, edgeenabled, P0b, VP1b, feature);
+    MBR ma(game, confa, P0, VP1, feature);
+    MBR mb(game, confb, P0b, VP1b, feature);
     if(this->metric_output){
         ma.metric_output = metric_output;
         mb.metric_output = metric_output;
@@ -169,48 +163,54 @@ void MBR::solve() {
     }
     ma.solvelocal = solvelocal;
     mb.solvelocal = solvelocal;
+    game->out_edges = subgame_out0;
+    game->in_edges = subgame_in0;
     ma.solve();
+    delete[] subgame_out0;
+    delete[] subgame_in0;
+    game->out_edges = orgout;
+    game->in_edges = orgin;
     mb.solve();
 
     delete P0b;
     delete VP1b;
 }
 
-void MBR::createPessimisticGames(vector<bool> *pessimisticedges0, vector<bool> *pessimisticedges1) {
-    vector<bool> * pess;
-    vector<bool> * opt;
-    for(int i = 0;i<edgeenabled->size();i++){
-        if(!(*edgeenabled)[i])
-            continue;
-        if(game->owner[game->edge_origins[i]] == 0){
-            pess = pessimisticedges0;
-            opt = pessimisticedges1;
-        } else{
-            pess = pessimisticedges1;
-            opt = pessimisticedges0;
-        }
-        (*opt)[i] = true;
-        Subset g = *conf;
-        g -= game->edge_guards[i];
-        (*pess)[i] = g == emptyset;
-    }
-}
+//void MBR::createPessimisticGames(vector<bool> *pessimisticedges0, vector<bool> *pessimisticedges1) {
+//    vector<bool> * pess;
+//    vector<bool> * opt;
+//    for(int i = 0;i<edgeenabled->size();i++){
+//        if(!(*edgeenabled)[i])
+//            continue;
+//        if(game->owner[game->edge_origins[i]] == 0){
+//            pess = pessimisticedges0;
+//            opt = pessimisticedges1;
+//        } else{
+//            pess = pessimisticedges1;
+//            opt = pessimisticedges0;
+//        }
+//        (*opt)[i] = true;
+//        Subset g = *conf;
+//        g -= game->edge_guards[i];
+//        (*pess)[i] = g == emptyset;
+//    }
+//}
 
 void MBR::parition(Subset *org, Subset *part) {
     *part = *org;
     *org &= game->bm_vars[feature];
     *part -= game->bm_vars[feature];
 }
-
-void MBR::createSubGames(Subset *confP, vector<bool> *edgeenabledP) {
-    for(int i = 0;i<edgeenabled->size();i++) {
-        if (!(*edgeenabled)[i])
-            continue;
-        Subset g = *confP;
-        g &= game->edge_guards[i];
-        (*edgeenabledP)[i] = !(g == emptyset);
-    }
-}
+//
+//void MBR::createSubGames(Subset *confP, vector<bool> *edgeenabledP) {
+//    for(int i = 0;i<edgeenabled->size();i++) {
+//        if (!(*edgeenabled)[i])
+//            continue;
+//        Subset g = *confP;
+//        g &= game->edge_guards[i];
+//        (*edgeenabledP)[i] = !(g == emptyset);
+//    }
+//}
 
 void MBR::printMeasurements(ostream * output) {
     *output << "digraph timetree {" << endl;
@@ -247,3 +247,67 @@ int MBR::printNode(ostream *output, bintree<vector<int>> *node, int c) {
         return l;
     }
 }
+
+void MBR::createPessimisticGames(vector<std::tuple<int, int>> *pessimistic_out0,
+                                 vector<std::tuple<int, int>> *pessimistic_in0,
+                                 vector<std::tuple<int, int>> *pessimistic_out1,
+                                 vector<std::tuple<int, int>> *pessimistic_in1) {
+    vector<bool> edgeenabled0(game->edge_guards.size()),edgeenabled1(game->edge_guards.size()), *pess, *opt;
+    for(int v = 0;v<game->n_nodes;v++){
+        for(const auto & e : game->out_edges[v]) {
+            if (game->owner[v] == 0) {
+                pess = &edgeenabled0;
+                opt = &edgeenabled1;
+            } else {
+                pess = &edgeenabled1;
+                opt = &edgeenabled0;
+            }
+            int gi = guard_index(e);
+            (*opt)[gi] = true;
+            Subset g = *conf;
+            g -= game->edge_guards[gi];
+            (*pess)[gi] = g == emptyset;
+        }
+    }
+    for(int v = 0;v<game->n_nodes;v++) {
+        removeDisabledEdge(pessimistic_out0 + v, &edgeenabled0);
+        removeDisabledEdge(pessimistic_in0 + v, &edgeenabled0);
+        removeDisabledEdge(pessimistic_out1 + v, &edgeenabled1);
+        removeDisabledEdge(pessimistic_in1 + v, &edgeenabled1);
+    }
+}
+
+void MBR::removeDisabledEdge(vector<std::tuple<int,int>> * edge, vector<bool> * edgeenabled){
+    auto it = edge->begin();
+    while(it != edge->end()){
+        int guard_index = guard_index(*it);
+        if(!(*edgeenabled)[guard_index]){
+            it = edge->erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
+void MBR::createSubGames(Subset *confP, vector<std::tuple<int, int>> *subgame_out,
+                         vector<std::tuple<int, int>> *subgame_in) {
+    vector<bool> edgeenabled(game->edge_guards.size());
+    for(int v = 0;v<game->n_nodes;v++) {
+        for (const auto & e : game->out_edges[v]) {
+            Subset g = *confP;
+            int gi = guard_index(e);
+            g &= game->edge_guards[gi];
+            edgeenabled[gi] = !(g == emptyset);
+        }
+    }
+    for(int v = 0;v<game->n_nodes;v++) {
+        removeDisabledEdge(subgame_out+v, &edgeenabled);
+        removeDisabledEdge(subgame_in+v, &edgeenabled);
+    }
+}
+
+void MBR::copyEdges(vector<std::tuple<int, int>> *edgeout, vector<std::tuple<int, int>> *edgein) {
+    copy(game->in_edges, game->in_edges + game->n_nodes, edgein);
+    copy(game->out_edges, game->out_edges + game->n_nodes, edgeout);
+}
+

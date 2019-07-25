@@ -19,7 +19,6 @@ public:
     static vector<VertexSet> winningVertices;
     Game * game;
     Subset * conf;
-    vector<bool> * edgeenabled;
     VertexSet * P0;
     VertexSet * VP1;
     int feature;
@@ -28,16 +27,17 @@ public:
     bool solvelocal = false;
 
     MBR(Game * game);
-    MBR(Game * game, Subset * conf, vector<bool> * edgeenabled, VertexSet * P0, VertexSet * P1, int feature);
+    MBR(Game * game, Subset * conf, VertexSet * P0, VertexSet * P1, int feature);
 
     void solve();
     void parition(Subset * org, Subset * part);
-    void createSubGames(Subset * confP, vector<bool> * edgeenabledP);
-    void createPessimisticGames(vector<bool> * pessimisticedges0, vector<bool> * pessimisticedges1);
-    void attr(int player, VertexSet * U, vector<bool> * edgeenabledvector);
-
+    void createSubGames(Subset * confP, vector<std::tuple<int,int>> * subgame_out, vector<std::tuple<int,int>> * subgame_in);
+    void createPessimisticGames(vector<std::tuple<int,int>> * pessimistic_out0, vector<std::tuple<int,int>> *pessimistic_in0, vector<std::tuple<int,int>> *pessimistic_out1, vector<std::tuple<int,int>> *pessimistic_in1);
+    void copyEdges(vector<std::tuple<int,int>> * edgeout, vector<std::tuple<int,int>> * edgein);
     void printMeasurements(ostream * output);
     int printNode(ostream * output,bintree<vector<int>> * node, int c);
+
+    void removeDisabledEdge(vector<tuple<int, int>> *edge, vector<bool> *edgeenabled);
 };
 
 
