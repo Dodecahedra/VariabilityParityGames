@@ -21,6 +21,14 @@ void Game::set_n_nodes(int nodes) {
     priority.resize(n_nodes);
     owner.resize(n_nodes);
     declared.resize(n_nodes);
+
+
+    reindexedNew.resize(this->n_nodes);
+    reindexedOrg.resize(this->n_nodes);
+    for(int v = 0;v < n_nodes;v++){
+        reindexedOrg[v] = v;
+        reindexedNew[v] = v;
+    }
 }
 
 
@@ -93,6 +101,11 @@ void Game::parseConfs(char * line) {
 #ifdef randombddorder
     unsigned seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
     shuffle (order.begin(), order.end(), default_random_engine(seed));
+#else
+    if(specificvarlast){
+        order[bm_n_vars-1] = specificvar;
+        order[specificvar] = bm_n_vars-1;
+    }
 #endif
     cout << "Bdd order: " ;
     for(i = 0;i<bm_n_vars;i++){
@@ -311,7 +324,7 @@ void Game::printCV(unordered_set<int> *bigV, vector<Subset> *vc, bool fulloutput
             cout << vi << ',';
         }
     } else {
-        if(bigV->find(0) == bigV->end())
+        if(bigV->find(0) != bigV->end())
             cout << "0,";
     }
     cout << "\n";
@@ -361,8 +374,6 @@ void Game::movePriorities(int from, int to) {
 }
 
 void Game::reindexVertices() {
-    reindexedNew.resize(this->n_nodes);
-    reindexedOrg.resize(this->n_nodes);
     reindexPCutoff.resize(this->priorityI.size() + 2);
 
     int c = 0;
@@ -420,4 +431,17 @@ void Game::reindexVertices() {
 void Game::parsePGFromFile(const string &filename) {
     parsePG = true;
     parseVPGFromFile(filename);
+}
+
+void Game::writePG(ostream *output) {
+    *output << "parity " << n_nodes << ';';
+    for(int v = 0;v < n_nodes;v++){
+        *output << endl << reindexedOrg[v] << ' ' << priority[v] << ' ' << owner[v];
+        char seperator = ' ';
+        for(const auto & e : out_edges[v]) {
+            *output << seperator << reindexedOrg[target(e)];
+            seperator = ',';
+        }
+        *output << ';';
+    }
 }

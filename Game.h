@@ -9,6 +9,7 @@
 #include <tuple>
 #include <unordered_set>
 #include <map>
+#include <iostream>
 #include "conf.h"
 
 using namespace std;
@@ -36,6 +37,9 @@ public :
 
     bool parsePG = false;
 
+    bool specificvarlast = false;
+    int specificvar;
+
     map<string, Subset> parseCache;
 
     Game();
@@ -58,6 +62,8 @@ public :
     void reindexVertices();
 
     void parsePGFromFile(const string &filename);
+
+    void writePG(ostream * output);
 };
 
 

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <chrono>
 #include "Game.h"
 #include "zlnk.h"
@@ -67,9 +68,13 @@ int main(int argc, char** argv) {
         int assistn;
         bool solvelocal = false;
         bool regulargame = false;
-
+        char *metricdir;
         for(int i = 2;i<argc;i++){
             switch (*argv[i]){
+                case 'o':
+                    g.specificvarlast = true;
+                    g.specificvar = atoi(argv[i]+1);
+                    break;
                 case 'R':
                     regulargame = true;
                     break;
@@ -93,6 +98,7 @@ int main(int argc, char** argv) {
                     break;
                 case 'm':
                     metricoutput = true;
+                    metricdir = argv[i]+1;
                     break;
                 case 'p':
                     priocompress = true;
@@ -168,7 +174,8 @@ int main(int argc, char** argv) {
 #else
             MBR mbr(&g);
             mbr.solvelocal = solvelocal;
-            mbr.metric_output = metricoutput;
+            MBR::metric_output = metricoutput;
+            MBR::metric_dir = metricdir;
             mbr.solve();
             auto end = std::chrono::high_resolution_clock::now();
 

@@ -4,6 +4,7 @@
 
 #include "MBR.h"
 #include <iostream>
+#include <fstream>
 #include <algorithm>
 #include <queue>
 #include <chrono>
@@ -11,7 +12,8 @@
 
 vector<Subset> MBR::winningConf;
 vector<VertexSet> MBR::winningVertices;
-
+bool MBR::metric_output;
+string MBR::metric_dir;
 MBR::MBR(Game *game, Subset *conf,  VertexSet *P0, VertexSet *VP1, int feature) {
     this->game = game;
     this->conf = conf;
@@ -34,12 +36,11 @@ MBR::MBR(Game *game) {
 }
 
 void MBR::solve() {
-    bdd_printset(*this->conf);
-    cout << "\n==========+\n";
-    if(this->metric_output){
+    if(metric_output){
         if(this->measured == nullptr)
-            this->measured = new bintree<vector<int>>();
-        this->measured->value = new vector<int>(4);
+            this->measured = new bintree<vector<long>>();
+        this->measured->value = new vector<long>(5);
+        (*this->measured->value)[4] = confstring;
 
 #ifdef subsetbdd
         (*this->measured->value)[0] = std::count_if(P0->begin(), P0->end(), [](bool b){return b;});
@@ -55,13 +56,13 @@ void MBR::solve() {
         FPIte fpite(game, P0, VP1, &(winningVertices[i]));
         fpite.solvelocal = solvelocal;
 
-        if(this->metric_output)
+        if(metric_output)
         {
             auto start = std::chrono::high_resolution_clock::now();
             fpite.solve();
             auto end = std::chrono::high_resolution_clock::now();
             (*this->measured->value)[2] = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-            cout << "Assisted " << (*this->measured->value)[0] + (*this->measured->value)[1] << " with time " << (*this->measured->value)[2] << endl;
+            cout << "Assisted leaf " << (*this->measured->value)[0] + (*this->measured->value)[1] << " with time " << (*this->measured->value)[2] << endl;
         } else {
             fpite.solve();
         }
@@ -70,9 +71,9 @@ void MBR::solve() {
 
 
     auto * subgame_out0 = new vector<std::tuple<int, int>>[game->n_nodes];
-    auto * subgame_in0 = new vector<std::tuple<int, int>>[game->n_nodes];
+    auto * subgame_in0  = new vector<std::tuple<int, int>>[game->n_nodes];
     auto * subgame_out1 = new vector<std::tuple<int, int>>[game->n_nodes];
-    auto * subgame_in1 =new vector<std::tuple<int, int>>[game->n_nodes];
+    auto * subgame_in1  = new vector<std::tuple<int, int>>[game->n_nodes];
     copyEdges(subgame_out0, subgame_in0);
     copyEdges(subgame_out1, subgame_in1);
     vector<std::tuple<int, int>> * orgin, * orgout;
@@ -86,13 +87,24 @@ void MBR::solve() {
     auto * VP1b = new VertexSet;
     game->in_edges = subgame_in0;
     game->out_edges = subgame_out0;
+
+
     auto *fpite0 = new FPIte(game, P0, VP1, &W0);
-    if (this->metric_output) {
+    if (metric_output) {
         auto start = std::chrono::high_resolution_clock::now();
         fpite0->solve();
         auto end = std::chrono::high_resolution_clock::now();
         (*this->measured->value)[2] = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-        cout << "Assisted " << (*this->measured->value)[0] + (*this->measured->value)[1] << " with time " << (*this->measured->value)[2] << endl;
+//            if(std::count_if(W0.begin(), W0.end(), [](bool b){return b;}) - std::count_if(P0->begin(), P0->end(), [](bool b){return b;}) < 3000)
+//        if(this->feature != 0)
+//            (*this->measured->value)[2] = 0;
+            if(metric_dir.length() > 0){
+                ofstream f;
+                f.open(metric_dir + to_string(confstring) + "_0.pg");
+                game->writePG(&f);
+                f.close();
+            }
+        cout << "Assisted node " << (*this->measured->value)[0] + (*this->measured->value)[1] << " with time " << (*this->measured->value)[2] << endl;
     } else {
         fpite0->solve();
     }
@@ -101,22 +113,33 @@ void MBR::solve() {
     game->in_edges = subgame_in1;
     game->out_edges = subgame_out1;
     auto *fpite1 = new FPIte(game, P0, VP1, &W0);
-    if (this->metric_output) {
+    if (metric_output) {
         auto start = std::chrono::high_resolution_clock::now();
         fpite1->solve();
         auto end = std::chrono::high_resolution_clock::now();
         (*this->measured->value)[3] = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-        cout << "Assisted " << (*this->measured->value)[0] + (*this->measured->value)[1] << " with time " << (*this->measured->value)[3] << endl;
+//            if(std::count_if(VP1->begin(), VP1->end(), [](bool b){return b;}) - std::count_if(W0.begin(), W0.end(), [](bool b){return b;}) < 3000)
+//        if(this->feature != 0)
+//            (*this->measured->value)[3] = 0;
+        if(metric_dir.length() > 0) {
+            ofstream f;
+            f.open(metric_dir + to_string(confstring) + "_1.pg");
+            game->writePG(&f);
+            f.close();
+        }
+        cout << "Assisted node " << (*this->measured->value)[0] + (*this->measured->value)[1] << " with time " << (*this->measured->value)[3] << endl;
     } else {
         fpite1->solve();
     }
     *VP1 = W0;
+
+    delete fpite0;
+    delete fpite1;
+
     game->in_edges = orgin;
     game->out_edges = orgout;
     delete[] subgame_in1;
     delete[] subgame_out1;
-    delete fpite0;
-    delete fpite1;
 
     bool done;
     if(this->solvelocal){
@@ -135,11 +158,16 @@ void MBR::solve() {
         return;
     }
 
+    int confastring = confstring;
+    int confbstring = confstring;
     auto * confa = new Subset;
     auto * confb = new Subset;
     do {
         *confa = *conf;
         parition(confa, confb);
+        confastring *= 10;
+        confastring += 1;
+        confbstring *= 10;
         this->feature++;
         if(this->feature >  game->bm_n_vars)
             throw "Empty conf sets found in partitioning";
@@ -153,13 +181,13 @@ void MBR::solve() {
     *VP1b = *VP1;
     MBR ma(game, confa, P0, VP1, feature);
     MBR mb(game, confb, P0b, VP1b, feature);
-    if(this->metric_output){
-        ma.metric_output = metric_output;
-        mb.metric_output = metric_output;
-        this->measured->left = new bintree<vector<int>>();
-        this->measured->right = new bintree<vector<int>>();
+    if(metric_output){
+        this->measured->left = new bintree<vector<long>>();
+        this->measured->right = new bintree<vector<long>>();
         ma.measured = this->measured->left;
         mb.measured = this->measured->right;
+        ma.confstring = confastring;
+        mb.confstring = confbstring;
     }
     ma.solvelocal = solvelocal;
     mb.solvelocal = solvelocal;
@@ -220,14 +248,15 @@ void MBR::printMeasurements(ostream * output) {
     cout << "Solved " << ((nodes+1)*3/2-2) << " games" << endl;
 }
 
-int MBR::printNode(ostream *output, bintree<vector<int>> *node, int c) {
+int MBR::printNode(ostream *output, bintree<vector<long>> *node, int c) {
     if(node == nullptr)
         return -1;
     *output << 'n' << c++ << " [label=\"";
     *output << "V0: " << (*node->value)[0] << '/' << this->game->n_nodes << endl;
     *output << "V1: " << (*node->value)[1] << '/' << this->game->n_nodes << endl;
     *output << "Solve 1: " << (*node->value)[2] << "ns" << endl;
-    *output << "Solve 2: " << (*node->value)[3] << "ns";
+    *output << "Solve 2: " << (*node->value)[3] << "ns" << endl;
+    *output << "Conf: " << (*node->value)[4];
     *output << "\"];" << endl;
     int l = printNode(output, node->left, c);
     if(l == -1) {

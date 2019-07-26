@@ -22,10 +22,13 @@ public:
     VertexSet * P0;
     VertexSet * VP1;
     int feature;
-    bool metric_output = false;
-    bintree<vector<int>> *measured;
-    bool solvelocal = false;
 
+    bintree<vector<long>> *measured;
+    bool solvelocal = false;
+    long confstring = 1;
+
+    static bool metric_output;
+    static string metric_dir;
     MBR(Game * game);
     MBR(Game * game, Subset * conf, VertexSet * P0, VertexSet * P1, int feature);
 
@@ -35,7 +38,7 @@ public:
     void createPessimisticGames(vector<std::tuple<int,int>> * pessimistic_out0, vector<std::tuple<int,int>> *pessimistic_in0, vector<std::tuple<int,int>> *pessimistic_out1, vector<std::tuple<int,int>> *pessimistic_in1);
     void copyEdges(vector<std::tuple<int,int>> * edgeout, vector<std::tuple<int,int>> * edgein);
     void printMeasurements(ostream * output);
-    int printNode(ostream * output,bintree<vector<int>> * node, int c);
+    int printNode(ostream * output,bintree<vector<long>> * node, int c);
 
     void removeDisabledEdge(vector<tuple<int, int>> *edge, vector<bool> *edgeenabled);
 };
