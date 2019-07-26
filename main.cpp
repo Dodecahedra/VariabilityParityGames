@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
         int assistn;
         bool solvelocal = false;
         bool regulargame = false;
-        char *metricdir;
+        char *metricdir = nullptr;
         for(int i = 2;i<argc;i++){
             switch (*argv[i]){
                 case 'o':
@@ -175,7 +175,8 @@ int main(int argc, char** argv) {
             MBR mbr(&g);
             mbr.solvelocal = solvelocal;
             MBR::metric_output = metricoutput;
-            MBR::metric_dir = metricdir;
+            if(metricoutput)
+                MBR::metric_dir = metricdir;
             mbr.solve();
             auto end = std::chrono::high_resolution_clock::now();
 
