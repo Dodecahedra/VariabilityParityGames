@@ -100,7 +100,7 @@ void MBR::solve() {
 //            (*this->measured->value)[2] = 0;
             if(metric_dir.length() > 0){
                 ofstream f;
-                f.open(metric_dir + to_string(confstring) + "_0.pg");
+                f.open(metric_dir + '/' + to_string(confstring) + "_0.pg");
                 game->writePG(&f);
                 f.close();
             }
@@ -123,7 +123,7 @@ void MBR::solve() {
 //            (*this->measured->value)[3] = 0;
         if(metric_dir.length() > 0) {
             ofstream f;
-            f.open(metric_dir + to_string(confstring) + "_1.pg");
+            f.open(metric_dir + '/' + to_string(confstring) + "_1.pg");
             game->writePG(&f);
             f.close();
         }

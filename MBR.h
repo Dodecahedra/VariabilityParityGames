@@ -23,7 +23,7 @@ public:
     VertexSet * VP1;
     int feature;
 
-    bintree<vector<long>> *measured;
+    bintree<vector<long>> *measured = nullptr;
     bool solvelocal = false;
     long confstring = 1;
 
