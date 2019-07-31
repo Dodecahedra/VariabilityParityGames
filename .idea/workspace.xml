@@ -18,9 +18,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="065c0f65-4e45-4bdd-bfb0-047fd78e757c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/MBR.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MBR.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MBR.h" beforeDir="false" afterPath="$PROJECT_DIR$/MBR.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Game.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/Game.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_bdd" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_bdd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_bdd_single" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_bdd_single" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_explicit" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_explicit" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -54,60 +56,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2655">
-              <caret line="177" column="40" selection-start-line="177" selection-start-column="40" selection-end-line="177" selection-end-column="40" />
+            <state relative-caret-position="104">
+              <caret line="124" column="26" lean-forward="true" selection-start-line="124" selection-start-column="26" selection-end-line="124" selection-end-column="26" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
                 <element signature="e#901#940#0" expanded="true" />
-                <element signature="e#3713#5011#0" expanded="true" />
-                <element signature="e#6954#6983#0" expanded="true" />
-                <element signature="e#7230#7307#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MBR.cpp">
+        <entry file="file://$PROJECT_DIR$/zlnk.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1125">
-              <caret line="102" column="42" selection-start-line="102" selection-start-column="42" selection-end-line="102" selection-end-column="42" />
+            <state relative-caret-position="224">
+              <caret line="104" selection-start-line="104" selection-end-line="104" />
               <folding>
-                <element signature="e#38#54#0" expanded="true" />
+                <element signature="e#37#53#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/MBR.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="25" column="45" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
-              <folding>
-                <element signature="e#88#105#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Measurements/bintree.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
-              <folding>
-                <element signature="e#38#56#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Measurements/bintree.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
@@ -115,8 +81,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Game.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="40" column="20" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="20" />
+            <state relative-caret-position="426">
+              <caret line="39" column="34" selection-start-line="39" selection-start-column="34" selection-end-line="39" selection-end-column="34" />
               <folding>
                 <element signature="e#119#136#0" expanded="true" />
               </folding>
@@ -125,32 +91,21 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file:///usr/include/c++/7/bits/stl_vector.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10050">
-              <caret line="670" selection-start-line="670" selection-end-line="670" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FPIte.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
+            <state relative-caret-position="428">
               <caret line="32" selection-start-line="32" selection-end-line="43" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Game.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4890">
-              <caret line="326" column="26" selection-start-line="326" selection-start-column="26" selection-end-line="326" selection-end-column="26" />
+            <state relative-caret-position="696">
+              <caret line="521" column="13" selection-start-line="521" selection-start-column="13" selection-end-line="521" selection-end-column="13" />
               <folding>
                 <element signature="e#37#55#0" expanded="true" />
-                <element signature="e#2259#2415#0" expanded="true" />
-                <element signature="e#9163#9225#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -160,7 +115,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cache</find>
       <find>range</find>
       <find>SINGLEMODE</find>
       <find>printCV</find>
@@ -190,6 +144,7 @@
       <find>bdd</find>
       <find>metric_output</find>
       <find>metric_pi</find>
+      <find>in_edges</find>
     </findStrings>
     <replaceStrings>
       <replace>bdd</replace>
@@ -232,11 +187,11 @@
         <option value="$PROJECT_DIR$/FPIte.h" />
         <option value="$PROJECT_DIR$/FPIte.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/Game.h" />
-        <option value="$PROJECT_DIR$/Game.cpp" />
-        <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/MBR.cpp" />
         <option value="$PROJECT_DIR$/MBR.h" />
+        <option value="$PROJECT_DIR$/Game.h" />
+        <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/Game.cpp" />
       </list>
     </option>
   </component>
@@ -265,6 +220,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -281,7 +237,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -315,13 +270,13 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="CMake Application.VPGSolver_bdd FPIte">
-    <configuration name="VPGSolver_bdd FPIte" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="$PROJECT_DIR$/../testsuite/minepump/game_phi3PGs/SVPG F m/tmp/test/" PASS_PARENT_ENVS_2="true" PROJECT_NAME="VPGSolver" TARGET_NAME="VPGSolver_bdd" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="VPGSolver" RUN_TARGET_NAME="VPGSolver_bdd">
+  <component name="RunManager" selected="CMake Application.VPGSolver_bdd">
+    <configuration name="VPGSolver_bdd FPIte" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="$PROJECT_DIR$/../testsuite/minepump/game_phi3PGs/SVPG F" PASS_PARENT_ENVS_2="true" PROJECT_NAME="VPGSolver" TARGET_NAME="VPGSolver_bdd" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="VPGSolver" RUN_TARGET_NAME="VPGSolver_bdd">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="VPGSolver_bdd" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="$PROJECT_DIR$/../testsuite/randomverification/gameC14/SVPG f" PASS_PARENT_ENVS_2="true" PROJECT_NAME="VPGSolver" TARGET_NAME="VPGSolver_bdd" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="VPGSolver" RUN_TARGET_NAME="VPGSolver_bdd">
+    <configuration name="VPGSolver_bdd" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="$PROJECT_DIR$/../testsuite/randomverification/gameC10/SVPG f" PASS_PARENT_ENVS_2="true" PROJECT_NAME="VPGSolver" TARGET_NAME="VPGSolver_bdd" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="VPGSolver" RUN_TARGET_NAME="VPGSolver_bdd">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -398,11 +353,12 @@
       <workItem from="1563433220316" duration="16873000" />
       <workItem from="1563783729324" duration="18481000" />
       <workItem from="1564411226826" duration="79000" />
+      <workItem from="1564497921975" duration="11614000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="266779000" />
+    <option name="totallyTimeSpent" value="278393000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -415,8 +371,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1365" y="0" width="1682" height="1002" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20624235" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20869033" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -427,7 +384,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3291714" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info active="true" anchor="bottom" id="Messages" order="8" sideWeight="0.49877602" visible="true" weight="0.44040862" />
+      <window_info anchor="bottom" id="Messages" order="8" sideWeight="0.49877602" weight="0.44040862" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3291714" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.501224" side_tool="true" weight="0.44040862" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.3291714" />
@@ -444,6 +401,41 @@
   <component name="debuggerHistoryManager">
     <expressions id="watch">
       <expression>
+        <expression-string>out_edges[0]</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>out_edges[36]</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>in_edges[28]</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>in_edges[0]</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>*(out_edges)</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>*(out_edges + 2)</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>*(out_edges + 1)</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>subgame_out[v]</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -458,92 +450,56 @@
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>(bool)edgeenabled[318]</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>*edgeenabled[318]</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>edgeenabled[318]</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>subgame_out-&gt;out_edges[4947]</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>this-&gt;feature</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>game-&gt;out_edges[4947]</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>reindexedNew[2894]</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>g</expression-string>
+        <expression-string>(*vc)[target]</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>edgeenabled[gi]</expression-string>
+        <expression-string>game-&gt;in_edges[vii].size()</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>fflush(stdout)</expression-string>
+        <expression-string>j[2]</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bdd_printset(game-&gt;edge_guards[gi]);</expression-string>
+        <expression-string>guard_index(j)</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>cout &lt;&lt;&quot;\n&quot;;</expression-string>
+        <expression-string>target(e)</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bdd_printset(game-&gt;edge_guards[gi])</expression-string>
+        <expression-string>reindex[i]</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>(*edgeenabled)</expression-string>
+        <expression-string>n_nodes - removed</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>game-&gt;reindexedNew[9155]</expression-string>
+        <expression-string>sizeof(*out_edges)</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>game-&gt;reindexedNew[70]</expression-string>
+        <expression-string>sizeof(out_edges)</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/BDD/bddObj.cpp" />
     <entry file="file://$PROJECT_DIR$/BuDDy/bddObj.cpp" />
     <entry file="file://$PROJECT_DIR$/BuDDy/bddObj.h" />
     <entry file="file://$PROJECT_DIR$/BDD/bddObj.h" />
@@ -615,13 +571,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/include/c++/7/bits/hashtable_policy.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="86" column="36" selection-start-line="86" selection-start-column="36" selection-end-line="86" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/include/c++/7/unordered_set">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="256">
@@ -660,20 +609,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/include/c++/7/bits/hashtable.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="630" selection-start-line="630" selection-end-line="630" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/c++/7/bits/unordered_set.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="95" column="10" selection-start-line="95" selection-start-column="10" selection-end-line="95" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zlnk.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -695,16 +630,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="167">
           <caret line="80" selection-start-line="80" selection-end-line="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlnk.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="123" column="41" selection-start-line="123" selection-start-column="41" selection-end-line="123" selection-end-column="41" />
-          <folding>
-            <element signature="e#37#53#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -786,16 +711,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
+    <entry file="file://$PROJECT_DIR$/MBR.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2655">
-          <caret line="177" column="40" selection-start-line="177" selection-start-column="40" selection-end-line="177" selection-end-column="40" />
+        <state relative-caret-position="1530">
+          <caret line="102" column="42" selection-start-line="102" selection-start-column="42" selection-end-line="102" selection-end-column="42" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#901#940#0" expanded="true" />
-            <element signature="e#3713#5011#0" expanded="true" />
-            <element signature="e#6954#6983#0" expanded="true" />
-            <element signature="e#7230#7307#0" expanded="true" />
+            <element signature="e#38#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -817,58 +738,95 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/MBR.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="45" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
+          <folding>
+            <element signature="e#88#105#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FPIte.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="32" selection-start-line="32" selection-end-line="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/7/bits/stl_function.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="355" selection-start-line="355" selection-end-line="355" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/7/bits/unordered_set.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="520" column="6" selection-start-line="520" selection-start-column="6" selection-end-line="520" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/7/bits/hashtable.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="630" selection-start-line="630" selection-end-line="630" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/7/bits/stl_vector.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="794" column="14" selection-start-line="794" selection-start-column="14" selection-end-line="794" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/7/bits/hashtable_policy.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="447" selection-start-line="447" selection-end-line="447" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Game.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="40" column="20" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="20" />
+        <state relative-caret-position="426">
+          <caret line="39" column="34" selection-start-line="39" selection-start-column="34" selection-end-line="39" selection-end-column="34" />
           <folding>
             <element signature="e#119#136#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/include/c++/7/bits/stl_vector.h">
+    <entry file="file://$PROJECT_DIR$/zlnk.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10050">
-          <caret line="670" selection-start-line="670" selection-end-line="670" />
+        <state relative-caret-position="224">
+          <caret line="104" selection-start-line="104" selection-end-line="104" />
+          <folding>
+            <element signature="e#37#53#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/FPIte.cpp">
+    <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" selection-start-line="32" selection-end-line="43" />
+        <state relative-caret-position="104">
+          <caret line="124" column="26" lean-forward="true" selection-start-line="124" selection-start-column="26" selection-end-line="124" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#901#940#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Game.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4890">
-          <caret line="326" column="26" selection-start-line="326" selection-start-column="26" selection-end-line="326" selection-end-column="26" />
+        <state relative-caret-position="696">
+          <caret line="521" column="13" selection-start-line="521" selection-start-column="13" selection-end-line="521" selection-end-column="13" />
           <folding>
             <element signature="e#37#55#0" expanded="true" />
-            <element signature="e#2259#2415#0" expanded="true" />
-            <element signature="e#9163#9225#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MBR.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1125">
-          <caret line="102" column="42" selection-start-line="102" selection-start-column="42" selection-end-line="102" selection-end-column="42" />
-          <folding>
-            <element signature="e#38#54#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MBR.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="25" column="45" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
-          <folding>
-            <element signature="e#88#105#0" expanded="true" />
           </folding>
         </state>
       </provider>

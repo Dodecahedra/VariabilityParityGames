@@ -71,6 +71,7 @@ void Game::parseVPGFromFile(const string &filename, const char *specificconf) {
     if (!infile.eof()) {
         throw std::string("could not open file");
     }
+    buildInEdges();
 }
 
 void Game::parseVPGFromFile(const string &filename) {
@@ -260,9 +261,9 @@ void Game::parseVertex(char *line) {
             out_edges[index].resize(outindex + 1);
             out_edges[index][outindex] = std::make_tuple(target, guardindex);
 
-            int inindex = in_edges[target].size();
-            in_edges[target].resize(inindex+1);
-            in_edges[target][inindex] = std::make_tuple(index, guardindex);
+//            int inindex = in_edges[target].size();
+//            in_edges[target].resize(inindex+1);
+//            in_edges[target][inindex] = std::make_tuple(index, guardindex);
 //            cout<< "with edge to " << target << " allowing: ";
 //            dumpSet(&edge_guards[guardindex], fullset, new char[bm_n_vars+1], 0);
         }
@@ -289,11 +290,27 @@ void Game::printCV(unordered_set<int> *bigV, vector<Subset> *vc, Subset t, char 
                 Subset result = (*vc)[vi];
                 result &= t;
                 if(!((result) == emptyset)){
-                    cout << vi << ',';
+                    if(compressvertices){
+                        for(auto j : orgvertices[vi])
+                            cout << j << ',';
+                    } else {
+                        cout << vi << ',';
+                    }
                 }
             }
         } else {
             int vi = 0;
+            if(compressvertices){
+                bool found = false;
+                for(int i = 0;i< n_nodes && !found;i++){
+                    for(int j = 0;j < orgvertices[i].size() && !found;j++){
+                        if(orgvertices[i][j] == 0){
+                            vi = i;
+                            found = true;
+                        }
+                    }
+                }
+            }
             Subset result = (*vc)[vi];
             result &= t;
             if(!((result) == emptyset)){
@@ -443,5 +460,168 @@ void Game::writePG(ostream *output) {
             seperator = ',';
         }
         *output << ';';
+    }
+}
+
+void Game::compressVertices() {
+    compressvertices = true;
+    orgvertices.resize(n_nodes);
+    for(int i = 0;i < n_nodes;i++){
+        orgvertices[i].resize(1);
+        orgvertices[i][0] = i;
+    }
+    vector<bool> remove(n_nodes);
+    for(int i = 0;i < n_nodes;i++){
+        int t = target(out_edges[i][0]);
+        if(out_edges[i].size() ==  1 && t != i && priority[t] >= priority[i]){
+            int orgindex = orgvertices[t].size();
+            orgvertices[t].resize(orgindex + orgvertices[i].size());
+            for(int j = 0;j < orgvertices[i].size();j++)
+                orgvertices[t][orgindex + j] = orgvertices[i][j];
+            // assume we admit all configurations since VPGs are total
+            remove[i] = true;
+            for(auto &e : in_edges[i]){
+                bool merge = false;
+                tuple<int,int> edgeorg, edgenew;
+
+                for(auto & oe: out_edges[target(e)]){
+                    if(target(oe) == t) {
+                        merge = true;
+                        edgeorg = oe;
+                    }
+                    if(target(oe) == i){
+                        oe = make_tuple(t, guard_index(oe));
+                        edgenew = oe;
+                    }
+                }
+                if(merge) {
+                    cout << "Merge"<<endl;
+                    //todo remove this loop by storing the iterator in the previous loop
+                    auto ite = out_edges[target(e)].begin();
+                    while(ite != out_edges[target(e)].end()){
+                        if(*ite == edgenew){
+                            out_edges[target(e)].erase(ite);
+                            break;
+                        }
+                        ite++;
+                    }
+                    edge_guards[guard_index(edgeorg)] |= edge_guards[guard_index(edgenew)];
+                }else{
+                    int index = in_edges[t].size();
+                    in_edges[t].resize(index + 1);
+                    in_edges[t][index] = e;
+                }
+            }
+            auto ite = in_edges[t].begin();
+            while(ite != in_edges[t].end()){
+                if(target(*ite) == i){
+                    in_edges[t].erase(ite);
+                    break;
+                }
+                ite++;
+            }
+            cout << "Remove " << i << endl;
+        }
+    }
+
+//    vector<bool> remove(n_nodes);
+    vector<int> reindex(n_nodes);
+    for(int i = 0;i < n_nodes;i++)
+        reindex[i] = i;
+    int removed = 0;
+    for(int i = 0;i < n_nodes;i++){
+        if(remove[i])
+            removed++;
+        else
+            reindex[i] -= removed;
+    }
+    for(int i = 0;i < n_nodes;i++){
+        if(!remove[i]) {
+            if(reindex[i] < i){
+                owner[reindex[i]] = owner[i];
+                priority[reindex[i]] = priority[i];
+                out_edges[reindex[i]] = out_edges[i];
+                in_edges[reindex[i]] = in_edges[i];
+                orgvertices[reindex[i]] = orgvertices[i];
+            } else if(reindex[i] > i)
+                throw "Incorrect reindex";
+        }
+    }
+    n_nodes -= removed;
+    priority.resize(n_nodes);
+    owner.resize(n_nodes);
+    orgvertices.resize(n_nodes);
+    for(int i = 0;i < n_nodes;i++){
+        for(auto & e : out_edges[i])
+            e = make_tuple(reindex[target(e)], guard_index(e));
+        for(auto & e : in_edges[i])
+            e = make_tuple(reindex[target(e)], guard_index(e));
+    }
+
+//    for(int i = 0;i < n_nodes;i++){
+//        int t = reindex[target(out_edges[i][0])];
+//        if(out_edges[i].size() ==  1 && t != i){
+//            // assume we admit all configurations since VPGs are total
+//            remove[i] = true;
+//            reindex[i] = t;
+//            if(priority[i] > priority[t]){
+//                priorityI[priority[t]].erase(t);
+//                priorityI[priority[i]].insert(t);
+//                priority[t] = priority[i];
+//                for(int j = 0;j < n_nodes;j++)
+//                    if(reindex[j] == i)
+//                        reindex[j] = t;
+//            }
+//            //todo remove edges
+////            out_edges[t].reserve(out_edges[t].size() + out_edges[i].size());
+////            out_edges[t].insert(out_edges[t].end(), out_edges[i].begin(), out_edges[i].end());
+//        }
+//    }
+
+//    auto * out_edges_old = out_edges;
+//    out_edges = new vector<std::tuple<int,int>>[n_nodes - removed];
+//    vector<int> priority_old(n_nodes);
+//    priority_old = priority;
+//    vector<int> owner_old(n_nodes);
+//    owner_old = owner;
+//    for(int i = 0;i < n_nodes;i++){
+//        if(!remove[i] && reindex[i] != i){
+//            out_edges[reindex[i]] = out_edges_old[i];
+//            priority[reindex[i]] = priority_old[i];
+//            owner[reindex[i]] = owner_old[i];
+//        }
+//    }
+//    delete[] out_edges_old;
+//
+//    orgvertices.resize(n_nodes - removed);
+//    for(int i = 0;i < n_nodes;i++){
+//        orgvertices[reindex[i]].insert(i);
+//    }
+//    n_nodes -= removed;
+//    //todo vector instead of array of out_edges
+////    delete[] (out_edges + n_nodes);
+//
+//
+//    for(auto &p : priorityI){
+//        unordered_set<int> pp = p;
+//        p.clear();
+//        for(const auto &v : pp)
+//            if (!remove[v])
+//                p.insert(reindex[v]);
+//    }
+//    //todo remove this reset
+//    for(int i = 0;i < n_nodes;i++)
+//        in_edges[i].resize(0);
+//    buildInEdges();
+}
+
+void Game::buildInEdges() {
+    for(int i = 0;i < n_nodes;i++){
+        for(const auto & e : out_edges[i]){
+            int t = target(e);
+            int index = in_edges[t].size();
+            in_edges[t].resize(index + 1);
+            in_edges[t][index] = make_tuple(i, guard_index(e));
+        }
     }
 }

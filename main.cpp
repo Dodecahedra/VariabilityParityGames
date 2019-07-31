@@ -121,6 +121,7 @@ int main(int argc, char** argv) {
                 g.parseVPGFromFile(argv[1]);
             }
         }
+        g.compressVertices();
         time_t t = time(0);
 
         cout << "\n[" << t << "] Parsed\n";

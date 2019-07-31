@@ -34,8 +34,10 @@ public :
     vector<int> reindexedNew;
     vector<int> reindexedOrg;
     vector<int> reindexPCutoff;
+    vector<vector<int>> orgvertices;
 
     bool parsePG = false;
+    bool compressvertices = false;
 
     bool specificvarlast = false;
     int specificvar;
@@ -57,7 +59,9 @@ public :
     void printCV(unordered_set<int> *bigV, vector<Subset> *vc, Subset t, char * p, int var, bool fulloutput);
     int readUntil(const char * line, char delim);
 
+    void buildInEdges();
     void compressPriorities();
+    void compressVertices();
     void movePriorities(int from, int to);
     void reindexVertices();
 
