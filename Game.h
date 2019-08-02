@@ -35,6 +35,7 @@ public :
     vector<int> reindexedOrg;
     vector<int> reindexPCutoff;
     vector<vector<int>> orgvertices;
+    int winningfor0 = -1;
 
     bool parsePG = false;
     bool compressvertices = false;
@@ -62,8 +63,11 @@ public :
     void buildInEdges();
     void compressPriorities();
     void compressVertices();
+    void moveVertexInto(int v1, int v2, bool v1Ev2);
     void movePriorities(int from, int to);
     void reindexVertices();
+    int findVertexWinningForVertex(int v);
+    int findVertexWinningFor0();
 
     void parsePGFromFile(const string &filename);
 

@@ -68,9 +68,13 @@ int main(int argc, char** argv) {
         int assistn;
         bool solvelocal = false;
         bool regulargame = false;
+        bool compressvertices = false;
         char *metricdir;
         for(int i = 2;i<argc;i++){
             switch (*argv[i]){
+                case 'v':
+                    compressvertices = true;
+                    break;
                 case 'o':
                     g.specificvarlast = true;
                     g.specificvar = atoi(argv[i]+1);
@@ -121,7 +125,6 @@ int main(int argc, char** argv) {
                 g.parseVPGFromFile(argv[1]);
             }
         }
-        g.compressVertices();
         time_t t = time(0);
 
         cout << "\n[" << t << "] Parsed\n";
@@ -131,8 +134,10 @@ int main(int argc, char** argv) {
         // enable cache after parsing
         bdd_setcacheratio(200);
 #endif
-
         auto start = std::chrono::high_resolution_clock::now();
+
+        if(compressvertices)
+            g.compressVertices();
 
         if(priocompress)
             g.compressPriorities();
@@ -148,7 +153,6 @@ int main(int argc, char** argv) {
                 fpite.P0IsFull();
                 fpite.unassist(g.n_nodes - assistn);
             }
-            start = std::chrono::high_resolution_clock::now();
             fpite.solve();
             auto end = std::chrono::high_resolution_clock::now();
 
@@ -163,11 +167,14 @@ int main(int argc, char** argv) {
             if(fulloutput)
             {
                 for(int i = 0;i<(*fpite.W0).size();i++){
-                    if((*fpite.W0)[i])
-                        cout << g.reindexedOrg[i] << ",";
+                    if((*fpite.W0)[i]) {
+                        for(const auto & v : g.orgvertices[g.reindexedOrg[i]]) {
+                            cout << v << ",";
+                        }
+                    }
                 }
             } else {
-                if((*fpite.W0)[g.reindexedNew[0]])
+                if((*fpite.W0)[g.reindexedNew[g.findVertexWinningFor0()]])
                     cout << "0,";
             }
             cout << "\nW1: \n";
@@ -176,7 +183,8 @@ int main(int argc, char** argv) {
             MBR mbr(&g);
             mbr.solvelocal = solvelocal;
             MBR::metric_output = metricoutput;
-            MBR::metric_dir = metricdir;
+            if(metricoutput)
+                MBR::metric_dir = metricdir;
             mbr.solve();
             auto end = std::chrono::high_resolution_clock::now();
 
@@ -194,11 +202,13 @@ int main(int argc, char** argv) {
                 if(fulloutput){
                     for (int j = 0; j < MBR::winningVertices[i].size(); j++){
                         if (MBR::winningVertices[i][j]) {
-                            winningset.append(std::to_string(g.reindexedOrg[j]));
-                            winningset.append(",");
+                            for(const auto & v : g.orgvertices[g.reindexedOrg[j]]) {
+                                winningset.append(std::to_string(v));
+                                winningset.append(",");
+                            }
                         }
                     }
-                } else if(MBR::winningVertices[i][g.reindexedNew[0]]){
+                } else if(MBR::winningVertices[i][g.reindexedNew[g.findVertexWinningFor0()]]){
                     winningset = "0,";
                 }
                 bdd_allsat(MBR::winningConf[i], allsatPrintHandler);
@@ -209,11 +219,13 @@ int main(int argc, char** argv) {
                 if(fulloutput){
                     for (int j = 0; j < MBR::winningVertices[i].size(); j++){
                         if (!MBR::winningVertices[i][j]) {
-                            winningset.append(std::to_string(g.reindexedOrg[j]));
-                            winningset.append(",");
+                            for(const auto & v : g.orgvertices[g.reindexedOrg[j]]) {
+                                winningset.append(std::to_string(v));
+                                winningset.append(",");
+                            }
                         }
                     }
-                } else if(!MBR::winningVertices[i][g.reindexedNew[0]]){
+                } else if(!MBR::winningVertices[i][g.reindexedNew[g.findVertexWinningFor0()]]){
                     winningset = "0,";
                 }
                 bdd_allsat(MBR::winningConf[i], allsatPrintHandler);

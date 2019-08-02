@@ -74,6 +74,8 @@ void MBR::solve() {
     auto * subgame_in0  = new vector<std::tuple<int, int>>[game->n_nodes];
     auto * subgame_out1 = new vector<std::tuple<int, int>>[game->n_nodes];
     auto * subgame_in1  = new vector<std::tuple<int, int>>[game->n_nodes];
+    auto * P0b = new VertexSet;
+    auto * VP1b = new VertexSet;
     copyEdges(subgame_out0, subgame_in0);
     copyEdges(subgame_out1, subgame_in1);
     vector<std::tuple<int, int>> * orgin, * orgout;
@@ -83,8 +85,6 @@ void MBR::solve() {
     createPessimisticGames(subgame_out0, subgame_in0, subgame_out1, subgame_in1);
 
     VertexSet W0(game->n_nodes);
-    auto * P0b = new VertexSet;
-    auto * VP1b = new VertexSet;
     game->in_edges = subgame_in0;
     game->out_edges = subgame_out0;
 
@@ -144,7 +144,7 @@ void MBR::solve() {
     bool done;
     if(this->solvelocal){
         //Local:
-        done = (*P0)[game->reindexedNew[0]] || !(*VP1)[game->reindexedNew[0]];
+        done = (*P0)[game->reindexedNew[game->findVertexWinningFor0()]] || !(*VP1)[game->reindexedNew[game->findVertexWinningFor0()]];
     } else {
         //Global:
         done = *P0 == *VP1;

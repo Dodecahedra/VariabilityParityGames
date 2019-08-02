@@ -18,12 +18,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="065c0f65-4e45-4bdd-bfb0-047fd78e757c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../testsuite/data/family/collect.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Report/FPITEalg.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/FPITEalg.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Report/Report.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/Report.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Report/Report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/Report.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FPIte.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/FPIte.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Game.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/Game.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MBR.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MBR.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_bdd" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_bdd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_bdd_single" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_bdd_single" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_explicit" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_explicit" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../testsuite/.ipynb_checkpoints/Untitled-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../testsuite/Untitled.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/Untitled.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../testsuite/minepump/createsolutions.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../testsuite/minepump/game_phi3PGs/sSVPG0001011001" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../testsuite/randomverification/verifyall.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/randomverification/verifyall.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../testsuite/~log3a" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-release/" />
@@ -56,11 +69,43 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="124" column="26" lean-forward="true" selection-start-line="124" selection-start-column="26" selection-end-line="124" selection-end-column="26" />
+            <state relative-caret-position="-2">
+              <caret line="108" column="26" lean-forward="true" selection-start-line="108" selection-start-column="26" selection-end-line="108" selection-end-column="26" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <element signature="e#901#940#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="25" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MBR.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1290">
+              <caret line="104" column="26" selection-start-line="104" selection-start-column="26" selection-end-line="104" selection-end-column="26" />
+              <folding>
+                <element signature="e#38#54#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zlnk.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+              <folding>
+                <element signature="e#89#113#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -69,7 +114,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/zlnk.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
+            <state relative-caret-position="1051">
               <caret line="104" selection-start-line="104" selection-end-line="104" />
               <folding>
                 <element signature="e#37#53#0" expanded="true" />
@@ -81,8 +126,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Game.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="426">
-              <caret line="39" column="34" selection-start-line="39" selection-start-column="34" selection-end-line="39" selection-end-column="34" />
+            <state relative-caret-position="660">
+              <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
               <folding>
                 <element signature="e#119#136#0" expanded="true" />
               </folding>
@@ -91,22 +136,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/FPIte.cpp">
+        <entry file="file://$PROJECT_DIR$/Game.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="428">
-              <caret line="32" selection-start-line="32" selection-end-line="43" />
+            <state relative-caret-position="-8100">
+              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+              <folding>
+                <element signature="e#37#55#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Game.cpp">
+        <entry file="file://$PROJECT_DIR$/FPIte.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="696">
-              <caret line="521" column="13" selection-start-line="521" selection-start-column="13" selection-end-line="521" selection-end-column="13" />
-              <folding>
-                <element signature="e#37#55#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-1155">
+              <caret line="43" selection-start-line="43" selection-end-line="43" />
             </state>
           </provider>
         </entry>
@@ -115,12 +160,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>range</find>
-      <find>SINGLEMODE</find>
-      <find>printCV</find>
-      <find>parse</find>
-      <find>milliseconds</find>
-      <find>ms\n</find>
       <find>ms.\n</find>
       <find>bd</find>
       <find>bdd.h</find>
@@ -145,6 +184,12 @@
       <find>metric_output</find>
       <find>metric_pi</find>
       <find>in_edges</find>
+      <find>findVerte</find>
+      <find>find</find>
+      <find>findVer</find>
+      <find>findVertexWinningForVertex(0)</find>
+      <find>vertex wit</find>
+      <find>local</find>
     </findStrings>
     <replaceStrings>
       <replace>bdd</replace>
@@ -155,6 +200,7 @@
       <replace>nanoseconds</replace>
       <replace>ns</replace>
       <replace>high_resolution_clock</replace>
+      <replace>findVertexWinningFor0()</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -185,15 +231,21 @@
         <option value="$PROJECT_DIR$/Measurements/bintree.h" />
         <option value="$PROJECT_DIR$/conf.h" />
         <option value="$PROJECT_DIR$/FPIte.h" />
-        <option value="$PROJECT_DIR$/FPIte.cpp" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/MBR.cpp" />
         <option value="$PROJECT_DIR$/MBR.h" />
         <option value="$PROJECT_DIR$/Game.h" />
-        <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/FPIte.cpp" />
         <option value="$PROJECT_DIR$/Game.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/MBR.cpp" />
       </list>
     </option>
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
   </component>
   <component name="OCFindUsagesOptions" text="false" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectConfigurationFiles">
@@ -220,7 +272,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -228,15 +279,11 @@
               <item name="VPGSolver" type="b2602c69:ProjectViewProjectNode" />
               <item name="VPGSolver" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="VPGSolver" type="b2602c69:ProjectViewProjectNode" />
-              <item name="VPGSolver" type="462c0819:PsiDirectoryNode" />
-              <item name="Measurements" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -251,7 +298,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+    <property name="settings.editor.selected.configurable" value="language.cpp.clangd" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -353,12 +400,13 @@
       <workItem from="1563433220316" duration="16873000" />
       <workItem from="1563783729324" duration="18481000" />
       <workItem from="1564411226826" duration="79000" />
-      <workItem from="1564497921975" duration="11614000" />
+      <workItem from="1564497921975" duration="30403000" />
+      <workItem from="1564739025676" duration="761000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="278393000" />
+    <option name="totallyTimeSpent" value="297943000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -371,9 +419,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1365" y="0" width="1682" height="1002" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20869033" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21113831" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -384,7 +431,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3291714" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Messages" order="8" sideWeight="0.49877602" weight="0.44040862" />
+      <window_info anchor="bottom" id="Messages" order="8" sideWeight="0.49877602" visible="true" weight="0.44040862" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3291714" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.501224" side_tool="true" weight="0.44040862" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.3291714" />
@@ -398,10 +445,53 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Game.cpp</url>
+          <line>460</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="CMakeRunConfiguration">
+        <watch expression="in_edges[2]" language="ObjectiveC" />
+        <watch expression="out_edges[36]" language="ObjectiveC" />
+        <watch expression="in_edges[0]" language="ObjectiveC" />
+        <watch expression="out_edges[2]" language="ObjectiveC" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand>
+      <path>
+        <item name="VPGSolver" type="b2602c69:ProjectViewProjectNode" />
+        <item name="VPGSolver" type="462c0819:PsiDirectoryNode" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
       <expression>
-        <expression-string>out_edges[0]</expression-string>
+        <expression-string>owner[36]</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>owner[2]</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>out_edges[2]</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>in_edges[0]</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -411,12 +501,17 @@
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>in_edges[28]</expression-string>
+        <expression-string>in_edges[2]</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>in_edges[0]</expression-string>
+        <expression-string>out_edges[0]</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>in_edges[28]</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -427,26 +522,6 @@
       </expression>
       <expression>
         <expression-string>*(out_edges + 2)</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>*(out_edges + 1)</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>subgame_out[v]</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>subgame_out[4947]</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>(bool)edgeenabled[319]</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -609,16 +684,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zlnk.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-          <folding>
-            <element signature="e#89#113#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/include/c++/7/algorithm">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -694,29 +759,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/FPIte.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="27" column="55" selection-start-line="27" selection-start-column="55" selection-end-line="27" selection-end-column="55" />
           <folding>
             <element signature="e#91#108#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MBR.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1530">
-          <caret line="102" column="42" selection-start-line="102" selection-start-column="42" selection-end-line="102" selection-end-column="42" />
-          <folding>
-            <element signature="e#38#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -745,13 +793,6 @@
           <folding>
             <element signature="e#88#105#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/FPIte.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="32" selection-start-line="32" selection-end-line="43" />
         </state>
       </provider>
     </entry>
@@ -790,19 +831,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Game.h">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="39" column="34" selection-start-line="39" selection-start-column="34" selection-end-line="39" selection-end-column="34" />
+        <state relative-caret-position="45">
+          <caret line="3" column="25" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zlnk.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
           <folding>
-            <element signature="e#119#136#0" expanded="true" />
+            <element signature="e#89#113#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/zlnk.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
+        <state relative-caret-position="1051">
           <caret line="104" selection-start-line="104" selection-end-line="104" />
           <folding>
             <element signature="e#37#53#0" expanded="true" />
@@ -810,24 +858,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/MBR.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1290">
+          <caret line="104" column="26" selection-start-line="104" selection-start-column="26" selection-end-line="104" selection-end-column="26" />
+          <folding>
+            <element signature="e#38#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="124" column="26" lean-forward="true" selection-start-line="124" selection-start-column="26" selection-end-line="124" selection-end-column="26" />
+        <state relative-caret-position="-2">
+          <caret line="108" column="26" lean-forward="true" selection-start-line="108" selection-start-column="26" selection-end-line="108" selection-end-column="26" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#901#940#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Game.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+          <folding>
+            <element signature="e#119#136#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Game.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="696">
-          <caret line="521" column="13" selection-start-line="521" selection-start-column="13" selection-end-line="521" selection-end-column="13" />
+        <state relative-caret-position="-8100">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
           <folding>
             <element signature="e#37#55#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FPIte.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1155">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
         </state>
       </provider>
     </entry>

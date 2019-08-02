@@ -153,10 +153,10 @@ void FPIte::solve() {
         if(solvelocal){
             if(i == d){
                 if((d - 1) % 2 == 0){
-                    if(!(*W0)[game->reindexedNew[0]])
+                    if(!(*W0)[game->reindexedNew[game->findVertexWinningFor0()]])
                         break;
                 } else {
-                    if((*W0)[game->reindexedNew[0]])
+                    if((*W0)[game->reindexedNew[game->findVertexWinningFor0()]])
                         break;
                 }
             }
