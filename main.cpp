@@ -182,6 +182,7 @@ int main(int argc, char** argv) {
 #else
             MBR mbr(&g);
             mbr.solvelocal = solvelocal;
+            MBR::fulloutput = fulloutput;
             MBR::metric_output = metricoutput;
             if(metricoutput)
                 MBR::metric_dir = metricdir;
@@ -208,7 +209,7 @@ int main(int argc, char** argv) {
                             }
                         }
                     }
-                } else if(MBR::winningVertices[i][g.reindexedNew[g.findVertexWinningFor0()]]){
+                } else if(MBR::winningVertices[i][0]){
                     winningset = "0,";
                 }
                 bdd_allsat(MBR::winningConf[i], allsatPrintHandler);
@@ -225,7 +226,7 @@ int main(int argc, char** argv) {
                             }
                         }
                     }
-                } else if(!MBR::winningVertices[i][g.reindexedNew[g.findVertexWinningFor0()]]){
+                } else if(!MBR::winningVertices[i][0]){
                     winningset = "0,";
                 }
                 bdd_allsat(MBR::winningConf[i], allsatPrintHandler);

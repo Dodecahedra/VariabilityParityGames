@@ -14,6 +14,8 @@ vector<Subset> MBR::winningConf;
 vector<VertexSet> MBR::winningVertices;
 bool MBR::metric_output;
 string MBR::metric_dir;
+bool MBR::fulloutput = false;
+
 MBR::MBR(Game *game, Subset *conf,  VertexSet *P0, VertexSet *VP1, int feature) {
     this->game = game;
     this->conf = conf;
@@ -65,6 +67,11 @@ void MBR::solve() {
             cout << "Assisted leaf " << (*this->measured->value)[0] + (*this->measured->value)[1] << " with time " << (*this->measured->value)[2] << endl;
         } else {
             fpite.solve();
+        }
+        if(!MBR::fulloutput){
+            bool v0 = winningVertices[i][game->reindexedNew[game->findVertexWinningFor0()]];
+            winningVertices[i].resize(1);
+            winningVertices[i][0] = v0;
         }
         return;
     }
@@ -155,6 +162,12 @@ void MBR::solve() {
         winningVertices.resize(i + 1);
         winningConf[i] = *conf;
         winningVertices[i] = *P0;
+
+        if(!MBR::fulloutput){
+            bool v0 = winningVertices[i][game->reindexedNew[game->findVertexWinningFor0()]];
+            winningVertices[i].resize(1);
+            winningVertices[i][0] = v0;
+        }
         return;
     }
 

@@ -22,6 +22,7 @@ public:
     VertexSet * P0;
     VertexSet * VP1;
     int feature;
+    static bool fulloutput;
 
     bintree<vector<long>> *measured = nullptr;
     bool solvelocal = false;
