@@ -46,7 +46,7 @@ int main(int argc, char** argv) {
 #ifdef subsetexplicit
     cout << "== Subsets are explicit == \n";
 #endif
-    if(argc < 2) {
+    if (argc < 2) {
         cerr << "Incorect params";
         return 2;
     }
@@ -55,6 +55,7 @@ int main(int argc, char** argv) {
         cout << "\n[" << t0 << "] Start\n";
 
         Game g;
+
         char *specificconf;
         bool specificconfenabled = false;
 
@@ -70,14 +71,20 @@ int main(int argc, char** argv) {
         bool regulargame = false;
         bool compressvertices = false;
         char *metricdir;
-        for(int i = 2;i<argc;i++){
-            switch (*argv[i]){
+        bool projectmode = false;
+        char *projectdir;
+        for (int i = 2; i < argc; i++) {
+            switch (*argv[i]) {
+                case 'Q':
+                    projectmode = true;
+                    projectdir = argv[i] + 1;
+                    break;
                 case 'v':
                     compressvertices = true;
                     break;
                 case 'o':
                     g.specificvarlast = true;
-                    g.specificvar = atoi(argv[i]+1);
+                    g.specificvar = atoi(argv[i] + 1);
                     break;
                 case 'R':
                     regulargame = true;
@@ -87,22 +94,22 @@ int main(int argc, char** argv) {
                     break;
                 case 'P':
                     assistedW0 = true;
-                    assistanceW0 = argv[i]+1;
+                    assistanceW0 = argv[i] + 1;
                     break;
                 case 'a':
                     assistrandom = true;
-                    assistn = atoi(argv[i]+1);
+                    assistn = atoi(argv[i] + 1);
                     break;
                 case 'c':
                     specificconfenabled = true;
-                    specificconf = argv[i]+1;
+                    specificconf = argv[i] + 1;
                     break;
                 case 'f':
                     fulloutput = true;
                     break;
                 case 'm':
                     metricoutput = true;
-                    metricdir = argv[i]+1;
+                    metricdir = argv[i] + 1;
                     break;
                 case 'p':
                     priocompress = true;
@@ -116,7 +123,7 @@ int main(int argc, char** argv) {
                     break;
             }
         }
-        if(regulargame){
+        if (regulargame) {
             g.parsePGFromFile(argv[1]);
         } else {
             if (specificconfenabled) {
@@ -125,6 +132,31 @@ int main(int argc, char** argv) {
                 g.parseVPGFromFile(argv[1]);
             }
         }
+        if (projectmode) {
+            vector<tuple<Subset, string>> allconfs;
+            g.findAllElements(g.bigC, &allconfs);
+            for (const auto &conf : allconfs) {
+                string target = string(projectdir);
+                target += "/sSVPG" + get<1>(conf);
+                ofstream output;
+                output.open(target);
+                g.writePG(&output, get<0>(conf));
+                output.close();
+                cout << "Projected to " << target << endl;
+            }
+            return 0;
+        }
+#ifdef lambdameasure
+        float avg = 0;
+        int c = 0;
+        for(const auto & e : g.edge_guards){
+            float n =  bdd_satcount(e);
+            cout << "Edge allows " << n << " configurations." << endl;
+            avg += (n - avg) / ++c;
+        }
+        cout << "Edge allow on average " << avg << " configurations." << endl;
+        return 0;
+#endif
         time_t t = time(0);
 
         cout << "\n[" << t << "] Parsed\n";
@@ -144,6 +176,7 @@ int main(int argc, char** argv) {
 
         if(SolveFPIte){
             g.reindexVertices();
+        start = std::chrono::high_resolution_clock::now();
 #ifdef SINGLEMODE
             FPIte fpite(&g);
             fpite.solvelocal = solvelocal;

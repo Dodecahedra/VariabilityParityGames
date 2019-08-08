@@ -52,9 +52,9 @@ void Game::parseVPGFromFile(const string &filename, const char *specificconf) {
     }
     std::ifstream infile(filename);
 
+    char * s = new char[PARSER_LINE_SIZE];
     while (infile.good())
     {
-        char s[PARSER_LINE_SIZE];
         infile.getline(s, PARSER_LINE_SIZE,';');
         if(c == 0){
             // create bigC
@@ -75,6 +75,7 @@ void Game::parseVPGFromFile(const string &filename, const char *specificconf) {
                 parseVertex(s);
         }
     }
+    delete[] s;
     if (!infile.eof()) {
         throw std::string("could not open file");
     }
@@ -89,7 +90,6 @@ void Game::parseConfs(char * line) {
     while(*line == '\n' || *line == '\t' ||*line == ' ')
         line++;
     if(strncmp(line, "confs ",6) != 0) throw std::string("Expected confs");
-    char conf[PARSER_LINE_SIZE];
     int i = 6;
     char c;
     do{
@@ -153,6 +153,11 @@ int Game::parseConfSet(const char *line, int i, Subset *result) {
         *result = fullset;
         return i+1;
     }
+    bool inverse = false;
+    if(line[i] == '!') {
+        inverse = true;
+        i++;
+    }
     *result = emptyset;
     Subset entry = fullset;
     int var = 0;
@@ -160,18 +165,6 @@ int Game::parseConfSet(const char *line, int i, Subset *result) {
     string * seq;
     do
     {
-        if(var == 0){
-            seq = new string(line+i);
-            *seq = seq->substr(0, bm_n_vars);
-            auto cacheite = parseCache.find(*seq);
-            if(cacheite != parseCache.end())
-            {
-                *result |= cacheite->second;
-                i += bm_n_vars;
-                c = line[i++];
-                continue;
-            }
-        }
         c = line[i++];
         if(c == 'F'){
             if(var != 0) throw std::string("Unexpected F");
@@ -188,14 +181,16 @@ int Game::parseConfSet(const char *line, int i, Subset *result) {
             if (var > bm_n_vars) throw std::string("Too many bits");
             var++;
         } else {
-            Subset * s = new Subset();
-            *s = entry;
-            parseCache.insert(pair<string, Subset>(*seq, *s));
             *result |= entry;
             entry = fullset;
             var = 0;
         }
     } while(c =='0' || c == '1' || c == '-' || c == '+' || c == 'F');
+    if(inverse){
+        Subset a = *result;
+        *result = fullset;
+        *result -= a;
+    }
     return i;
 }
 
@@ -456,6 +451,24 @@ void Game::writePG(ostream *output) {
     }
 }
 
+void Game::writePG(ostream *output, Subset conf) {
+    *output << "parity " << n_nodes << ';';
+    for(int v = 0;v < n_nodes;v++){
+        *output << endl << reindexedOrg[v] << ' ' << priority[v] << ' ' << owner[v];
+        char seperator = ' ';
+        for(const auto & e : out_edges[v]) {
+            Subset cc = conf;
+            cc &= edge_guards[guard_index(e)];
+            if(cc == emptyset)
+                continue;
+            *output << seperator << reindexedOrg[target(e)];
+            seperator = ',';
+        }
+        *output << ';';
+    }
+}
+
+
 void Game::compressVertices() {
     compressvertices = true;
     vector<bool> remove(n_nodes);
@@ -646,5 +659,29 @@ int Game::findVertexWinningFor0() {
     if(winningfor0 == -1)
         winningfor0 = findVertexWinningForVertex(0);
     return winningfor0;
+}
+
+void Game::findAllElements(Subset s, vector<tuple<Subset, string>> *result) {
+    auto p = new char[bm_n_vars+1];
+    findAllElements(s, result, p, 0);
+    delete[] p;
+}
+
+void Game::findAllElements(Subset s, vector<tuple<Subset, string>> *result, char *p, int var) {
+    if(s == emptyset) return;
+    if(var == bm_n_vars)
+    {
+        p[var] = '\0';
+        result->push_back(make_tuple(s, string(p)));
+    } else {
+        Subset t1 = s;
+        t1 &= bm_vars[var];
+        p[var] = '1';
+        findAllElements(t1, result, p, var + 1);
+        p[var] = '0';
+        Subset t2 = s;
+        t2 -= bm_vars[var];
+        findAllElements(t2, result, p, var + 1);
+    }
 }
 

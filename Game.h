@@ -4,7 +4,7 @@
 
 #ifndef VPGSOLVER_GAME_H
 #define VPGSOLVER_GAME_H
-#define PARSER_LINE_SIZE  16384
+#define PARSER_LINE_SIZE  16777216
 #include <vector>
 #include <tuple>
 #include <unordered_set>
@@ -72,6 +72,9 @@ public :
     void parsePGFromFile(const string &filename);
 
     void writePG(ostream * output);
+    void writePG(ostream * output, Subset conf);
+    void findAllElements(Subset s, vector<tuple<Subset, string>> * result);
+    void findAllElements(Subset s, vector<tuple<Subset, string>> * result, char * p, int var);
 };
 
 
