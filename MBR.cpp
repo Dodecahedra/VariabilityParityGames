@@ -215,6 +215,8 @@ void MBR::solve() {
 
     delete P0b;
     delete VP1b;
+    delete confa;
+    delete confb;
 }
 
 //void MBR::createPessimisticGames(vector<bool> *pessimisticedges0, vector<bool> *pessimisticedges1) {

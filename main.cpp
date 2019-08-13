@@ -163,8 +163,10 @@ int main(int argc, char** argv) {
         fflush(stdout);
 
 #ifdef subsetbdd
+        bdd_gbc();
         // enable cache after parsing
         bdd_setcacheratio(200);
+        bdd_gbc();
 #endif
         auto start = std::chrono::high_resolution_clock::now();
 
