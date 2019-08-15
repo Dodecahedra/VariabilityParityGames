@@ -28,7 +28,6 @@
       <change beforePath="$PROJECT_DIR$/../FTSMMC/src/mmc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../FTSMMC/src/mmc/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../FTSMMC/src/mmc/features/FeatureDiagram.java" beforeDir="false" afterPath="$PROJECT_DIR$/../FTSMMC/src/mmc/features/FeatureDiagram.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Game.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MBR.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MBR.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../bin/FTSMMC.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/FTSMMC.jar" afterDir="false" />
@@ -59,8 +58,6 @@
       <change beforePath="$PROJECT_DIR$/../testsuite/minepump/game_phi9PGs_lambda.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../testsuite/randomgames/createdgameslog" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/randomgames/createdgameslog" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../testsuite/randomgames/creategames.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/randomgames/creategames.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/time.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/time.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/time_single.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/time_single.sh" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-release/" />
@@ -250,7 +247,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="1365" />
     <option name="width" value="1682" />
     <option name="height" value="1002" />
@@ -414,12 +411,12 @@
       <workItem from="1565271965976" duration="72000" />
       <workItem from="1565272301503" duration="594000" />
       <workItem from="1565342849016" duration="38000" />
-      <workItem from="1565696518177" duration="4491000" />
+      <workItem from="1565696518177" duration="5104000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="318573000" />
+    <option name="totallyTimeSpent" value="319186000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -431,8 +428,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1365" y="0" width="1682" height="1002" extended-state="0" />
-    <editor active="true" />
+    <frame x="1365" y="0" width="1682" height="1002" extended-state="1" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23684211" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
