@@ -273,8 +273,8 @@ int main(int argc, char** argv) {
         } else {
             zlnk::conf_metricoutput = metricoutput;
             zlnk z(&g);
-            auto * W0BigV = new unordered_set<int>;
-            auto * W1BigV = new unordered_set<int>;
+            auto * W0BigV = new VertexSetZlnk(g.n_nodes);
+            auto * W1BigV = new VertexSetZlnk(g.n_nodes);
 
     #ifdef SINGLEMODE
             vector<Subset> * W0vc = nullptr;

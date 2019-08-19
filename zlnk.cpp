@@ -10,32 +10,32 @@
 
 
 bool zlnk::conf_metricoutput = false;
-
+VertexSetZlnk zlnk::emptyvertexset;
 zlnk::zlnk(Game *game) {
+    zlnk::emptyvertexset = VertexSetZlnk(game->n_nodes);
 #ifdef SINGLEMODE
     vector<Subset> * vc = nullptr;
 #else
     vector<Subset> * vc = new vector<Subset>(game->n_nodes);
 #endif
-    unordered_set<int> * bigV = new unordered_set<int>(game->n_nodes);
+    bigV = new VertexSetZlnk(game->n_nodes);
     for(int i = 0;i<game->n_nodes;i++){
-        bigV->insert(i);
+        (*bigV)[i] = true;
 #ifndef SINGLEMODE
         (*vc)[i] = game->bigC;
 #endif
     }
     this->game = game;
-    this->bigV = bigV;
     this->vc = vc;
 }
 
-zlnk::zlnk(Game * game, unordered_set<int> * bigV, vector<Subset> * vc){
+zlnk::zlnk(Game * game, VertexSetZlnk * bigV, vector<Subset> * vc){
     this->game = game;
     this->bigV = bigV;
     this->vc = vc;
 }
 
-void zlnk::attr(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
+void zlnk::attr(int player, VertexSetZlnk *bigA, vector<Subset> *ac) {
     auto start = std::chrono::high_resolution_clock::now();
 
 
@@ -55,23 +55,28 @@ void zlnk::attr(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
 }
 
 #ifdef SINGLEMODE
-void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
+void zlnk::attrQueue(int player, VertexSetZlnk *bigA, vector<Subset> *ac) {
     vector<bool> countinitialized;
     vector<int> countincoming;
     countincoming.resize(game->n_nodes);
     countinitialized.resize(game->n_nodes);
     queue<int> qq;
+#ifdef VertexSetZlnkIsBitVector
+    for(int vi = 0;vi<game->n_nodes;vi++){
+        if(!(*bigA)[vi])
+            continue;
+#else
     for (const auto& vi : *bigA) {
+#endif
         qq.push(vi);
     }
     while(!qq.empty())
     {
         int vii = qq.front();
         qq.pop();
-
         for(auto & i : game->in_edges[vii]){
             int vi = target(i);
-            if(bigV->find(vi) == bigV->end()) // vertex not in the playing area anymore
+            if(!(*bigV)[vi]) // vertex not in the playing area anymore
                 continue;
             bool attracted = true;
             if(game->owner[vi] != player){
@@ -79,7 +84,7 @@ void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
                     countinitialized[vi] = true;
                     countincoming[vi] = 0;
                     for(auto & j : game->out_edges[vi])
-                        if(bigV->find(target(j)) != bigV->end() || bigA->find(target(j)) != bigA->end())
+                        if((*bigV)[target(j)] || (*bigA)[target(j)])
                             countincoming[vi]++;
                 }
                 if((--countincoming[vi]) > 0){
@@ -88,16 +93,22 @@ void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
             }
             if(!attracted)
                 continue;
-            bigA->insert(vi);
-            bigV->erase(vi);
+            (*bigA)[vi] = true;
+            (*bigV)[vi] = false;
             qq.push(vi);
         }
     }
 }
 #else
-void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
+void zlnk::attrQueue(int player, VertexSetZlnk *bigA, vector<Subset> *ac) {
     queue<int> qq;
+#ifdef VertexSetZlnkIsBitVector
+    for(int vi = 0;vi<game->n_nodes;vi++){
+        if(!(*bigA)[vi])
+            continue;
+#else
     for (const auto& vi : *bigA) {
+#endif
         qq.push(vi);
     }
     while(!qq.empty())
@@ -108,7 +119,7 @@ void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
         for(int i = 0;i<game->in_edges[vii].size();i++){
             int vi = target(game->in_edges[vii][i]);
             int gi = guard_index(game->in_edges[vii][i]);
-            if(bigV->find(vi) == bigV->end()) // vertex not in the playing area anymore
+            if(!(*bigV)[vi]) // vertex not in the playing area anymore
                 continue;
             Subset attracted;
             if(game->owner[vi] == player){
@@ -129,9 +140,9 @@ void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
             }
             if(attracted == emptyset)
                 continue;
-            if(bigA->find(vi) == bigA->end()){
+            if(!(*bigA)[vi]){
                 // add vertex to attracted set
-                bigA->insert(vi);
+                (*bigA)[vi] = true;
                 (*ac)[vi] = attracted;
             } else {
                 (*ac)[vi] |= attracted;
@@ -139,7 +150,7 @@ void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
             (*vc)[vi] -= attracted;
             if((*vc)[vi] == emptyset)
             {
-                bigV->erase(vi);
+                (*bigV)[vi] = false;
             }
             qq.push(vi);
             if(conf_metricoutput)
@@ -155,17 +166,6 @@ void zlnk::attrQueue(int player, unordered_set<int> *bigA, vector<Subset> *ac) {
 }
 #endif
 
-
-void zlnk::test() {
-    auto * bigA = new unordered_set<int>;
-    vector<Subset> * ac = new vector<Subset>(game->n_nodes);
-    for(int i = 0;i<game->n_nodes;i++)
-        (*ac)[i] = emptyset;
-    bigA->insert(12);
-    (*ac)[12] = game->bigC;
-    attr(1, bigA, ac);
-}
-
 #ifdef SINGLEMODE
 /**
  * Assume empty winning sets (bigV empty and vc all 0's)
@@ -174,8 +174,8 @@ void zlnk::test() {
  * @param W1bigV
  * @param W1vc
  */
-void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set<int> *W1bigV, vector<Subset> *W1vc) {
-    if(bigV->empty()) return;
+void zlnk::solve(VertexSetZlnk *W0bigV, vector<Subset> *W0vc, VertexSetZlnk *W1bigV, vector<Subset> *W1vc) {
+    if(*bigV == zlnk::emptyvertexset) return;
 
     auto [h,l] = getHighLowPrio();
     int player = (h % 2);
@@ -188,8 +188,8 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
         return;
     }
 
-    unordered_set<int> *WMebigV;
-    unordered_set<int> *WOpbigV;
+    VertexSetZlnk *WMebigV;
+    VertexSetZlnk *WOpbigV;
     if(player == 0){
         WMebigV = W0bigV;
         WOpbigV = W1bigV;
@@ -200,9 +200,9 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
 
 
 
-    auto * bigA = new unordered_set<int>;
+    auto * bigA = new VertexSetZlnk(game->n_nodes);
 
-    auto * subBigV = new unordered_set<int>;
+    auto * subBigV = new VertexSetZlnk(game->n_nodes);
     getVCWithPrio(bigA, nullptr, h);
 
     *subBigV = *bigV;
@@ -212,14 +212,18 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
     subgame.solve(W0bigV, W0vc, W1bigV, W1vc);
     attracting += subgame.attracting;
     cout << "\nUp1\n";
-    if(WOpbigV->empty()){
+    if(*WOpbigV == zlnk::emptyvertexset){
         unify(WMebigV, nullptr, bigA, nullptr);
-        return;
     } else {
         // clone content and wipe winningConf sets
         *bigA = *WOpbigV;
+#ifdef VertexSetZlnkIsBitVector
+        std::fill(W0bigV->begin(), W0bigV->end(), false);
+        std::fill(W1bigV->begin(), W1bigV->end(), false);
+#else
         W0bigV->clear();
         W1bigV->clear();
+#endif
 
         zlnk subgame2(game, bigV, vc);
         subgame2.attr(1-player, bigA, nullptr);
@@ -229,8 +233,6 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
         cout << "\nUp2\n";
         unify(WOpbigV, nullptr, bigA, nullptr);
     }
-    bigA->clear();
-    subBigV->clear();
     delete bigA;
     delete subBigV;
 }
@@ -242,8 +244,8 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
  * @param W1bigV
  * @param W1vc
  */
-void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set<int> *W1bigV, vector<Subset> *W1vc) {
-    if(bigV->empty()) return;
+void zlnk::solve(VertexSetZlnk *W0bigV, vector<Subset> *W0vc, VertexSetZlnk *W1bigV, vector<Subset> *W1vc) {
+    if(*bigV == zlnk::emptyvertexset) return;
 
     auto [h,l] = getHighLowPrio();
     int player = (h % 2);
@@ -258,9 +260,9 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
         return;
     }
 
-    unordered_set<int> *WMebigV;
+    VertexSetZlnk *WMebigV;
     vector<Subset> *WMevc;
-    unordered_set<int> *WOpbigV;
+    VertexSetZlnk *WOpbigV;
     vector<Subset> *WOpvc;
     if(player == 0){
         WMebigV = W0bigV;
@@ -276,10 +278,10 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
 
 
 
-    auto * bigA = new unordered_set<int>;
+    auto * bigA = new VertexSetZlnk(game->n_nodes);;
     vector<Subset> * ac = new vector<Subset>(game->n_nodes);
 
-    auto * subBigV = new unordered_set<int>;
+    auto * subBigV = new VertexSetZlnk(game->n_nodes);;
     vector<Subset> * subvc = new vector<Subset>(game->n_nodes);
 
     getVCWithPrio(bigA, ac, h);
@@ -292,15 +294,19 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
     subgame.solve(W0bigV, W0vc, W1bigV, W1vc);
     attracting += subgame.attracting;
     cout << "\nUp1\n";
-    if(WOpbigV->empty()){
+    if(*WOpbigV == zlnk::emptyvertexset){
         unify(WMebigV, WMevc, bigA, ac);
-        return;
     } else {
         // clone content and wipe winningConf sets
         *bigA = *WOpbigV;
         *ac = *WOpvc;
+#ifdef VertexSetZlnkIsBitVector
+        std::fill(W0bigV->begin(), W0bigV->end(), false);
+        std::fill(W1bigV->begin(), W1bigV->end(), false);
+#else
         W0bigV->clear();
         W1bigV->clear();
+#endif
         fill(W0vc->begin(), W0vc->end(), emptyset);
         fill(W1vc->begin(), W1vc->end(), emptyset);
 
@@ -312,10 +318,6 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
         cout << "\nUp2\n";
         unify(WOpbigV, WOpvc, bigA, ac);
     }
-    bigA->clear();
-    ac->clear();
-    subBigV->clear();
-    subvc->clear();
     delete bigA;
     delete ac;
     delete subBigV;
@@ -326,7 +328,13 @@ void zlnk::solve(unordered_set<int> *W0bigV, vector<Subset> *W0vc, unordered_set
 tuple<int, int> zlnk::getHighLowPrio() {
     int highest = 0;
     int lowest = INT32_MAX;
+#ifdef VertexSetZlnkIsBitVector
+    for(int vi = 0;vi<game->n_nodes;vi++){
+        if(!(*bigV)[vi])
+            continue;
+#else
     for (const auto& vi : *bigV) {
+#endif
         int prio = game->priority[vi];
         if(prio < lowest) lowest = prio;
         if(prio > highest) highest = prio;
@@ -334,10 +342,10 @@ tuple<int, int> zlnk::getHighLowPrio() {
     return make_tuple(highest, lowest);
 }
 
-void zlnk::getVCWithPrio(unordered_set<int> *bigA, vector<Subset> *ac, int prio) {
-    for (const auto& vi : *bigV) {
-        if(game->priority[vi] == prio){
-            bigA->insert(vi);
+void zlnk::getVCWithPrio(VertexSetZlnk *bigA, vector<Subset> *ac, int prio) {
+    for (const auto& vi : game->priorityI[prio]) {
+        if((*bigV)[vi]){
+            (*bigA)[vi] = true;
 #ifndef SINGLEMODE
             (*ac)[vi] = (*vc)[vi];
 #endif
@@ -345,9 +353,15 @@ void zlnk::getVCWithPrio(unordered_set<int> *bigA, vector<Subset> *ac, int prio)
     }
 }
 
-void zlnk::unify(unordered_set<int> *bigA, vector<Subset> *ac, unordered_set<int> *bigB, vector<Subset> *bc) {
+void zlnk::unify(VertexSetZlnk *bigA, vector<Subset> *ac, VertexSetZlnk *bigB, vector<Subset> *bc) {
+#ifdef VertexSetZlnkIsBitVector
+    for (int vi = 0;vi < game->n_nodes;vi++){
+        if(!(*bigB)[vi])
+            continue;
+#else
     for (const auto& vi : *bigB) {
-        bigA->insert(vi);
+#endif
+        (*bigA)[vi] = true;
 #ifndef SINGLEMODE
         (*ac)[vi] |= (*bc)[vi];
 #endif
@@ -355,18 +369,30 @@ void zlnk::unify(unordered_set<int> *bigA, vector<Subset> *ac, unordered_set<int
 }
 
 #ifdef SINGLEMODE
-void zlnk::removeFromBigV(unordered_set<int> * bigA, vector<Subset> *ac){
+void zlnk::removeFromBigV(VertexSetZlnk * bigA, vector<Subset> *ac){
+#ifdef VertexSetZlnkIsBitVector
+    for (int vi = 0;vi < game->n_nodes;vi++){
+        if(!(*bigA)[vi])
+            continue;
+#else
     for (const auto& vi : *bigA) {
-        bigV->erase(vi);
+#endif
+        (*bigV)[vi] = false;
     }
 }
 void zlnk::removeFromBigV(int i, Subset c) {
-    bigV->erase(i);
+    (*bigV)[i] = false;
 }
 
 #else
-void zlnk::removeFromBigV(unordered_set<int> * bigA, vector<Subset> *ac){
-    for (const auto& vi : *bigA) {
+void zlnk::removeFromBigV(VertexSetZlnk * bigA, vector<Subset> *ac){
+#ifdef VertexSetZlnkIsBitVector
+    for (int vi = 0;vi < game->n_nodes;vi++){
+        if(!(*bigA)[vi])
+            continue;
+#else
+        for (const auto& vi : *bigA) {
+#endif
         removeFromBigV(vi, (*ac)[vi]);
     }
 }
@@ -375,7 +401,7 @@ void zlnk::removeFromBigV(int i, Subset c) {
     (*vc)[i] -= c;
     if((*vc)[i] == emptyset)
     {
-        bigV->erase(i);
+        (*bigV)[i] = false;
     }
 }
 

@@ -6,29 +6,29 @@
 #define VPGSOLVER_ZLNK_H
 
 
-#include <unordered_set>
 #include "Game.h"
 
 class zlnk {
 public:
     static bool conf_metricoutput;
+    static VertexSetZlnk emptyvertexset;
     long attracting = 0;
     Game * game;
-    unordered_set<int> * bigV;
+    VertexSetZlnk * bigV;
     vector<Subset> * vc;
 
 
     zlnk(Game * game);
-    zlnk(Game * game, unordered_set<int> * bigV, vector<Subset> * vc);
+    zlnk(Game * game, VertexSetZlnk * bigV, vector<Subset> * vc);
 
-    void attr(int player,unordered_set<int> * bigA,vector<Subset> * ac);
-    void attrNaive(int player,unordered_set<int> * bigA,vector<Subset> * ac);
-    void attrQueue(int player,unordered_set<int> * bigA,vector<Subset> * ac);
-    void solve(unordered_set<int> * W0bigV, vector<Subset> * W0vc,unordered_set<int> * W1bigV, vector<Subset> * W1vc);
+    void attr(int player,VertexSetZlnk * bigA,vector<Subset> * ac);
+    void attrNaive(int player,VertexSetZlnk * bigA,vector<Subset> * ac);
+    void attrQueue(int player,VertexSetZlnk * bigA,vector<Subset> * ac);
+    void solve(VertexSetZlnk * W0bigV, vector<Subset> * W0vc,VertexSetZlnk * W1bigV, vector<Subset> * W1vc);
     tuple<int,int> getHighLowPrio();
-    void getVCWithPrio(unordered_set<int> *bigA, vector<Subset> *ac, int prio);
-    void unify(unordered_set<int> * bigA, vector<Subset> *ac, unordered_set<int> * bigB, vector<Subset> * bc);
-    void removeFromBigV(unordered_set<int> * bigA, vector<Subset> *ac);
+    void getVCWithPrio(VertexSetZlnk *bigA, vector<Subset> *ac, int prio);
+    void unify(VertexSetZlnk * bigA, vector<Subset> *ac, VertexSetZlnk * bigB, vector<Subset> * bc);
+    void removeFromBigV(VertexSetZlnk * bigA, vector<Subset> *ac);
     void removeFromBigV(int i, Subset c);
     void test();
 };

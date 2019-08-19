@@ -3,11 +3,11 @@ project(VPGSolver)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ../../bin/)
-add_executable(VPGSolver_bdd main.cpp Game.cpp Game.h zlnk.cpp zlnk.h conf.h SubsetExplicit.cpp SubsetExplicit.h FPIte.cpp FPIte.h MBR.cpp MBR.h Measurements/bintree.cpp Measurements/bintree.h)
-add_executable(VPGSolver_bdd_single main.cpp Game.cpp Game.h zlnk.cpp zlnk.h conf.h SubsetExplicit.cpp SubsetExplicit.h FPIte.cpp FPIte.h MBR.h)
+add_executable(VPGSolver_bdd main.cpp Game.cpp Game.h zlnk.cpp zlnk.h conf.h SubsetExplicit.cpp SubsetExplicit.h FPIte.cpp FPIte.h MBR.cpp MBR.h Measurements/bintree.cpp Measurements/bintree.h UnorderedVertexSet.cpp UnorderedVertexSet.h)
+add_executable(VPGSolver_bdd_single main.cpp Game.cpp Game.h zlnk.cpp zlnk.h conf.h SubsetExplicit.cpp SubsetExplicit.h FPIte.cpp FPIte.h MBR.h UnorderedVertexSet.cpp UnorderedVertexSet.h)
 
-add_executable(VPGSolver_explicit main.cpp Game.cpp Game.h zlnk.cpp zlnk.h conf.h SubsetExplicit.cpp SubsetExplicit.h FPIte.cpp FPIte.h MBR.cpp MBR.h)
-add_executable(VPGlambdameasure main.cpp Game.cpp Game.h zlnk.cpp zlnk.h conf.h SubsetExplicit.cpp SubsetExplicit.h FPIte.cpp FPIte.h MBR.cpp MBR.h)
+add_executable(VPGSolver_explicit main.cpp Game.cpp Game.h zlnk.cpp zlnk.h conf.h SubsetExplicit.cpp SubsetExplicit.h FPIte.cpp FPIte.h MBR.cpp MBR.h UnorderedVertexSet.cpp UnorderedVertexSet.h)
+add_executable(VPGlambdameasure main.cpp Game.cpp Game.h zlnk.cpp zlnk.h conf.h SubsetExplicit.cpp SubsetExplicit.h FPIte.cpp FPIte.h MBR.cpp MBR.h UnorderedVertexSet.cpp UnorderedVertexSet.h bool_reference.cpp bool_reference.h)
 find_library(BDD_LIB bdd lib)
 
 target_compile_definitions(VPGSolver_bdd PUBLIC subsetbdd)

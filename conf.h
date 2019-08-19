@@ -23,5 +23,15 @@
 #define emptyset SubsetExplicit::SetEmptyset
 #include "SubsetExplicit.h"
 #endif
+#define VertexSetZlnkIsBitVector
+//#define VertexSetZlnkIsHashSet
+#ifdef VertexSetZlnkIsBitVector
+#include <vector>
+#define VertexSetZlnk  vector<bool>
+#endif
+#ifdef VertexSetZlnkIsHashSet
+#include "UnorderedVertexSet.h"
+#define VertexSetZlnk  UnorderedVertexSet
+#endif
 #define VertexSet vector<bool>
 #endif //VPGSOLVER_CONF_H

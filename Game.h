@@ -56,8 +56,8 @@ public :
     void parseVertex(char * line);
 
     void dumpSet(Subset * dumpee, Subset t, char * p, int var);
-    void printCV(unordered_set<int> *bigV, vector<Subset> *vc, bool fulloutut);
-    void printCV(unordered_set<int> *bigV, vector<Subset> *vc, Subset t, char * p, int var, bool fulloutput);
+    void printCV(VertexSetZlnk *bigV, vector<Subset> *vc, bool fulloutut);
+    void printCV(VertexSetZlnk *bigV, vector<Subset> *vc, Subset t, char * p, int var, bool fulloutput);
     int readUntil(const char * line, char delim);
 
     void buildInEdges();

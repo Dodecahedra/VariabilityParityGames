@@ -281,14 +281,16 @@ int Game::readUntil(const char * line, char delim){
     return i;
 }
 
-void Game::printCV(unordered_set<int> *bigV, vector<Subset> *vc, Subset t, char * p, int var, bool fulloutput) {
+void Game::printCV(VertexSetZlnk *bigV, vector<Subset> *vc, Subset t, char * p, int var, bool fulloutput) {
     if(t == emptyset) return;
     if(var == bm_n_vars)
     {
         p[var]  = '\0';
         cout << "For product " << p << " the following vertices are in: ";
         if(fulloutput){
-            for(const int& vi : *bigV) {
+            for(int vi = 0;vi<n_nodes;vi++) {
+                if(!(*bigV)[vi])
+                    continue;
                 Subset result = (*vc)[vi];
                 result &= t;
                 if(!((result) == emptyset)){
@@ -320,16 +322,18 @@ void Game::printCV(unordered_set<int> *bigV, vector<Subset> *vc, Subset t, char 
 }
 
 
-void Game::printCV(unordered_set<int> *bigV, vector<Subset> *vc, bool fulloutput) {
+void Game::printCV(VertexSetZlnk *bigV, vector<Subset> *vc, bool fulloutput) {
 #ifdef SINGLEMODE
     cout << "The following vertices are in: ";
     if(fulloutput){
-        for(const int& vi : *bigV) {
-            for(auto j : orgvertices[vi])
+        for(int vi = 0;vi<n_nodes;vi++) {
+            if(!(*bigV)[vi])
+                continue;
+            for (auto j : orgvertices[vi])
                 cout << j << ',';
         }
     } else {
-        if(bigV->find(findVertexWinningFor0()) != bigV->end())
+        if((*bigV)[findVertexWinningFor0()])
             cout << "0,";
     }
     cout << "\n";
@@ -422,7 +426,7 @@ void Game::reindexVertices() {
     for(int & edge_origin : edge_origins){
         edge_origin = reindexedNew[edge_origin];
     }
-//    unordered_set<int> p_old;
+//    VertexSetZlnk p_old;
 //    for(auto & p : priorityI){
 //        p_old = p;
 //        p.clear();
