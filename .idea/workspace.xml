@@ -19,91 +19,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="065c0f65-4e45-4bdd-bfb0-047fd78e757c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Report/FPITEalg.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/FPITEalg.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Report/Report.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/Report.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/Report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/Report.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/appendixResults.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/appendixResults.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/experimental_evaluation_intro.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/experimental_evaluation_intro.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/implementation.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/implementation.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/mybib.bib" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/mybib.bib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/pessimistic.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/pessimistic.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Report/results.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/BC_randomgames/Fixed-point local product based_Incremental pre-solve_Incremental pre-solve local_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/BC_randomgames/Fixed-point local product based_Incremental pre-solve_Incremental pre-solve local_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/BC_randomgames/Zlnk product based_Incremental pre-solve_Incremental pre-solve local_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/BC_randomgames/Zlnk product based_Incremental pre-solve_Incremental pre-solve local_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/BC_randomgames/Zlnk product based_Zlnk fam based - explicit_Zlnk fam based - symbolic_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/BC_randomgames/Zlnk product based_Zlnk fam based - explicit_Zlnk fam based - symbolic_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/FC_randomgames/Fixed-point local product based_Incremental pre-solve_Incremental pre-solve local_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/FC_randomgames/Fixed-point local product based_Incremental pre-solve_Incremental pre-solve local_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/FC_randomgames/Zlnk product based_Incremental pre-solve_Incremental pre-solve local_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/FC_randomgames/Zlnk product based_Incremental pre-solve_Incremental pre-solve local_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/FC_randomgames/Zlnk product based_Zlnk fam based - explicit_Zlnk fam based - symbolic_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/FC_randomgames/Zlnk product based_Zlnk fam based - explicit_Zlnk fam based - symbolic_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/FF_randomgames/Fixed-point local product based_Incremental pre-solve_Incremental pre-solve local_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/FF_randomgames/Fixed-point local product based_Incremental pre-solve_Incremental pre-solve local_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/FF_randomgames/Zlnk product based_Incremental pre-solve_Incremental pre-solve local_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/FF_randomgames/Zlnk product based_Incremental pre-solve_Incremental pre-solve local_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/FF_randomgames/Zlnk product based_Zlnk fam based - explicit_Zlnk fam based - symbolic_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/FF_randomgames/Zlnk product based_Zlnk fam based - explicit_Zlnk fam based - symbolic_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/elevator/Fixed-point local product based_Incremental pre-solve_Incremental pre-solve local_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/elevator/Fixed-point local product based_Incremental pre-solve_Incremental pre-solve local_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/elevator/Zlnk product based_Incremental pre-solve_Incremental pre-solve local_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/elevator/Zlnk product based_Incremental pre-solve_Incremental pre-solve local_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/elevator/Zlnk product based_Zlnk fam based - explicit_Zlnk fam based - symbolic_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/elevator/Zlnk product based_Zlnk fam based - explicit_Zlnk fam based - symbolic_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/minepump/Fixed-point local product based_Incremental pre-solve_Incremental pre-solve local_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/minepump/Fixed-point local product based_Incremental pre-solve_Incremental pre-solve local_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/minepump/Zlnk product based_Incremental pre-solve_Incremental pre-solve local_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/minepump/Zlnk product based_Incremental pre-solve_Incremental pre-solve local_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/minepump/Zlnk product based_Zlnk fam based - explicit_Zlnk fam based - symbolic_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/minepump/Zlnk product based_Zlnk fam based - explicit_Zlnk fam based - symbolic_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/randomscalegames/Zlnk product based_Incremental pre-solve_Incremental pre-solve local_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/randomscalegames/Zlnk product based_Incremental pre-solve_Incremental pre-solve local_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/results/randomscalegames/Zlnk product based_Zlnk fam based - explicit_Zlnk fam based - symbolic_.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/results/randomscalegames/Zlnk product based_Zlnk fam based - explicit_Zlnk fam based - symbolic_.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/test_cases.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/test_cases.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_bdd" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_bdd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_bdd_single" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_bdd_single" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_explicit" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_explicit" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/VPGlambdameasure" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGlambdameasure" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../testsuite/data/.ipynb_checkpoints/datacollection-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/.ipynb_checkpoints/datacollection-checkpoint.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../testsuite/data/datacollection.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/datacollection.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/BC_randomgames_zlnk.data" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/BC_randomgames_zlnk.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/BC_randomgames_zlnk_explicit.data" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/BC_randomgames_zlnk_explicit.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/FC_randomgames_zlnk.data" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/FC_randomgames_zlnk.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/FC_randomgames_zlnk_explicit.data" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/FC_randomgames_zlnk_explicit.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/FF_randomgames_zlnk.data" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/FF_randomgames_zlnk.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/FF_randomgames_zlnk_explicit.data" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/FF_randomgames_zlnk_explicit.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/BC_randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/BC_randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/BC_randomgames_zlnk_explicit.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/BC_randomgames_zlnk_explicit.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/FC_randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/FC_randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/FC_randomgames_zlnk_explicit.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/FC_randomgames_zlnk_explicit.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/FF_randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/FF_randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/FF_randomgames_zlnk_explicit.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/FF_randomgames_zlnk_explicit.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_BC_randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_BC_randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_BC_randomgames_zlnk_explicit.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_BC_randomgames_zlnk_explicit.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_FC_randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_FC_randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_FC_randomgames_zlnk_explicit.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_FC_randomgames_zlnk_explicit.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_FF_randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_FF_randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_FF_randomgames_zlnk_explicit.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_FF_randomgames_zlnk_explicit.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_elevator_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_elevator_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_elevator_zlnk_explicit.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_elevator_zlnk_explicit.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_minepump_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_minepump_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_minepump_zlnk_explicit.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_minepump_zlnk_explicit.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_randomgames_zlnk_explicit.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_randomgames_zlnk_explicit.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_randomscalegames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_randomscalegames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_randomscalegames_zlnk_explicit.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/clean_randomscalegames_zlnk_explicit.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/elevator_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/elevator_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/elevator_zlnk_explicit.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/elevator_zlnk_explicit.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/minepump_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/minepump_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/minepump_zlnk_explicit.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/minepump_zlnk_explicit.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/randomgames_zlnk_explicit.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/randomgames_zlnk_explicit.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/randomscalegames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/randomscalegames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/family/csvs/randomscalegames_zlnk_explicit.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/family/csvs/randomscalegames_zlnk_explicit.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/BC_randomgames_zlnk.data" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/BC_randomgames_zlnk.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/FC_randomgames_zlnk.data" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/FC_randomgames_zlnk.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/FF_randomgames_zlnk.data" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/FF_randomgames_zlnk.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/csvs/BC_randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/csvs/BC_randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/csvs/FC_randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/csvs/FC_randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/csvs/FF_randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/csvs/FF_randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/csvs/clean_BC_randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/csvs/clean_BC_randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/csvs/clean_FC_randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/csvs/clean_FC_randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/csvs/clean_FF_randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/csvs/clean_FF_randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/csvs/clean_elevator_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/csvs/clean_elevator_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/csvs/clean_minepump_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/csvs/clean_minepump_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/csvs/clean_randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/csvs/clean_randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/csvs/clean_randomscalegames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/csvs/clean_randomscalegames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/csvs/elevator_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/csvs/elevator_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/csvs/minepump_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/csvs/minepump_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/csvs/randomgames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/csvs/randomgames_zlnk.data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/data/singles/csvs/randomscalegames_zlnk.data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/data/singles/csvs/randomscalegames_zlnk.data.csv" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-release/" />
@@ -227,6 +147,7 @@
               <caret line="27" column="30" lean-forward="true" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
               <folding>
                 <element signature="e#314#459#0" expanded="true" />
+                <element signature="e#656#729#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -339,7 +260,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="1365" />
     <option name="width" value="1682" />
     <option name="height" value="1002" />
@@ -505,12 +426,12 @@
       <workItem from="1565342849016" duration="38000" />
       <workItem from="1565696518177" duration="5104000" />
       <workItem from="1566221491402" duration="10970000" />
-      <workItem from="1566297650213" duration="1072000" />
+      <workItem from="1566297650213" duration="1673000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="331228000" />
+    <option name="totallyTimeSpent" value="331829000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -523,7 +444,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1365" y="0" width="1682" height="1002" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24296206" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -536,7 +456,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3291714" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Messages" order="8" sideWeight="0.49877602" weight="0.44040862" />
+      <window_info active="true" anchor="bottom" id="Messages" order="8" sideWeight="0.49877602" visible="true" weight="0.44040862" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3291714" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.501224" side_tool="true" weight="0.44040862" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.3291714" />
@@ -1022,6 +942,7 @@
           <caret line="27" column="30" lean-forward="true" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
           <folding>
             <element signature="e#314#459#0" expanded="true" />
+            <element signature="e#656#729#0" expanded="true" />
           </folding>
         </state>
       </provider>
