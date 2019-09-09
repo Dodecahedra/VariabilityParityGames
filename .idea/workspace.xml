@@ -19,20 +19,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="065c0f65-4e45-4bdd-bfb0-047fd78e757c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Report/FPITEalg.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/FPITEalg.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Report/PG_algs.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/PG_algs.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Report/Report.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/Report.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Report/Report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/Report.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zlnk.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/zlnk.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zlnk.h" beforeDir="false" afterPath="$PROJECT_DIR$/zlnk.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_bdd" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_bdd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_bdd_single" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_bdd_single" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/VPGSolver_explicit" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGSolver_explicit" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/VPGlambdameasure" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/VPGlambdameasure" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/randomgames/gameBC51/sSVPG01011110100" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/randomverification/verifyall.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/randomverification/verifyall.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testsuite/time.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../testsuite/time.sh" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-release/" />
@@ -399,7 +389,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1365" y="0" width="1682" height="1002" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25520197" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
