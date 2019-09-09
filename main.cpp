@@ -276,6 +276,8 @@ int main(int argc, char** argv) {
             auto * W0BigV = new VertexSetZlnk(g.n_nodes);
             auto * W1BigV = new VertexSetZlnk(g.n_nodes);
 
+            if(solvelocal)
+                z.solvelocal = 2;
     #ifdef SINGLEMODE
             vector<Subset> * W0vc = nullptr;
             vector<Subset> * W1vc = nullptr;

@@ -16,6 +16,7 @@ public:
     Game * game;
     VertexSetZlnk * bigV;
     vector<Subset> * vc;
+    int solvelocal = -1;
 
 
     zlnk(Game * game);
@@ -31,6 +32,9 @@ public:
     void removeFromBigV(VertexSetZlnk * bigA, vector<Subset> *ac);
     void removeFromBigV(int i, Subset c);
     void test();
+
+    void removeCF(Subset c, VertexSetZlnk * bigA, vector<Subset> *ac);
+    bool inSolveLocal(int player);
 };
 
 

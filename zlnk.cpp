@@ -175,6 +175,7 @@ void zlnk::attrQueue(int player, VertexSetZlnk *bigA, vector<Subset> *ac) {
  * @param W1vc
  */
 void zlnk::solve(VertexSetZlnk *W0bigV, vector<Subset> *W0vc, VertexSetZlnk *W1bigV, vector<Subset> *W1vc) {
+    cout << "Delta is " << solvelocal << endl;
     if(*bigV == zlnk::emptyvertexset) return;
 
     auto [h,l] = getHighLowPrio();
@@ -209,29 +210,42 @@ void zlnk::solve(VertexSetZlnk *W0bigV, vector<Subset> *W0vc, VertexSetZlnk *W1b
     zlnk subgame(game, subBigV, nullptr);
     subgame.attr(player, bigA, nullptr);
     cout << "\nDown1\n";
+    if(inSolveLocal(1 - player))
+        subgame.solvelocal = 1-player;
+    else
+        subgame.solvelocal = -1;
+
     subgame.solve(W0bigV, W0vc, W1bigV, W1vc);
     attracting += subgame.attracting;
     cout << "\nUp1\n";
     if(*WOpbigV == zlnk::emptyvertexset){
         unify(WMebigV, nullptr, bigA, nullptr);
     } else {
-        // clone content and wipe winningConf sets
-        *bigA = *WOpbigV;
+        if(inSolveLocal(1-player) && (*WOpbigV)[0]){
+        } else {
+            // clone content and wipe winningConf sets
+            *bigA = *WOpbigV;
 #ifdef VertexSetZlnkIsBitVector
-        std::fill(W0bigV->begin(), W0bigV->end(), false);
-        std::fill(W1bigV->begin(), W1bigV->end(), false);
+            std::fill(W0bigV->begin(), W0bigV->end(), false);
+            std::fill(W1bigV->begin(), W1bigV->end(), false);
 #else
-        W0bigV->clear();
-        W1bigV->clear();
+            W0bigV->clear();
+            W1bigV->clear();
 #endif
 
-        zlnk subgame2(game, bigV, vc);
-        subgame2.attr(1-player, bigA, nullptr);
-        cout << "\nDown2\n";
-        subgame2.solve(W0bigV, W0vc, W1bigV, W1vc);
-        attracting += subgame.attracting;
-        cout << "\nUp2\n";
-        unify(WOpbigV, nullptr, bigA, nullptr);
+            zlnk subgame2(game, bigV, vc);
+            subgame2.attr(1 - player, bigA, nullptr);
+            if(inSolveLocal(1-player) && (*bigA)[0]){
+                *WOpbigV = *bigA;
+            } else {
+                cout << "\nDown2\n";
+                subgame2.solvelocal = solvelocal;
+                subgame2.solve(W0bigV, W0vc, W1bigV, W1vc);
+                attracting += subgame.attracting;
+                cout << "\nUp2\n";
+                unify(WOpbigV, nullptr, bigA, nullptr);
+            }
+        }
     }
     delete bigA;
     delete subBigV;
@@ -405,4 +419,24 @@ void zlnk::removeFromBigV(int i, Subset c) {
     }
 }
 
+void zlnk::removeCF(Subset c, VertexSetZlnk *bigA, vector<Subset> *ac) {
+#ifdef VertexSetZlnkIsBitVector
+    for (int vi = 0;vi < game->n_nodes;vi++){
+        if(!(*bigA)[vi])
+            continue;
+#else
+    for (const auto& vi : *bigA) {
 #endif
+        (*ac)[vi] -= c;
+        if((*ac)[vi] == emptyset)
+            (*bigA)[vi] = false;
+    }
+}
+
+#endif
+
+bool zlnk::inSolveLocal(int player) {
+    if(solvelocal == 2)
+        return true;
+    return player == solvelocal;
+}
