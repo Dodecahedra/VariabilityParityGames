@@ -19,10 +19,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="065c0f65-4e45-4bdd-bfb0-047fd78e757c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Report/FPITEalg.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/FPITEalg.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Report/PG_algs.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/PG_algs.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Report/Report.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/Report.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Report/Report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/Report.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Report/localrecursivezlnk.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/localrecursivezlnk.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Report/mybib.bib" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/mybib.bib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Report/preliminatires_solving.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Report/preliminatires_solving.tex" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-release/" />
@@ -55,7 +56,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
+            <state relative-caret-position="4185">
               <caret line="279" column="32" selection-start-line="279" selection-start-column="32" selection-end-line="279" selection-end-column="32" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -76,8 +77,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/zlnk.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="434" lean-forward="true" selection-start-line="434" selection-end-line="434" />
+            <state relative-caret-position="277">
+              <caret line="102" column="11" selection-start-line="102" selection-start-column="11" selection-end-line="102" selection-end-column="11" />
               <folding>
                 <element signature="e#37#53#0" expanded="true" />
                 <element signature="e#305#335#0" expanded="true" />
@@ -86,8 +87,6 @@
                 <element signature="e#4537#4627#0" expanded="true" />
                 <element signature="e#4679#6971#0" expanded="true" />
                 <element signature="e#8747#8788#0" expanded="true" />
-                <element signature="e#10435#10903#0" expanded="true" />
-                <element signature="e#11119#11149#0" expanded="true" />
                 <element signature="e#11340#11370#0" expanded="true" />
               </folding>
             </state>
@@ -215,7 +214,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -227,6 +225,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -372,11 +371,12 @@
       <workItem from="1567499068986" duration="9391000" />
       <workItem from="1567760019557" duration="599000" />
       <workItem from="1568021772694" duration="3140000" />
+      <workItem from="1568895034334" duration="239000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="345558000" />
+    <option name="totallyTimeSpent" value="345797000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -390,7 +390,7 @@
   <component name="ToolWindowManager">
     <frame x="1365" y="0" width="1682" height="1002" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25520197" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25826192" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -859,16 +859,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zlnk.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
+        <state relative-caret-position="4185">
           <caret line="279" column="32" selection-start-line="279" selection-start-column="32" selection-end-line="279" selection-end-column="32" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
@@ -876,10 +869,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/zlnk.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/zlnk.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="434" lean-forward="true" selection-start-line="434" selection-end-line="434" />
+        <state relative-caret-position="277">
+          <caret line="102" column="11" selection-start-line="102" selection-start-column="11" selection-end-line="102" selection-end-column="11" />
           <folding>
             <element signature="e#37#53#0" expanded="true" />
             <element signature="e#305#335#0" expanded="true" />
@@ -888,8 +888,6 @@
             <element signature="e#4537#4627#0" expanded="true" />
             <element signature="e#4679#6971#0" expanded="true" />
             <element signature="e#8747#8788#0" expanded="true" />
-            <element signature="e#10435#10903#0" expanded="true" />
-            <element signature="e#11119#11149#0" expanded="true" />
             <element signature="e#11340#11370#0" expanded="true" />
           </folding>
         </state>
