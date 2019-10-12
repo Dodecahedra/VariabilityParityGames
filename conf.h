@@ -26,8 +26,8 @@
 #define VertexSetZlnkIsBitVector
 //#define VertexSetZlnkIsHashSet
 #ifdef VertexSetZlnkIsBitVector
-#include <vector>
-#define VertexSetZlnk  vector<bool>
+#include "VectorBoolOptimized.h"
+#define VertexSetZlnk  VectorBoolOptimized
 #endif
 #ifdef VertexSetZlnkIsHashSet
 #include "UnorderedVertexSet.h"

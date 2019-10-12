@@ -37,7 +37,7 @@ void allsatPrintHandler(char* varset, int size)
 }
 
 int main(int argc, char** argv) {
-#ifdef SINGLEMODE
+    #ifdef SINGLEMODE
     cout << "== Running Single mode == \n";
 #endif
 #ifdef subsetbdd

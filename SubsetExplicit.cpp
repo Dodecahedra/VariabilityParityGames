@@ -5,12 +5,13 @@
 #include <algorithm>
 #include "SubsetExplicit.h"
 
+
 SubsetExplicit SubsetExplicit::SetFullset = SubsetExplicit();
 SubsetExplicit SubsetExplicit::SetEmptyset = SubsetExplicit();
 int SubsetExplicit::size;
 
 SubsetExplicit *SubsetExplicit::getFullSet() {
-    return &SubsetExplicit::SetEmptyset;
+    return &SubsetExplicit::SetFullset;
 }
 
 SubsetExplicit *SubsetExplicit::getEmptySet() {
@@ -23,21 +24,15 @@ void SubsetExplicit::operator=(SubsetExplicit other) {
 }
 
 void SubsetExplicit::operator&=(SubsetExplicit &other) {
-    for(int i = 0;i<size;i++){
-        items[i] = items[i] && other.items[i];
-    }
+    this->items &= other.items;
 }
 
 void SubsetExplicit::operator|=(SubsetExplicit &other) {
-    for(int i = 0;i<size;i++){
-        items[i] = items[i] || other.items[i];
-    }
+    this->items |= other.items;
 }
 
 void SubsetExplicit::operator-=(SubsetExplicit &other) {
-    for(int i = 0;i<size;i++){
-        items[i] = items[i] && !other.items[i];
-    }
+    this->items -= other.items;
 }
 
 SubsetExplicit::SubsetExplicit() {

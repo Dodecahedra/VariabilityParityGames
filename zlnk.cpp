@@ -367,6 +367,17 @@ void zlnk::getVCWithPrio(VertexSetZlnk *bigA, vector<Subset> *ac, int prio) {
     }
 }
 
+#ifdef SINGLEMODE
+void zlnk::unify(VertexSetZlnk *bigA, vector<Subset> *ac, VertexSetZlnk *bigB, vector<Subset> *bc) {
+#ifdef VertexSetZlnkIsBitVector
+    (*bigA) |= (*bigB);
+#else
+    for (const auto& vi : *bigB) {
+        (*bigA)[vi] = true;
+    }
+#endif
+}
+#else
 void zlnk::unify(VertexSetZlnk *bigA, vector<Subset> *ac, VertexSetZlnk *bigB, vector<Subset> *bc) {
 #ifdef VertexSetZlnkIsBitVector
     for (int vi = 0;vi < game->n_nodes;vi++){
@@ -376,23 +387,23 @@ void zlnk::unify(VertexSetZlnk *bigA, vector<Subset> *ac, VertexSetZlnk *bigB, v
     for (const auto& vi : *bigB) {
 #endif
         (*bigA)[vi] = true;
-#ifndef SINGLEMODE
         (*ac)[vi] |= (*bc)[vi];
-#endif
     }
 }
+#endif
 
 #ifdef SINGLEMODE
 void zlnk::removeFromBigV(VertexSetZlnk * bigA, vector<Subset> *ac){
 #ifdef VertexSetZlnkIsBitVector
-    for (int vi = 0;vi < game->n_nodes;vi++){
-        if(!(*bigA)[vi])
-            continue;
+    (*bigV) -= (*bigA);
+//    for (int vi = 0;vi < game->n_nodes;vi++){
+//        if(!(*bigA)[vi])
+//            continue;
 #else
     for (const auto& vi : *bigA) {
-#endif
         (*bigV)[vi] = false;
     }
+#endif
 }
 void zlnk::removeFromBigV(int i, Subset c) {
     (*bigV)[i] = false;

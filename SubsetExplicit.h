@@ -5,13 +5,14 @@
 #ifndef VPGSOLVER_SUBSETEXPLICIT_H
 #define VPGSOLVER_SUBSETEXPLICIT_H
 #include <vector>
+#include "VectorBoolOptimized.h"
 using namespace std;
 
 class SubsetExplicit {
 public:
     SubsetExplicit();
     SubsetExplicit(int bit);
-    vector<bool> items;
+    VectorBoolOptimized items;
     static SubsetExplicit SetFullset;
     static SubsetExplicit SetEmptyset;
     static SubsetExplicit *getFullSet();
