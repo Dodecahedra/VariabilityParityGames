@@ -305,32 +305,57 @@ void zlnk::solve(VertexSetZlnk *W0bigV, vector<Subset> *W0vc, VertexSetZlnk *W1b
     zlnk subgame(game, subBigV, subvc);
     subgame.attr(player, bigA, ac);
     cout << "\nDown1\n";
+    if(inSolveLocal(1 - player))
+        subgame.solvelocal = 1-player;
+    else
+        subgame.solvelocal = -1;
     subgame.solve(W0bigV, W0vc, W1bigV, W1vc);
     attracting += subgame.attracting;
     cout << "\nUp1\n";
     if(*WOpbigV == zlnk::emptyvertexset){
         unify(WMebigV, WMevc, bigA, ac);
     } else {
-        // clone content and wipe winningConf sets
-        *bigA = *WOpbigV;
-        *ac = *WOpvc;
-#ifdef VertexSetZlnkIsBitVector
-        std::fill(W0bigV->begin(), W0bigV->end(), false);
-        std::fill(W1bigV->begin(), W1bigV->end(), false);
-#else
-        W0bigV->clear();
-        W1bigV->clear();
-#endif
-        fill(W0vc->begin(), W0vc->end(), emptyset);
-        fill(W1vc->begin(), W1vc->end(), emptyset);
+        Subset localconfs, localconfs2;
+        if(inSolveLocal(1 - player) && (*WOpbigV)[0])
+            localconfs = (*WOpvc)[0];
+        if(!(localconfs == emptyset) && !removeCSet(WOpbigV, WOpvc, localconfs)){
+            // WOp is empty
+            (*WOpbigV)[0] = true;
+            (*WOpvc)[0] |= localconfs;
+            unify(WMebigV,WMevc,bigA,ac);
+        } else {
+            // clone content and wipe winningConf sets
+            *bigA = *WOpbigV;
+            *ac = *WOpvc;
+    #ifdef VertexSetZlnkIsBitVector
+            std::fill(W0bigV->begin(), W0bigV->end(), false);
+            std::fill(W1bigV->begin(), W1bigV->end(), false);
+    #else
+            W0bigV->clear();
+            W1bigV->clear();
+    #endif
+            fill(W0vc->begin(), W0vc->end(), emptyset);
+            fill(W1vc->begin(), W1vc->end(), emptyset);
 
-        zlnk subgame2(game, bigV, vc);
-        subgame2.attr(1-player, bigA, ac);
-        cout << "\nDown2\n";
-        subgame2.solve(W0bigV, W0vc, W1bigV, W1vc);
-        attracting += subgame.attracting;
-        cout << "\nUp2\n";
-        unify(WOpbigV, WOpvc, bigA, ac);
+            zlnk subgame2(game, bigV, vc);
+            subgame2.attr(1-player, bigA, ac);
+            if(inSolveLocal(1 - player)){
+                localconfs2 = (*ac)[0];
+                localconfs |= localconfs2;
+            }
+            if(!inSolveLocal(1 - player) || removeCSet(bigV, vc, localconfs2)){
+                cout << "\nDown2\n";
+                subgame2.solvelocal = solvelocal;
+                subgame2.solve(W0bigV, W0vc, W1bigV, W1vc);
+                attracting += subgame.attracting;
+                cout << "\nUp2\n";
+                unify(WOpbigV, WOpvc, bigA, ac);
+            }
+            if(!(localconfs == emptyset)) {
+                (*WOpbigV)[0] = true;
+                (*WOpvc)[0] |= localconfs;
+            }
+        }
     }
     delete bigA;
     delete ac;
@@ -450,4 +475,20 @@ bool zlnk::inSolveLocal(int player) {
     if(solvelocal == 2)
         return true;
     return player == solvelocal;
+}
+
+bool zlnk::removeCSet(VertexSetZlnk *bigA, vector<Subset> *ac, Subset C) {
+    if(C == emptyset)
+        return true;
+    bool somethingleft = false;
+    for (int vi = 0;vi < game->n_nodes;vi++) {
+        if (!(*bigA)[vi])
+            continue;
+        (*ac)[vi] -= C;
+        if((*ac)[vi] == emptyset)
+            (*bigA)[vi] = false;
+        else
+            somethingleft = true;
+    }
+    return somethingleft;
 }

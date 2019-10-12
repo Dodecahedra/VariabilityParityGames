@@ -35,6 +35,7 @@ public:
 
     void removeCF(Subset c, VertexSetZlnk * bigA, vector<Subset> *ac);
     bool inSolveLocal(int player);
+    bool removeCSet(VertexSetZlnk *bigA, vector<Subset> *ac, Subset C);
 };
 
 
