@@ -33,5 +33,5 @@
 #include "UnorderedVertexSet.h"
 #define VertexSetZlnk  UnorderedVertexSet
 #endif
-#define VertexSet vector<bool>
+#define VertexSet VectorBoolOptimized
 #endif //VPGSOLVER_CONF_H

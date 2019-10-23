@@ -221,9 +221,10 @@ void FPIte::copyWithPrio(VertexSet *Z, VertexSet *ZP, int p) {
 //        (*Z)[v] = (*ZP)[v];
 //    }
     int start = game->reindexPCutoff[p];
-    copy_n(ZP->begin() + start,
-                    game->reindexPCutoff[p+2] - start,
-                    Z->begin() + start);
+    Z->copy_n(ZP, start, game->reindexPCutoff[p+2] - start);
+//    copy_n(ZP->begin() + start,
+//                    game->reindexPCutoff[p+2] - start,
+//                    Z->begin() + start);
 }
 
 bool FPIte::compareWithPrio(VertexSet *Z, VertexSet *ZP, int p) {
@@ -235,16 +236,20 @@ bool FPIte::compareWithPrio(VertexSet *Z, VertexSet *ZP, int p) {
 //    }
 //    return equal;
     int start = game->reindexPCutoff[p];
-    return equal(ZP->begin() + start,
-           ZP->begin() + game->reindexPCutoff[p+2],
-           Z->begin() + start);
+    return Z->compare_n(ZP,start, game->reindexPCutoff[p+2] - start);
+//    return equal(ZP->begin() + start,
+//           ZP->begin() + game->reindexPCutoff[p+2],
+//           Z->begin() + start);
 }
 
 void FPIte::copyWithPrio(VertexSet *Z, VertexSet *ZP, int sp, int ep) {
+    if(ep < sp)
+        return;
     int start = game->reindexPCutoff[sp];
-    copy_n(ZP->begin() + start,
-           game->reindexPCutoff[ep+2] - start,
-           Z->begin() + start);
+    Z->copy_n(ZP, start, game->reindexPCutoff[ep+2] - start);
+//    copy_n(ZP->begin() + start,
+//           game->reindexPCutoff[ep+2] - start,
+//           Z->begin() + start);
 }
 
 void FPIte::setP0(char *P0string) {
