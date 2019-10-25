@@ -7,6 +7,7 @@
 
 #include "conf.h"
 #include "Game.h"
+#include <queue>
 #include <vector>
 using namespace std;
 
@@ -21,6 +22,9 @@ public:
     int d;
     VertexSet * W0;
     vector<int> edgecount;
+    vector<queue<int>> prioqueues;
+    VectorBoolOptimized inqueue;
+    VectorBoolOptimized inqueuefalse;
 
     VertexSet ZZ;
     VertexSet targetWasIn;
@@ -36,6 +40,7 @@ public:
     void copyWithPrio(VertexSet * Z, VertexSet * ZP, int sp, int ep);
     bool copyAndCompareWithPrio(VertexSet * Z, VertexSet * ZP, int p);
     bool compareWithPrio(VertexSet * Z, VertexSet * ZP, int p);
+    void considerVertex(VertexSet * Z,int v, bool doq);
 
     void setP0(char * P0string);
     void P0IsFull();

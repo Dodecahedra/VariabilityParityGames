@@ -65,33 +65,101 @@ void FPIte::init(int i, int ie) {
 
 void FPIte::diamondbox(VertexSet *Z, int maxprio) {
     dbs_executed++;
-    for(int p = 0;p <= maxprio;p++) {
-        for (int v = game->reindexPCutoff[p]; v < game->reindexPCutoff[p + 2]; v++) {
-            if (targetIsIn(v) != targetWasIn[v]) {
-                for (auto &edge : game->in_edges[v]) {
-                    int t = target(edge);
-                    // Vertices in P0 are always in and vertices in P1 are always out, so we don't need to reconsider them
-                    if ((*P0)[t] || !(*VP1)[t])
-                        continue;
-                    verticesconsidered++;
+//    for(int v = 0;v < game->n_nodes;v++){
+//        if (targetIsIn(v) != targetWasIn[v]) {
+//            if(!inqueue[v])
+//                cout << "hier";
+//        }
+//    }
 
-                    if (game->owner[t] == 0) {
-                        if (targetIsIn(v))
-                            edgecount[t]++;
-                        else
-                            edgecount[t]--;
-                        (*Z)[t] = edgecount[t] > 0;
-                    } else {
-                        if (targetIsIn(v))
-                            edgecount[t]--;
-                        else
-                            edgecount[t]++;
-                        (*Z)[t] = edgecount[t] == 0;
-                    }
-                }
-                targetWasIn[v] = targetIsIn(v);
+    if(maxprio == 0){
+//        int size = prioqueues[maxprio].size();
+//        copyWithPrio(&inqueue, &inqueuefalse, maxprio);
+//        for(int i = 0;i<size;i++){
+//            int v = prioqueues[maxprio].front();
+//            prioqueues[maxprio].pop();
+//            considerVertex(Z, v);
+//        }
+        cout << endl;
+        for (int v = game->reindexPCutoff[0]; v < game->reindexPCutoff[2]; v++) {
+            considerVertex(Z, v, true);
+        }
+        int c = 0;
+        while(!prioqueues[0].empty()){
+            int v = prioqueues[0].front();
+            prioqueues[0].pop();
+            inqueue[v] = false;
+            considerVertex(Z,v,true);
+            c++;
+        }
+        cout << "Tested " << c << " out of " << (game->reindexPCutoff[2] - game->reindexPCutoff[0]) << endl;
+    } else {
+        for (int p = 0; p <= maxprio; p++) {
+            for (int v = game->reindexPCutoff[p]; v < game->reindexPCutoff[p + 2]; v++) {
+                considerVertex(Z, v, false);
             }
         }
+    }
+
+//    vector<int> size(maxprio+1);
+//    for(int p = 0;p <= maxprio;p++) {
+//        size[p] = prioqueues[p].size();
+//        for (int v = game->reindexPCutoff[p]; v < game->reindexPCutoff[p + 2]; v++) {
+//            inqueue[v] = false;
+////            prioqueues[p].push(v);
+//        }
+//    }
+//    for(int p = 0;p <= maxprio;p++) {
+////        for (int v = game->reindexPCutoff[p]; v < game->reindexPCutoff[p + 2]; v++) {;
+////        for(int i = 0;i<size;i++){
+////            prioqueues[p].pop();
+////        }
+////        size = prioqueues[p].size();
+//        for(int i = 0;i<size[p];i++){
+//            int v = prioqueues[p].front();
+//            prioqueues[p].pop();
+//
+//        }
+//    }
+}
+void FPIte::considerVertex(VertexSet * Z,int v, bool doq) {
+    if (targetIsIn(v) != targetWasIn[v]) {
+        for (auto &edge : game->in_edges[v]) {
+            int t = target(edge);
+            // Vertices in P0 are always in and vertices in P1 are always out, so we don't need to reconsider them
+            if ((*P0)[t] || !(*VP1)[t])
+                continue;
+            verticesconsidered++;
+
+            if (game->owner[t] == 0) {
+                if (targetIsIn(v))
+                    edgecount[t]++;
+                else
+                    edgecount[t]--;
+                bool in = edgecount[t] > 0;
+                if(doq && game->priority[t] == 0 && (*Z)[t] && !inqueue[t]) {
+                    prioqueues[0].push(t);
+                    inqueue[t] = true;
+                }
+                (*Z)[t] = in;
+            } else {
+                if (targetIsIn(v))
+                    edgecount[t]--;
+                else
+                    edgecount[t]++;
+                bool in = edgecount[t] == 0;
+                if(doq && game->priority[t] == 0 && (*Z)[t] != in && !inqueue[t]) {
+                    prioqueues[0].push(t);
+                    inqueue[t] = true;
+                }
+                (*Z)[t] = in;
+            }
+        }
+//        if(targetIsIn(v) != (*Z)[v] && !inqueue[v]){
+//            prioqueues[game->priority[v]].push(v);
+//            inqueue[v] = true;
+//        }
+        targetWasIn[v] = targetIsIn(v);
     }
 }
 
@@ -129,13 +197,24 @@ void FPIte::diamondbox(VertexSet *Z) {
                 }
             }
         }
+//        if((*Z)[i] != in && !inqueue[i]) {
+//            prioqueues[game->priority[i]].push(i);
+//            inqueue[i] = true;
+//        }
         (*Z)[i] = in;
     }
+//    for(int v = 0;v < game->n_nodes;v++){
+//            prioqueues[game->priority[v]].push(v);
+//            inqueue[v] = true;
+//    }
 //    cout << "Size first: " << std::count_if(Z->begin(), Z->end(), [](bool b){return b;}) << endl;
 }
 
 void FPIte::solve() {
     d = game->priorityI.size();
+    prioqueues.resize(d);
+    inqueue.resize(game->n_nodes);
+//    inqueuefalse.resize(game->n_nodes);
     ZZ.resize(game->n_nodes);
 
     if((d-1) % 2 == 0){
@@ -145,6 +224,7 @@ void FPIte::solve() {
         init(1,d - 1);
         init(0,d - 2);
     }
+    (*W0) = ZZ;
 
     int i = 0;
     bool equal;
