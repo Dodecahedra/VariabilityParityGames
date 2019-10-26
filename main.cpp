@@ -2,9 +2,14 @@
 #include <fstream>
 #include <chrono>
 #include "Game.h"
-#include "zlnk.h"
 #include "FPIte.h"
 #include "MBR.h"
+
+#ifdef SINGLEMODE
+#include "zlnkPG.h"
+#else
+#include "zlnkVPG.h"
+#endif
 
 using namespace std;
 
@@ -133,7 +138,7 @@ int main(int argc, char** argv) {
             }
         }
         if (projectmode) {
-            vector<tuple<Subset, string>> allconfs;
+            vector<tuple<ConfSet, string>> allconfs;
             g.findAllElements(g.bigC, &allconfs);
             for (const auto &conf : allconfs) {
                 string target = string(projectdir);
@@ -271,26 +276,31 @@ int main(int argc, char** argv) {
 #endif
 #endif
         } else {
-            zlnk::conf_metricoutput = metricoutput;
-            zlnk z(&g);
             auto * W0BigV = new VertexSetZlnk(g.n_nodes);
             auto * W1BigV = new VertexSetZlnk(g.n_nodes);
 
+    #ifdef SINGLEMODE
+            zlnkPG::conf_metricoutput = metricoutput;
+            zlnkPG z(&g);
+
+            vector<ConfSet> * W0vc = nullptr;
+            vector<ConfSet> * W1vc = nullptr;
             if(solvelocal)
                 z.solvelocal = 2;
-    #ifdef SINGLEMODE
-            vector<Subset> * W0vc = nullptr;
-            vector<Subset> * W1vc = nullptr;
+            z.solve(W0BigV, W1BigV);
     #else
-            vector<Subset> * W0vc = new vector<Subset>(g.n_nodes);
-            vector<Subset> * W1vc = new vector<Subset>(g.n_nodes);
+            zlnkVPG::conf_metricoutput = metricoutput;
+            zlnkVPG z(&g);
+            vector<ConfSet> * W0vc = new vector<ConfSet>(g.n_nodes);
+            vector<ConfSet> * W1vc = new vector<ConfSet>(g.n_nodes);
             for(int i = 0;i<g.n_nodes;i++){
                 (*W0vc)[i] = emptyset;
                 (*W1vc)[i] = emptyset;
             }
-    #endif
-
+            if(solvelocal)
+                z.solvelocal = 2;
             z.solve(W0BigV, W0vc, W1BigV, W1vc);
+    #endif
 
 
             auto end = std::chrono::high_resolution_clock::now();

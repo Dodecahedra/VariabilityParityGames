@@ -5,23 +5,25 @@
 #ifndef VPGSOLVER_CONF_H
 #define VPGSOLVER_CONF_H
 
-//#define SINGLEMODE
-//#define randombddorder
-
-//#define subsetbdd
-//#define subsetexplicit
-
+/**
+ * Define subsetbdd to indicate the sets of configurations ought to be expressed as bdd
+ * Define subsetexplicit to indicate the sets of configurations ought to be expressed as bdd
+ * Define VertexSetZlnkIsBitVector to represent sets of vertices used by the recursive algorithm as bit vectors
+ * Define VertexSetZlnkIsHashSet to represent sets of vertices used by the recursive algorithm as unordered sets
+ *
+ * Define VertexSetFPIte to be the type used to represent sets of vertices in the fixed-point iteration algorithm
+ */
 #ifdef subsetbdd
 #include "bdd.h"
-#define Subset bdd
+#define ConfSet bdd
 #define fullset bddtrue
 #define emptyset bddfalse
 #endif
 #ifdef subsetexplicit
-#define Subset SubsetExplicit
-#define fullset SubsetExplicit::SetFullset
-#define emptyset SubsetExplicit::SetEmptyset
-#include "SubsetExplicit.h"
+#define ConfSet ConfSetExplicit
+#define fullset ConfSetExplicit::SetFullset
+#define emptyset ConfSetExplicit::SetEmptyset
+#include "ConfSetExplicit.h"
 #endif
 #define VertexSetZlnkIsBitVector
 //#define VertexSetZlnkIsHashSet
@@ -33,5 +35,6 @@
 #include "UnorderedVertexSet.h"
 #define VertexSetZlnk  UnorderedVertexSet
 #endif
-#define VertexSet VectorBoolOptimized
+
+#define VertexSetFPIte VectorBoolOptimized
 #endif //VPGSOLVER_CONF_H

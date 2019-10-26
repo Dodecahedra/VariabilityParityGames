@@ -9,6 +9,9 @@
 #include "bool_reference.h"
 using namespace std;
 
+/**
+ * Extend the unordered set class with an [] operator such that this[i] == true iff i is in this
+ */
 class UnorderedVertexSet : public unordered_set<int> {
 public:
     bool_reference
@@ -17,7 +20,7 @@ public:
         return bool_reference(this, __n);
     }
     UnorderedVertexSet();
-    UnorderedVertexSet(int size);
+    explicit UnorderedVertexSet(int size);
 };
 
 

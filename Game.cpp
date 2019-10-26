@@ -125,15 +125,15 @@ void Game::parseConfs(char * line) {
     }
 #endif
 #ifdef subsetexplicit
-    SubsetExplicit::size = (1 << (bm_n_vars));
-    fullset.items.resize(SubsetExplicit::size);
-    emptyset.items.resize(SubsetExplicit::size);
+    ConfSetExplicit::size = (1 << (bm_n_vars));
+    fullset.items.resize(ConfSetExplicit::size);
+    emptyset.items.resize(ConfSetExplicit::size);
     for(int i =0;i<1<<bm_n_vars;i++) {
         fullset.items[i] = true;
         emptyset.items[i] = false;
     }
     for(int i = 0;i<bm_n_vars;i++) {
-        bm_vars[i] = SubsetExplicit(bm_n_vars-i-1);
+        bm_vars[i] = ConfSetExplicit(bm_n_vars-i-1);
     }
 #endif
     parseConfSet(line, 6, &bigC);
@@ -148,7 +148,7 @@ void Game::parseInitialiser(char *line) {
 }
 
 
-int Game::parseConfSet(const char *line, int i, Subset *result) {
+int Game::parseConfSet(const char *line, int i, ConfSet *result) {
     if(parsePG){
         *result = fullset;
         return i+1;
@@ -159,7 +159,7 @@ int Game::parseConfSet(const char *line, int i, Subset *result) {
         i++;
     }
     *result = emptyset;
-    Subset entry = fullset;
+    ConfSet entry = fullset;
     int var = 0;
     char c;
     string * seq;
@@ -187,29 +187,29 @@ int Game::parseConfSet(const char *line, int i, Subset *result) {
         }
     } while(c =='0' || c == '1' || c == '-' || c == '+' || c == 'F');
     if(inverse){
-        Subset a = *result;
+        ConfSet a = *result;
         *result = fullset;
         *result -= a;
     }
     return i;
 }
 
-void Game::dumpSet(Subset * dumpee, Subset t, char * p, int var) {
+void Game::dumpSet(ConfSet * dumpee, ConfSet t, char * p, int var) {
     if(var == bm_n_vars)
     {
         p[var]  = '\0';
-        Subset result = *dumpee;
+        ConfSet result = *dumpee;
         result &= t;
         if(!(result == emptyset)){
             cout << p << ',';
         }
     } else {
-        Subset t1 = t;
+        ConfSet t1 = t;
         t1 &= bm_vars[var];
         p[var] = '1';
         dumpSet(dumpee, t1, p , var + 1);
         p[var] = '0';
-        Subset t2 = t;
+        ConfSet t2 = t;
         t2 -= bm_vars[var];
         dumpSet(dumpee, t2, p, var + 1);
     }
@@ -281,7 +281,7 @@ int Game::readUntil(const char * line, char delim){
     return i;
 }
 
-void Game::printCV(VertexSetZlnk *bigV, vector<Subset> *vc, Subset t, char * p, int var, bool fulloutput) {
+void Game::printCV(VertexSetZlnk *bigV, vector<ConfSet> *vc, ConfSet t, char * p, int var, bool fulloutput) {
     if(t == emptyset) return;
     if(var == bm_n_vars)
     {
@@ -291,7 +291,7 @@ void Game::printCV(VertexSetZlnk *bigV, vector<Subset> *vc, Subset t, char * p, 
             for(int vi = 0;vi<n_nodes;vi++) {
                 if(!(*bigV)[vi])
                     continue;
-                Subset result = (*vc)[vi];
+                ConfSet result = (*vc)[vi];
                 result &= t;
                 if(!((result) == emptyset)){
                     for(auto j : orgvertices[vi])
@@ -300,7 +300,7 @@ void Game::printCV(VertexSetZlnk *bigV, vector<Subset> *vc, Subset t, char * p, 
             }
         } else {
             int vi = findVertexWinningFor0();
-            Subset result = (*vc)[vi];
+            ConfSet result = (*vc)[vi];
             result &= t;
             if(!((result) == emptyset)){
                 cout << 0 << ',';
@@ -310,19 +310,19 @@ void Game::printCV(VertexSetZlnk *bigV, vector<Subset> *vc, Subset t, char * p, 
         fflush(stdout);
 
     } else {
-        Subset t1 = t;
+        ConfSet t1 = t;
         t1 &= bm_vars[var];
         p[var] = '1';
         printCV(bigV,vc, t1, p , var + 1, fulloutput);
         p[var] = '0';
-        Subset t2 = t;
+        ConfSet t2 = t;
         t2 -= bm_vars[var];
         printCV(bigV, vc, t2, p, var + 1, fulloutput);
     }
 }
 
 
-void Game::printCV(VertexSetZlnk *bigV, vector<Subset> *vc, bool fulloutput) {
+void Game::printCV(VertexSetZlnk *bigV, vector<ConfSet> *vc, bool fulloutput) {
 #ifdef SINGLEMODE
     cout << "The following vertices are in: ";
     if(fulloutput){
@@ -455,13 +455,13 @@ void Game::writePG(ostream *output) {
     }
 }
 
-void Game::writePG(ostream *output, Subset conf) {
+void Game::writePG(ostream *output, ConfSet conf) {
     *output << "parity " << n_nodes << ';';
     for(int v = 0;v < n_nodes;v++){
         *output << endl << reindexedOrg[v] << ' ' << priority[v] << ' ' << owner[v];
         char seperator = ' ';
         for(const auto & e : out_edges[v]) {
-            Subset cc = conf;
+            ConfSet cc = conf;
             cc &= edge_guards[guard_index(e)];
             if(cc == emptyset)
                 continue;
@@ -665,25 +665,25 @@ int Game::findVertexWinningFor0() {
     return winningfor0;
 }
 
-void Game::findAllElements(Subset s, vector<tuple<Subset, string>> *result) {
+void Game::findAllElements(ConfSet s, vector<tuple<ConfSet, string>> *result) {
     auto p = new char[bm_n_vars+1];
     findAllElements(s, result, p, 0);
     delete[] p;
 }
 
-void Game::findAllElements(Subset s, vector<tuple<Subset, string>> *result, char *p, int var) {
+void Game::findAllElements(ConfSet s, vector<tuple<ConfSet, string>> *result, char *p, int var) {
     if(s == emptyset) return;
     if(var == bm_n_vars)
     {
         p[var] = '\0';
         result->push_back(make_tuple(s, string(p)));
     } else {
-        Subset t1 = s;
+        ConfSet t1 = s;
         t1 &= bm_vars[var];
         p[var] = '1';
         findAllElements(t1, result, p, var + 1);
         p[var] = '0';
-        Subset t2 = s;
+        ConfSet t2 = s;
         t2 -= bm_vars[var];
         findAllElements(t2, result, p, var + 1);
     }

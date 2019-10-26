@@ -19,9 +19,9 @@ using namespace std;
 
 class Game {
 public :
-    std::vector<Subset> bm_vars;
+    std::vector<ConfSet> bm_vars;
     int bm_n_vars;
-    Subset bigC;
+    ConfSet bigC;
     int n_nodes;
     vector<int> priority;
     vector<unordered_set<int>> priorityI;
@@ -29,7 +29,7 @@ public :
     vector<bool> declared;
     vector<std::tuple<int,int>> *out_edges;
     vector<std::tuple<int,int>> *in_edges;
-    vector<Subset> edge_guards;
+    vector<ConfSet> edge_guards;
     vector<int> edge_origins;
     vector<int> reindexedNew;
     vector<int> reindexedOrg;
@@ -43,7 +43,7 @@ public :
     bool specificvarlast = false;
     int specificvar;
 
-    map<string, Subset> parseCache;
+    map<string, ConfSet> parseCache;
 
     Game();
     void set_n_nodes(int nodes);
@@ -52,12 +52,12 @@ public :
     void parseVPGFromFile(const string &filename, const char *specificconf);
     void parseConfs(char * line);
     void parseInitialiser(char* line);
-    int parseConfSet(const char * line, int i, Subset * result);
+    int parseConfSet(const char * line, int i, ConfSet * result);
     void parseVertex(char * line);
 
-    void dumpSet(Subset * dumpee, Subset t, char * p, int var);
-    void printCV(VertexSetZlnk *bigV, vector<Subset> *vc, bool fulloutut);
-    void printCV(VertexSetZlnk *bigV, vector<Subset> *vc, Subset t, char * p, int var, bool fulloutput);
+    void dumpSet(ConfSet * dumpee, ConfSet t, char * p, int var);
+    void printCV(VertexSetZlnk *bigV, vector<ConfSet> *vc, bool fulloutut);
+    void printCV(VertexSetZlnk *bigV, vector<ConfSet> *vc, ConfSet t, char * p, int var, bool fulloutput);
     int readUntil(const char * line, char delim);
 
     void buildInEdges();
@@ -72,9 +72,9 @@ public :
     void parsePGFromFile(const string &filename);
 
     void writePG(ostream * output);
-    void writePG(ostream * output, Subset conf);
-    void findAllElements(Subset s, vector<tuple<Subset, string>> * result);
-    void findAllElements(Subset s, vector<tuple<Subset, string>> * result, char * p, int var);
+    void writePG(ostream * output, ConfSet conf);
+    void findAllElements(ConfSet s, vector<tuple<ConfSet, string>> * result);
+    void findAllElements(ConfSet s, vector<tuple<ConfSet, string>> * result, char * p, int var);
 };
 
 

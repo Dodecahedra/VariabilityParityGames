@@ -15,12 +15,12 @@ using namespace std;
 
 class MBR {
 public:
-    static vector<Subset> winningConf;
-    static vector<VertexSet> winningVertices;
+    static vector<ConfSet> winningConf;
+    static vector<VertexSetFPIte> winningVertices;
     Game * game;
-    Subset * conf;
-    VertexSet * P0;
-    VertexSet * VP1;
+    ConfSet * conf;
+    VertexSetFPIte * P0;
+    VertexSetFPIte * VP1;
     int feature;
     static bool fulloutput;
 
@@ -31,11 +31,11 @@ public:
     static bool metric_output;
     static string metric_dir;
     MBR(Game * game);
-    MBR(Game * game, Subset * conf, VertexSet * P0, VertexSet * P1, int feature);
+    MBR(Game * game, ConfSet * conf, VertexSetFPIte * P0, VertexSetFPIte * P1, int feature);
 
     void solve();
-    void parition(Subset * org, Subset * part);
-    void createSubGames(Subset * confP, vector<std::tuple<int,int>> * subgame_out, vector<std::tuple<int,int>> * subgame_in);
+    void parition(ConfSet * org, ConfSet * part);
+    void createSubGames(ConfSet * confP, vector<std::tuple<int,int>> * subgame_out, vector<std::tuple<int,int>> * subgame_in);
     void createPessimisticGames(vector<std::tuple<int,int>> * pessimistic_out0, vector<std::tuple<int,int>> *pessimistic_in0, vector<std::tuple<int,int>> *pessimistic_out1, vector<std::tuple<int,int>> *pessimistic_in1);
     void copyEdges(vector<std::tuple<int,int>> * edgeout, vector<std::tuple<int,int>> * edgein);
     void printMeasurements(ostream * output);

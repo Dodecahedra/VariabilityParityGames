@@ -8,6 +8,9 @@
 #include <unordered_set>
 using namespace std;
 
+/**
+ * Reference to a boolean value in an unordered set
+ */
 struct bool_reference {
     unordered_set<int> * ref;
     int element;
@@ -23,7 +26,7 @@ struct bool_reference {
 
     bool_reference& operator=(bool b){
         if(b)
-            ref->insert(element);
+            ref->insert(element); 
         else
             ref->erase(element);
         return *this;

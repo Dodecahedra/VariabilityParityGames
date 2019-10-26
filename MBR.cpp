@@ -10,13 +10,13 @@
 #include <chrono>
 #include "FPIte.h"
 
-vector<Subset> MBR::winningConf;
-vector<VertexSet> MBR::winningVertices;
+vector<ConfSet> MBR::winningConf;
+vector<VertexSetFPIte> MBR::winningVertices;
 bool MBR::metric_output;
 string MBR::metric_dir;
 bool MBR::fulloutput = false;
 
-MBR::MBR(Game *game, Subset *conf,  VertexSet *P0, VertexSet *VP1, int feature) {
+MBR::MBR(Game *game, ConfSet *conf,  VertexSetFPIte *P0, VertexSetFPIte *VP1, int feature) {
     this->game = game;
     this->conf = conf;
     this->P0 = P0;
@@ -26,12 +26,12 @@ MBR::MBR(Game *game, Subset *conf,  VertexSet *P0, VertexSet *VP1, int feature) 
 
 MBR::MBR(Game *game) {
     this->game = game;
-    this->conf = new Subset;
+    this->conf = new ConfSet;
     *this->conf = game->bigC;
 
-    this->P0 =  new VertexSet();
+    this->P0 =  new VertexSetFPIte();
     this->P0->resize(game->n_nodes);
-    this->VP1 =  new VertexSet();
+    this->VP1 =  new VertexSetFPIte();
     this->VP1->resize(game->n_nodes);
     fill(this->VP1->begin(), this->VP1->end(), true);
     this->feature =  0;
@@ -81,8 +81,8 @@ void MBR::solve() {
     auto * subgame_in0  = new vector<std::tuple<int, int>>[game->n_nodes];
     auto * subgame_out1 = new vector<std::tuple<int, int>>[game->n_nodes];
     auto * subgame_in1  = new vector<std::tuple<int, int>>[game->n_nodes];
-    auto * P0b = new VertexSet;
-    auto * VP1b = new VertexSet;
+    auto * P0b = new VertexSetFPIte;
+    auto * VP1b = new VertexSetFPIte;
     copyEdges(subgame_out0, subgame_in0);
     copyEdges(subgame_out1, subgame_in1);
     vector<std::tuple<int, int>> * orgin, * orgout;
@@ -91,7 +91,7 @@ void MBR::solve() {
 
     createPessimisticGames(subgame_out0, subgame_in0, subgame_out1, subgame_in1);
 
-    VertexSet W0(game->n_nodes);
+    VertexSetFPIte W0(game->n_nodes);
     game->in_edges = subgame_in0;
     game->out_edges = subgame_out0;
 
@@ -173,8 +173,8 @@ void MBR::solve() {
 
     int confastring = confstring;
     int confbstring = confstring;
-    auto * confa = new Subset;
-    auto * confb = new Subset;
+    auto * confa = new ConfSet;
+    auto * confb = new ConfSet;
     do {
         *confa = *conf;
         parition(confa, confb);
@@ -233,23 +233,23 @@ void MBR::solve() {
 //            opt = pessimisticedges0;
 //        }
 //        (*opt)[i] = true;
-//        Subset g = *conf;
+//        ConfSet g = *conf;
 //        g -= game->edge_guards[i];
 //        (*pess)[i] = g == emptyset;
 //    }
 //}
 
-void MBR::parition(Subset *org, Subset *part) {
+void MBR::parition(ConfSet *org, ConfSet *part) {
     *part = *org;
     *org &= game->bm_vars[feature];
     *part -= game->bm_vars[feature];
 }
 //
-//void MBR::createSubGames(Subset *confP, vector<bool> *edgeenabledP) {
+//void MBR::createSubGames(ConfSet *confP, vector<bool> *edgeenabledP) {
 //    for(int i = 0;i<edgeenabled->size();i++) {
 //        if (!(*edgeenabled)[i])
 //            continue;
-//        Subset g = *confP;
+//        ConfSet g = *confP;
 //        g &= game->edge_guards[i];
 //        (*edgeenabledP)[i] = !(g == emptyset);
 //    }
@@ -308,7 +308,7 @@ void MBR::createPessimisticGames(vector<std::tuple<int, int>> *pessimistic_out0,
             }
             int gi = guard_index(e);
             (*opt)[gi] = true;
-            Subset g = *conf;
+            ConfSet g = *conf;
             g -= game->edge_guards[gi];
             (*pess)[gi] = g == emptyset;
         }
@@ -333,12 +333,12 @@ void MBR::removeDisabledEdge(vector<std::tuple<int,int>> * edge, vector<bool> * 
     }
 }
 
-void MBR::createSubGames(Subset *confP, vector<std::tuple<int, int>> *subgame_out,
+void MBR::createSubGames(ConfSet *confP, vector<std::tuple<int, int>> *subgame_out,
                          vector<std::tuple<int, int>> *subgame_in) {
     vector<bool> edgeenabled(game->edge_guards.size());
     for(int v = 0;v<game->n_nodes;v++) {
         for (const auto & e : game->out_edges[v]) {
-            Subset g = *confP;
+            ConfSet g = *confP;
             int gi = guard_index(e);
             g &= game->edge_guards[gi];
             edgeenabled[gi] = !(g == emptyset);
