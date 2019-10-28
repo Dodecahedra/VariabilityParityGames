@@ -6,7 +6,7 @@
 #define VPGSOLVER_UNORDEREDVERTEXSET_H
 
 #include <unordered_set>
-#include "bool_reference.h"
+#include "Algorithms/Datastructures/bool_reference.h"
 using namespace std;
 
 /**

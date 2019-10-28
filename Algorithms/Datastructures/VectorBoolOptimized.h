@@ -22,6 +22,8 @@ using namespace std;
  * This class performs the operations above in an efficient manner.
  *
  * The C++ boost library should have been used for this.
+ *
+ * @todo: implement == operator
  */
 class VectorBoolOptimized : public vector<bool>{
 public:

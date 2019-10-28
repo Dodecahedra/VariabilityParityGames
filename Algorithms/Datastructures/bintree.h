@@ -7,6 +7,10 @@
 
 using namespace std;
 
+/**
+ * Implement simple binary tree containing some value of type T at every node.
+ * @tparam T type of value that every node contains
+ */
 template <class T>
 class bintree {
 public:
