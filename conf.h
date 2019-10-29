@@ -23,16 +23,16 @@
 #define ConfSet ConfSetExplicit
 #define fullset ConfSetExplicit::SetFullset
 #define emptyset ConfSetExplicit::SetEmptyset
-#include "ConfSetExplicit.h"
+#include "Algorithms/Datastructures/ConfSetExplicit.h"
 #endif
 #define VertexSetZlnkIsBitVector
 //#define VertexSetZlnkIsHashSet
 #ifdef VertexSetZlnkIsBitVector
-#include "VectorBoolOptimized.h"
+#include "Algorithms/Datastructures/VectorBoolOptimized.h"
 #define VertexSetZlnk  VectorBoolOptimized
 #endif
 #ifdef VertexSetZlnkIsHashSet
-#include "UnorderedVertexSet.h"
+#include "Algorithms/Datastructures/UnorderedVertexSet.h"
 #define VertexSetZlnk  UnorderedVertexSet
 #endif
 

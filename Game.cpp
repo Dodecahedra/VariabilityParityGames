@@ -1,3 +1,9 @@
+/***********************************************************************************************************************
+ * In this project only algorithms and datastructures are implemented properly.
+ *
+ * The code in this file is not optimized and not up to standards; it is sufficient only for experimental applications
+ * but not for any real application.
+ **********************************************************************************************************************/
 //
 // Created by sjef on 5-6-19.
 //
@@ -8,11 +14,12 @@
 #include <string>
 #include <cstring>
 #include <unordered_set>
-#include <random>       // std::default_random_engine
-#include <chrono>       // std::chrono::high_resolution_clock
-#include <algorithm>    // std::shuffle
+#include <random>
+#include <chrono>
+#include <algorithm>
 
 #include "Game.h"
+#include "Algorithms/Datastructures/ConfSetExplicit.h"
 
 void Game::set_n_nodes(int nodes) {
     n_nodes = nodes;
@@ -417,10 +424,10 @@ void Game::reindexVertices() {
         in_edges[to] = in_edges_old[i];
 
         for(auto & j : out_edges[to]){
-            j = make_tuple(reindexedNew[target(j)], guard_index(j));
+            j = make_tuple(reindexedNew[target(j)], edge_index(j));
         }
         for(auto & j : in_edges[to]){
-            j = make_tuple(reindexedNew[target(j)], guard_index(j));
+            j = make_tuple(reindexedNew[target(j)], edge_index(j));
         }
     }
     for(int & edge_origin : edge_origins){
@@ -462,7 +469,7 @@ void Game::writePG(ostream *output, ConfSet conf) {
         char seperator = ' ';
         for(const auto & e : out_edges[v]) {
             ConfSet cc = conf;
-            cc &= edge_guards[guard_index(e)];
+            cc &= edge_guards[edge_index(e)];
             if(cc == emptyset)
                 continue;
             *output << seperator << reindexedOrg[target(e)];
@@ -523,9 +530,9 @@ void Game::compressVertices() {
     orgvertices.resize(n_nodes);
     for(int i = 0;i < n_nodes;i++){
         for(auto & e : out_edges[i])
-            e = make_tuple(reindex[target(e)], guard_index(e));
+            e = make_tuple(reindex[target(e)], edge_index(e));
         for(auto & e : in_edges[i])
-            e = make_tuple(reindex[target(e)], guard_index(e));
+            e = make_tuple(reindex[target(e)], edge_index(e));
     }
 
 //    for(int i = 0;i < n_nodes;i++){
@@ -607,7 +614,7 @@ void Game::moveVertexInto(int v1, int v2, bool v1Ev2) {
                 edgeorg = oe;
             }
             if(target(oe) == v1){
-                oe = make_tuple(v2, guard_index(oe));
+                oe = make_tuple(v2, edge_index(oe));
                 edgenew = oe;
             }
         }
@@ -622,7 +629,7 @@ void Game::moveVertexInto(int v1, int v2, bool v1Ev2) {
                 }
                 ite++;
             }
-            edge_guards[guard_index(edgeorg)] |= edge_guards[guard_index(edgenew)];
+            edge_guards[edge_index(edgeorg)] |= edge_guards[edge_index(edgenew)];
         }else{
             int index = in_edges_local[v2].size();
             in_edges_local[v2].resize(index + 1);
@@ -646,7 +653,7 @@ void Game::buildInEdges() {
             int t = target(e);
             int index = in_edges[t].size();
             in_edges[t].resize(index + 1);
-            in_edges[t][index] = make_tuple(i, guard_index(e));
+            in_edges[t][index] = make_tuple(i, edge_index(e));
         }
     }
 }

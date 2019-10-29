@@ -6,9 +6,9 @@
 #define VPGSOLVER_MBR_H
 
 
-#include "Game.h"
-#include "conf.h"
-#include "Algorithms/Datastructures/bintree.h"
+#include "../Game.h"
+#include "../conf.h"
+#include "Datastructures/bintree.h"
 #include <vector>
 #include <iostream>
 using namespace std;

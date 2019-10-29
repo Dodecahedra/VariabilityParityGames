@@ -6,7 +6,7 @@
 #define VPGSOLVER_ZLNKPG_H
 
 
-#include "Game.h"
+#include "../Game.h"
 
 /**
  * Implementation of Zielonka's recursive algorithm.

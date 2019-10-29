@@ -1,3 +1,9 @@
+/***********************************************************************************************************************
+ * In this project only algorithms and datastructures are implemented properly.
+ *
+ * The code in this file is not optimized and not up to standards; it is sufficient only for experimental applications
+ * but not for any real application.
+ **********************************************************************************************************************/
 //
 // Created by sjef on 5-6-19.
 //
@@ -15,8 +21,12 @@
 using namespace std;
 
 #define target(a) std::get<0>(a)
-#define guard_index(a) std::get<1>(a)
+#define edge_index(a) std::get<1>(a)
 
+/**
+ * Represent VPG using a double edge relation. Every edge has an edge index.
+ * Every edge index is mapped to a set of configurations guarding the edge.
+ */
 class Game {
 public :
     std::vector<ConfSet> bm_vars;

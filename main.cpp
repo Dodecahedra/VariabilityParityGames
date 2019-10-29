@@ -1,14 +1,21 @@
+/***********************************************************************************************************************
+ * In this project only algorithms and datastructures are implemented properly.
+ *
+ * The code in this file is not optimized and not up to standards; it is sufficient only for experimental applications
+ * but not for any real application.
+ **********************************************************************************************************************/
+
 #include <iostream>
 #include <fstream>
 #include <chrono>
 #include "Game.h"
-#include "FPIte.h"
-#include "MBR.h"
+#include "Algorithms/FPIte.h"
+#include "Algorithms/MBR.h"
 
 #ifdef SINGLEMODE
-#include "zlnkPG.h"
+#include "Algorithms/zlnkPG.h"
 #else
-#include "zlnkVPG.h"
+#include "Algorithms/zlnkVPG.h"
 #endif
 
 using namespace std;

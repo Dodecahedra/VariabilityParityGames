@@ -6,7 +6,7 @@
 #define VPGSOLVER_ZLNKVPG_H
 
 
-#include "Game.h"
+#include "../Game.h"
 
 /**
  * Implementation of the recursive algorithm for VPGs.

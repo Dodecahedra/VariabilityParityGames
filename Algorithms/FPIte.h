@@ -5,8 +5,8 @@
 #ifndef VPGSOLVER_FPITE_H
 #define VPGSOLVER_FPITE_H
 
-#include "conf.h"
-#include "Game.h"
+#include "../conf.h"
+#include "../Game.h"
 #include <vector>
 using namespace std;
 
