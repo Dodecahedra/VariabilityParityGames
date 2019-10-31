@@ -910,7 +910,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/include/c++/7/bits/hashtable_policy.h">
+    <entry file="file://$PROJECT_DIR$/Measurements/bintree.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="142">
           <caret line="447" selection-start-line="447" selection-end-line="447" />
@@ -966,7 +966,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/include/c++/7/bits/unordered_set.h">
+    <entry file="file:///usr/include/c++/7/vector">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="155">
           <caret line="95" column="10" selection-start-line="95" selection-start-column="10" selection-end-line="95" selection-end-column="10" />
@@ -1161,7 +1161,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Game.h">
+    <entry file="file://$PROJECT_DIR$/zlnkVPG.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" selection-start-line="6" selection-end-line="6" />
