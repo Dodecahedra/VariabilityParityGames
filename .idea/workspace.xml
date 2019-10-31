@@ -19,6 +19,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="065c0f65-4e45-4bdd-bfb0-047fd78e757c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
@@ -79,8 +80,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
+            <state relative-caret-position="300">
+              <caret line="25" column="41" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
               <folding>
                 <element signature="e#634#664#0" expanded="true" />
               </folding>
@@ -259,9 +260,8 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1173" />
-    <option name="y" value="315" />
     <option name="width" value="1026" />
-    <option name="height" value="541" />
+    <option name="height" value="1001" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -451,12 +451,12 @@
       <workItem from="1571901162035" duration="13724000" />
       <workItem from="1572016711806" duration="601000" />
       <workItem from="1572094075304" duration="22004000" />
-      <workItem from="1572524206296" duration="89000" />
+      <workItem from="1572524206296" duration="823000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="409404000" />
+    <option name="totallyTimeSpent" value="410138000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -469,9 +469,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1365" y="0" width="1682" height="1002" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18421052" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18421052" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -482,7 +481,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3291714" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Messages" order="8" sideWeight="0.49816403" visible="true" weight="0.44040862" />
+      <window_info active="true" anchor="bottom" id="Messages" order="8" sideWeight="0.49816403" visible="true" weight="0.44040862" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3291714" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.501836" side_tool="true" weight="0.44040862" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.3291714" />
@@ -938,8 +937,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        <state relative-caret-position="300">
+          <caret line="25" column="41" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
           <folding>
             <element signature="e#634#664#0" expanded="true" />
           </folding>
