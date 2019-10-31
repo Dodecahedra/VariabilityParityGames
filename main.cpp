@@ -18,12 +18,6 @@
 #include "Algorithms/zlnkVPG.h"
 #endif
 
-#ifdef SINGLEMODE
-#include "zlnkPG.h"
-#else
-#include "zlnkVPG.h"
-#endif
-
 using namespace std;
 
 string winningset;
