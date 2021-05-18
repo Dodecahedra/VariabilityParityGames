@@ -119,7 +119,7 @@ void zlnkVPG::solve(VertexSetZlnk *W0bigV, vector<ConfSet> *W0vc, VertexSetZlnk 
     if(*bigV == zlnkVPG::emptyvertexset) return;
 
     auto [h,l] = getHighLowPrio();
-    int player = (h % 2);
+    int player = (l % 2);
     if(h == l){
         if(player == 0){
             *W0bigV = *bigV;
@@ -156,8 +156,8 @@ void zlnkVPG::solve(VertexSetZlnk *W0bigV, vector<ConfSet> *W0vc, VertexSetZlnk 
     // initialize (subBigV,subvc) which describes the subgame
     auto * subBigV = new VertexSetZlnk(game->n_nodes);;
     vector<ConfSet> * subvc = new vector<ConfSet>(game->n_nodes);
-    //fill (bigA,ac) with the highest priorities
-    getVCWithPrio(bigA, ac, h);
+    //fill (bigA,ac) with the lowest priorities
+    getVCWithPrio(bigA, ac, l);
     // initially, fill subgame with the entire game
     *subBigV = *bigV;
     *subvc = *vc;
