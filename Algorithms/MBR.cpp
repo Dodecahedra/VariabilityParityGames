@@ -16,7 +16,7 @@ bool MBR::metric_output;
 string MBR::metric_dir;
 bool MBR::fulloutput = false;
 
-MBR::MBR(Game *game, ConfSet *conf,  VertexSetFPIte *P0, VertexSetFPIte *VP1, int feature) {
+MBR::MBR(VPGame *game, ConfSet *conf,  VertexSetFPIte *P0, VertexSetFPIte *VP1, int feature) {
     this->game = game;
     this->conf = conf;
     this->P0 = P0;
@@ -24,7 +24,7 @@ MBR::MBR(Game *game, ConfSet *conf,  VertexSetFPIte *P0, VertexSetFPIte *VP1, in
     this->feature = feature;
 }
 
-MBR::MBR(Game *game) {
+MBR::MBR(VPGame *game) {
     this->game = game;
     this->conf = new ConfSet;
     *this->conf = game->bigC;

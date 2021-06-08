@@ -5,23 +5,20 @@
  * but not for any real application.
  **********************************************************************************************************************/
 //
-// Created by sjef on 5-6-19.
+// Copy from VariabilityParityGames/Game.cpp
 //
 
 #include <fstream>
 #include <iostream>
-#include <sstream>
 #include <string>
 #include <cstring>
 #include <unordered_set>
-#include <random>
-#include <chrono>
 #include <algorithm>
 
-#include "Game.h"
-#include "Algorithms/Datastructures/ConfSetExplicit.h"
+#include "VPGame.h"
+#define PARSER_LINE_SIZE  16777216
 
-void Game::set_n_nodes(int nodes) {
+void VPGame::set_n_nodes(int nodes) {
     n_nodes = nodes;
     out_edges = new std::vector<std::tuple<int,int>>[n_nodes];
     in_edges = new std::vector<std::tuple<int,int>>[n_nodes];
@@ -29,29 +26,79 @@ void Game::set_n_nodes(int nodes) {
     owner.resize(n_nodes);
     declared.resize(n_nodes);
 
-
-    reindexedNew.resize(this->n_nodes);
-    reindexedOrg.resize(this->n_nodes);
-    for(int v = 0;v < n_nodes;v++){
-        reindexedOrg[v] = v;
-        reindexedNew[v] = v;
-    }
-
-
-    orgvertices.resize(n_nodes);
-    for(int i = 0;i < n_nodes;i++){
-        orgvertices[i].resize(1);
-        orgvertices[i][0] = i;
-    }
+    // Construct vectors containing the winning configurations fow player 0,1.
+    winning_0.resize(n_nodes); winning_1.resize(n_nodes);
 }
 
 
-Game::Game() {
+VPGame::VPGame() {
 
 }
 
+void VPGame::sort() {
+    mapping = std::vector<int>(n_nodes);
+    constructMapping(mapping);
+    /* Using the identity mapping we just constructed, we now make a permutation mapping, where
+     * we sort in ascending order of priority. */
+    std::sort(mapping.begin(), mapping.end(),
+              [&](const int &a, const int &b) {
+                  return priority[a] < priority[b];
+              }
+    );
+    // Now sort all our values according to this mapping.
+    vector<int> inverse(n_nodes);
+    for (int i = 0; i < mapping.size(); i++) inverse[mapping[i]] = i;
+    permute(inverse);
+}
 
-void Game::parseVPGFromFile(const string &filename, const char *specificconf) {
+void VPGame::constructMapping(vector<int> &mapping) const {
+    for (int i = 0; i < priority.size(); i++) {
+        mapping[i] = i;
+    }
+}
+
+void VPGame::permute(std::vector<int> &mapping) {
+    // Update the target index in the `out_edges` vector.
+    for (int j = 0; j < mapping.size(); j++) {
+        /* For each tuple in `out_edges` list, update the `target` parameter according to new
+         * mapping. */
+        for (std::tuple<int,int> &oe: out_edges[j]) {
+            int new_index = mapping[get<0>(oe)];
+            oe = std::make_tuple(new_index, get<1>(oe));
+        }
+        for (std::tuple<int,int> &ie : in_edges[j]) {
+            int new_index = mapping[get<0>(ie)];
+            ie = std::make_tuple(new_index, get<1>(ie));
+        }
+    }
+    // Now update the rest of the values (destroys mapping)
+    for (int i = 0; i < mapping.size(); i++) {
+        while (i != mapping[i]) {
+            int swp = mapping[i];
+            std::swap(priority[i], priority[swp]);
+            std::swap(owner[i], owner[mapping[i]]);
+            std::swap(declared[i], declared[mapping[i]]);;
+            std::swap(out_edges[i], out_edges[mapping[i]]);
+            std::swap(in_edges[i], in_edges[mapping[i]]);
+            std::swap(winning_0[i], winning_0[mapping[i]]);
+            std::swap(winning_1[i], winning_1[mapping[i]]);
+            std::swap(mapping[i], mapping[swp]);
+        }
+
+    }
+}
+
+void VPGame::elimateSelfLoops(vector<int> &self_loops) {
+
+}
+
+/**
+ * Reads VPG from file.
+ * IMPORTANT: does not like trailing '\n' characters.
+ * @param filename
+ * @param specificconf
+ */
+void VPGame::parseVPGFromFile(const string &filename, const char *specificconf) {
     int c = 0;
     if(parsePG){
         c++;
@@ -89,11 +136,11 @@ void Game::parseVPGFromFile(const string &filename, const char *specificconf) {
     buildInEdges();
 }
 
-void Game::parseVPGFromFile(const string &filename) {
+void VPGame::parseVPGFromFile(const string &filename, bool detect_self_loops, vector<int> &loops) {
     parseVPGFromFile(filename, "");
 }
 
-void Game::parseConfs(char * line) {
+void VPGame::parseConfs(char * line) {
     while(*line == '\n' || *line == '\t' ||*line == ' ')
         line++;
     if(strncmp(line, "confs ",6) != 0) throw std::string("Expected confs");
@@ -146,7 +193,7 @@ void Game::parseConfs(char * line) {
     parseConfSet(line, 6, &bigC);
 }
 
-void Game::parseInitialiser(char *line) {
+void VPGame::parseInitialiser(char *line) {
     while(*line == '\n' || *line == '\t' ||*line == ' ')
         line++;
     if(strncmp(line, "parity ",7) != 0) throw std::string("Expected parity");
@@ -155,7 +202,7 @@ void Game::parseInitialiser(char *line) {
 }
 
 
-int Game::parseConfSet(const char *line, int i, ConfSet *result) {
+int VPGame::parseConfSet(const char *line, int i, ConfSet *result) {
     if(parsePG){
         *result = fullset;
         return i+1;
@@ -201,7 +248,7 @@ int Game::parseConfSet(const char *line, int i, ConfSet *result) {
     return i;
 }
 
-void Game::dumpSet(ConfSet * dumpee, ConfSet t, char * p, int var) {
+void VPGame::dumpSet(ConfSet * dumpee, ConfSet t, char * p, int var) {
     if(var == bm_n_vars)
     {
         p[var]  = '\0';
@@ -222,7 +269,7 @@ void Game::dumpSet(ConfSet * dumpee, ConfSet t, char * p, int var) {
     }
 }
 
-void Game::parseVertex(char *line) {
+void VPGame::parseVertex(char *line) {
     while(*line == '\n' || *line == '\t' ||*line == ' ')
         line++;
     int index;
@@ -270,9 +317,9 @@ void Game::parseVertex(char *line) {
             out_edges[index].resize(outindex + 1);
             out_edges[index][outindex] = std::make_tuple(target, guardindex);
 
-//            int inindex = in_edges[target].size();
-//            in_edges[target].resize(inindex+1);
-//            in_edges[target][inindex] = std::make_tuple(index, guardindex);
+            int inindex = in_edges[target].size();
+            in_edges[target].resize(inindex+1);
+            in_edges[target][inindex] = std::make_tuple(index, guardindex);
 //            cout<< "with edge to " << target << " allowing: ";
 //            dumpSet(&edge_guards[guardindex], fullset, new char[bm_n_vars+1], 0);
         }
@@ -281,14 +328,14 @@ void Game::parseVertex(char *line) {
     declared[index] = true;
 }
 
-int Game::readUntil(const char * line, char delim){
+int VPGame::readUntil(const char * line, char delim){
     int i = 0;
     while(*(line + i) != delim && *(line + i) != '\0')
         i++;
     return i;
 }
 
-void Game::printCV(VertexSetZlnk *bigV, vector<ConfSet> *vc, ConfSet t, char * p, int var, bool fulloutput) {
+void VPGame::printCV(VertexSetZlnk *bigV, vector<ConfSet> *vc, ConfSet t, char * p, int var, bool fulloutput) {
     if(t == emptyset) return;
     if(var == bm_n_vars)
     {
@@ -329,7 +376,7 @@ void Game::printCV(VertexSetZlnk *bigV, vector<ConfSet> *vc, ConfSet t, char * p
 }
 
 
-void Game::printCV(VertexSetZlnk *bigV, vector<ConfSet> *vc, bool fulloutput) {
+void VPGame::printCV(VertexSetZlnk *bigV, vector<ConfSet> *vc, bool fulloutput) {
 #ifdef SINGLEMODE
     cout << "The following vertices are in: ";
     if(fulloutput){
@@ -350,7 +397,7 @@ void Game::printCV(VertexSetZlnk *bigV, vector<ConfSet> *vc, bool fulloutput) {
 #endif
 }
 
-void Game::compressPriorities() {
+void VPGame::compressPriorities() {
     int pp = -1;
     for(int i = 0;i<priorityI.size();i++){
         if(!priorityI[i].empty())
@@ -377,7 +424,7 @@ void Game::compressPriorities() {
     priorityI.resize(pp+1);
 }
 
-void Game::movePriorities(int from, int to) {
+void VPGame::movePriorities(int from, int to) {
     for(auto &e : priorityI[from]){
         priority[e] = to;
     }
@@ -389,7 +436,7 @@ void Game::movePriorities(int from, int to) {
     priorityI[from].clear();
 }
 
-void Game::reindexVertices() {
+void VPGame::reindexVertices() {
     reindexPCutoff.resize(this->priorityI.size() + 2);
 
     int c = 0;
@@ -444,12 +491,12 @@ void Game::reindexVertices() {
     delete[] in_edges_old;
 }
 
-void Game::parsePGFromFile(const string &filename) {
+void VPGame::parsePGFromFile(const string &filename, bool detect_loops, vector<int> &loops) {
     parsePG = true;
-    parseVPGFromFile(filename);
+    parseVPGFromFile(filename, detect_loops, loops);
 }
 
-void Game::writePG(ostream *output) {
+void VPGame::writePG(ostream *output) {
     *output << "parity " << n_nodes << ';';
     for(int v = 0;v < n_nodes;v++){
         *output << endl << reindexedOrg[v] << ' ' << priority[v] << ' ' << owner[v];
@@ -462,7 +509,7 @@ void Game::writePG(ostream *output) {
     }
 }
 
-void Game::writePG(ostream *output, ConfSet conf) {
+void VPGame::writePG(ostream *output, ConfSet conf) {
     *output << "parity " << n_nodes << ';';
     for(int v = 0;v < n_nodes;v++){
         *output << endl << reindexedOrg[v] << ' ' << priority[v] << ' ' << owner[v];
@@ -480,7 +527,7 @@ void Game::writePG(ostream *output, ConfSet conf) {
 }
 
 
-void Game::compressVertices() {
+void VPGame::compressVertices() {
     compressvertices = true;
     vector<bool> remove(n_nodes);
     for(int i = 0;i < n_nodes;i++){
@@ -592,7 +639,7 @@ void Game::compressVertices() {
 //    buildInEdges();
 }
 
-void Game::moveVertexInto(int v1, int v2, bool v1Ev2) {
+void VPGame::moveVertexInto(int v1, int v2, bool v1Ev2) {
     int orgindex = orgvertices[v2].size();
     orgvertices[v2].resize(orgindex + orgvertices[v1].size());
     for(int j = 0;j < orgvertices[v1].size();j++)
@@ -647,7 +694,7 @@ void Game::moveVertexInto(int v1, int v2, bool v1Ev2) {
     cout << "Remove " << v1 << " v1Ev2: " << v1Ev2 << endl;
 }
 
-void Game::buildInEdges() {
+void VPGame::buildInEdges() {
     for(int i = 0;i < n_nodes;i++){
         for(const auto & e : out_edges[i]){
             int t = target(e);
@@ -658,7 +705,7 @@ void Game::buildInEdges() {
     }
 }
 
-int Game::findVertexWinningForVertex(int v) {
+int VPGame::findVertexWinningForVertex(int v) {
     for(int i = 0;i< n_nodes;i++)
         for(int j = 0;j < orgvertices[i].size();j++)
             if(orgvertices[i][j] == v)
@@ -666,19 +713,19 @@ int Game::findVertexWinningForVertex(int v) {
     return -1;
 }
 
-int Game::findVertexWinningFor0() {
+int VPGame::findVertexWinningFor0() {
     if(winningfor0 == -1)
         winningfor0 = findVertexWinningForVertex(0);
     return winningfor0;
 }
 
-void Game::findAllElements(ConfSet s, vector<tuple<ConfSet, string>> *result) {
+void VPGame::findAllElements(ConfSet s, vector<tuple<ConfSet, string>> *result) {
     auto p = new char[bm_n_vars+1];
     findAllElements(s, result, p, 0);
     delete[] p;
 }
 
-void Game::findAllElements(ConfSet s, vector<tuple<ConfSet, string>> *result, char *p, int var) {
+void VPGame::findAllElements(ConfSet s, vector<tuple<ConfSet, string>> *result, char *p, int var) {
     if(s == emptyset) return;
     if(var == bm_n_vars)
     {

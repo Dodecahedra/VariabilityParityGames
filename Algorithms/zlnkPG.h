@@ -6,7 +6,7 @@
 #define VPGSOLVER_ZLNKPG_H
 
 
-#include "../Game.h"
+#include "../VPGame.h"
 
 /**
  * Implementation of Zielonka's recursive algorithm.
@@ -48,13 +48,13 @@ public:
      * Initialize solver
      * @param game Parity game
      */
-    explicit zlnkPG(Game * game);
+    explicit zlnkPG(VPGame *game);
     /**
      * Initialize solver for the subgame containing vertices in bigV
      * @param game Parity game
      * @param bigV Vertices in the game
      */
-    zlnkPG(Game * game, VertexSetZlnk * bigV);
+    zlnkPG(VPGame *game, VertexSetZlnk * bigV);
     /**
      * Solve the parity game.
      * Assume the winning sets are empty.
@@ -68,7 +68,7 @@ protected:
     /**
      * Parity game
      */
-    Game * game;
+    VPGame * game;
     /**
      * Indicate what subgame we are solving
      */

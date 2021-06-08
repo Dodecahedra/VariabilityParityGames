@@ -8,7 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <chrono>
-#include "Game.h"
+#include "VPGame.h"
 #include "Algorithms/FPIte.h"
 #include "Algorithms/MBR.h"
 
@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
         time_t t0 = time(0);
         cout << "\n[" << t0 << "] Start\n";
 
-        Game g;
+        VPGame g;
 
         char *specificconf;
         bool specificconfenabled = false;
@@ -135,13 +135,14 @@ int main(int argc, char** argv) {
                     break;
             }
         }
+        vector<int> loops = vector<int>();
         if (regulargame) {
-            g.parsePGFromFile(argv[1]);
+            g.parsePGFromFile(argv[1], false, loops);
         } else {
             if (specificconfenabled) {
                 g.parseVPGFromFile(argv[1], specificconf);
             } else {
-                g.parseVPGFromFile(argv[1]);
+                g.parseVPGFromFile(argv[1], false, loops);
             }
         }
         if (projectmode) {

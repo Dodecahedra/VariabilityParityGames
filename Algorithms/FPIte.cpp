@@ -11,7 +11,7 @@
 
 #define targetIsIn(t) ZZ[t]
 
-FPIte::FPIte(Game *game, VertexSetFPIte *P0, VertexSetFPIte *VP1, VertexSetFPIte * W0) {
+FPIte::FPIte(VPGame *game, VertexSetFPIte *P0, VertexSetFPIte *VP1, VertexSetFPIte * W0) {
     this->P0 = P0;
     this->VP1 = VP1;
     this->W0 = W0;
@@ -19,7 +19,7 @@ FPIte::FPIte(Game *game, VertexSetFPIte *P0, VertexSetFPIte *VP1, VertexSetFPIte
     this->game = game;
 }
 
-FPIte::FPIte(Game *game) {
+FPIte::FPIte(VPGame *game) {
     this->game = game;
     this->P0 =  new VertexSetFPIte();
     this->P0->resize(game->n_nodes);

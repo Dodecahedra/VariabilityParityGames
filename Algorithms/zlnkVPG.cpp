@@ -12,7 +12,7 @@
 bool zlnkVPG::conf_metricoutput = false;
 VertexSetZlnk zlnkVPG::emptyvertexset;
 
-zlnkVPG::zlnkVPG(Game *game) {
+zlnkVPG::zlnkVPG(VPGame *game) {
     zlnkVPG::emptyvertexset = VertexSetZlnk(game->n_nodes);
     vector<ConfSet> * vc = new vector<ConfSet>(game->n_nodes);
     bigV = new VertexSetZlnk(game->n_nodes);
@@ -24,7 +24,7 @@ zlnkVPG::zlnkVPG(Game *game) {
     this->vc = vc;
 }
 
-zlnkVPG::zlnkVPG(Game * game, VertexSetZlnk * bigV, vector<ConfSet> * vc){
+zlnkVPG::zlnkVPG(VPGame * game, VertexSetZlnk * bigV, vector<ConfSet> * vc){
     this->game = game;
     this->bigV = bigV;
     this->vc = vc;

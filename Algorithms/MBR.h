@@ -6,7 +6,7 @@
 #define VPGSOLVER_MBR_H
 
 
-#include "../Game.h"
+#include "../VPGame.h"
 #include "../conf.h"
 #include "Datastructures/bintree.h"
 #include <vector>
@@ -50,7 +50,7 @@ public:
      * Initialize the solver
      * @param game Variability Parity game
      */
-    explicit MBR(Game * game);
+    explicit MBR(VPGame * game);
     /**
      * Initialize the solver. Solve only for configurations in conf and use P0 and P1. Create the next subgames by
      * splitting the set of configurations in two sets; one including feature "feature" and one excluding it
@@ -60,7 +60,7 @@ public:
      * @param VP1 Vertices, such that every vertex not in VP1 is won by player 1 for all configurations in conf
      * @param feature Feature number on which we will split the set of configurations next
      */
-    MBR(Game * game, ConfSet * conf, VertexSetFPIte * P0, VertexSetFPIte * VP1, int feature);
+    MBR(VPGame * game, ConfSet * conf, VertexSetFPIte * P0, VertexSetFPIte * VP1, int feature);
 
     /**
      * Solve the game, filling winningConf and winningVertices
@@ -75,7 +75,7 @@ protected:
     /**
      * VPG
      */
-    Game * game;
+    VPGame * game;
     /**
      * Describes the subgame
      */

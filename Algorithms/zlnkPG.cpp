@@ -12,7 +12,7 @@
 bool zlnkPG::conf_metricoutput = false;
 VertexSetZlnk zlnkPG::emptyvertexset;
 
-zlnkPG::zlnkPG(Game *game) {
+zlnkPG::zlnkPG(VPGame *game) {
     zlnkPG::emptyvertexset = VertexSetZlnk(game->n_nodes);
     bigV = new VertexSetZlnk(game->n_nodes);
     for(int i = 0;i<game->n_nodes;i++){
@@ -21,7 +21,7 @@ zlnkPG::zlnkPG(Game *game) {
     this->game = game;
 }
 
-zlnkPG::zlnkPG(Game * game, VertexSetZlnk * bigV){
+zlnkPG::zlnkPG(VPGame *game, VertexSetZlnk * bigV){
     this->game = game;
     this->bigV = bigV;
 }

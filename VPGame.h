@@ -5,12 +5,11 @@
  * but not for any real application.
  **********************************************************************************************************************/
 //
-// Created by sjef on 5-6-19.
+// Copy from VariabilityParityGames/Game.h
 //
 
-#ifndef VPGSOLVER_GAME_H
-#define VPGSOLVER_GAME_H
-#define PARSER_LINE_SIZE  16777216
+#ifndef VPGSOLVER_VPGAME_H
+#define VPGSOLVER_VPGAME_H
 #include <vector>
 #include <tuple>
 #include <unordered_set>
@@ -27,7 +26,7 @@ using namespace std;
  * Represent VPG using a double edge relation. Every edge has an edge index.
  * Every edge index is mapped to a set of configurations guarding the edge.
  */
-class Game {
+class VPGame {
 public :
     std::vector<ConfSet> bm_vars;
     int bm_n_vars;
@@ -47,6 +46,10 @@ public :
     vector<vector<int>> orgvertices;
     int winningfor0 = -1;
 
+    /** Vectors which contain for each vertex at index i the winning configurations for player 0,1. */
+    std::vector<ConfSet> winning_0;
+    std::vector<ConfSet> winning_1;
+
     bool parsePG = false;
     bool compressvertices = false;
 
@@ -54,11 +57,18 @@ public :
     int specificvar;
 
     map<string, ConfSet> parseCache;
+    /** We store the mapping such that we can later get back the original parity game. */
+    vector<int> mapping;
 
-    Game();
+    VPGame();
     void set_n_nodes(int nodes);
 
-    void parseVPGFromFile(const string &filename);
+    /** Make sure that the priorities are sorted (useful for more efficient search for highest priority) */
+    void sort();
+    /** Given a mapping {@param mapping}, permute all of the properties according to the mapping. */
+    void permute(std::vector<int> &mapping);
+
+    void parseVPGFromFile(const string &filename, bool detect_self_loops, vector<int> &loops);
     void parseVPGFromFile(const string &filename, const char *specificconf);
     void parseConfs(char * line);
     void parseInitialiser(char* line);
@@ -79,13 +89,18 @@ public :
     int findVertexWinningForVertex(int v);
     int findVertexWinningFor0();
 
-    void parsePGFromFile(const string &filename);
+    void parsePGFromFile(const string &filename, bool detect_loops, vector<int> &loops);
 
     void writePG(ostream * output);
     void writePG(ostream * output, ConfSet conf);
     void findAllElements(ConfSet s, vector<tuple<ConfSet, string>> * result);
     void findAllElements(ConfSet s, vector<tuple<ConfSet, string>> * result, char * p, int var);
+
+protected:
+    void constructMapping(vector<int> &mapping) const;
+
+    void elimateSelfLoops(vector<int> &self_loops);
 };
 
 
-#endif //VPGSOLVER_GAME_H
+#endif //VPGSOLVER_VPGAME_H

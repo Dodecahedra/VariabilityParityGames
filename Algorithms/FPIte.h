@@ -6,7 +6,7 @@
 #define VPGSOLVER_FPITE_H
 
 #include "../conf.h"
-#include "../Game.h"
+#include "../VPGame.h"
 #include <vector>
 using namespace std;
 
@@ -51,7 +51,7 @@ public:
      * Initialize the algorithm with no vertices that are known the be won by player 0 or 1
      * @param Parity game where vertices are sorted by parity and priority
      */
-    explicit FPIte(Game * game);
+    explicit FPIte(VPGame * game);
     /**
      * Initialize the algoritm
      * @param game Parity game where vertices are sorted by parity and priority
@@ -59,7 +59,7 @@ public:
      * @param VP1 Set of vertices, such that any vertex not in VP1 is known to be won by player 1
      * @param W0 Set of vertices in which the winning set will be placed
      */
-    FPIte(Game * game, VertexSetFPIte * P0, VertexSetFPIte * VP1, VertexSetFPIte * W0);
+    FPIte(VPGame * game, VertexSetFPIte * P0, VertexSetFPIte * VP1, VertexSetFPIte * W0);
     ~FPIte();
 
     /**
@@ -90,7 +90,7 @@ protected:
     /**
      * Parity game where vertices are sorted by parity and priority.
      */
-    Game * game;
+    VPGame * game;
     /**
      * Set of vertices that are known to be won by player 0
      */

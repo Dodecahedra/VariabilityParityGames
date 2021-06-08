@@ -6,7 +6,7 @@
 #define VPGSOLVER_ZLNKVPG_H
 
 
-#include "../Game.h"
+#include "../VPGame.h"
 
 /**
  * Implementation of the recursive algorithm for VPGs.
@@ -51,14 +51,14 @@ public:
      * Initialize solved
      * @param game Variability parity game
      */
-    explicit zlnkVPG(Game * game);
+    explicit zlnkVPG(VPGame * game);
     /**
      * Initialize solver for the subgame containing vertices and configuration in (bigV,vc)
      * @param game Variability parity game
      * @param bigV vertices in the game
      * @param vc configurations per vertex that are in the game
      */
-    zlnkVPG(Game * game, VertexSetZlnk * bigV, vector<ConfSet> * vc);
+    zlnkVPG(VPGame * game, VertexSetZlnk * bigV, vector<ConfSet> * vc);
     /**
      * Solve the parity game
      * Assume the winning sets are empty
@@ -74,7 +74,7 @@ protected:
     /**
      * VPG
      */
-    Game * game;
+    VPGame * game;
     /**
      * Indicate what subgame we are solving
      */
