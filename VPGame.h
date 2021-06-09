@@ -15,7 +15,7 @@
 #include <unordered_set>
 #include <map>
 #include <iostream>
-#include "conf.h"
+#include "../Conf.h"
 
 using namespace std;
 
@@ -68,7 +68,9 @@ public :
     /** Given a mapping {@param mapping}, permute all of the properties according to the mapping. */
     void permute(std::vector<int> &mapping);
 
-    void parseVPGFromFile(const string &filename, bool detect_self_loops, vector<int> &loops);
+    void elimateSelfLoops();
+
+    void parseVPGFromFile(const string &filename);
     void parseVPGFromFile(const string &filename, const char *specificconf);
     void parseConfs(char * line);
     void parseInitialiser(char* line);
@@ -89,7 +91,7 @@ public :
     int findVertexWinningForVertex(int v);
     int findVertexWinningFor0();
 
-    void parsePGFromFile(const string &filename, bool detect_loops, vector<int> &loops);
+    void parsePGFromFile(const string &filename);
 
     void writePG(ostream * output);
     void writePG(ostream * output, ConfSet conf);
@@ -99,7 +101,6 @@ public :
 protected:
     void constructMapping(vector<int> &mapping) const;
 
-    void elimateSelfLoops(vector<int> &self_loops);
 };
 
 

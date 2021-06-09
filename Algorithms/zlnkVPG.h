@@ -70,6 +70,15 @@ public:
      */
     void solve(VertexSetZlnk * W0bigV, vector<ConfSet> * W0vc,VertexSetZlnk * W1bigV, vector<ConfSet> * W1vc);
 
+    /**
+     * Attract vertices from bigA for player "player". Vertices and configurations attracted are removed from (bigV,vc),
+     * so attracting creates a subgame simultaneously.
+     * @param player Player for which to attract
+     * @param bigA Vertices we are attracting
+     * @param ac Vertices we are attracting
+     */
+    void attr(int player,VertexSetZlnk * bigA,vector<ConfSet> * ac);
+
 protected:
     /**
      * VPG
@@ -85,14 +94,6 @@ protected:
     vector<ConfSet> * vc;
 
 
-    /**
-     * Attract vertices from bigA for player "player". Vertices and configurations attracted are removed from (bigV,vc),
-     * so attracting creates a subgame simultaneously.
-     * @param player Player for which to attract
-     * @param bigA Vertices we are attracting
-     * @param ac Vertices we are attracting
-     */
-    void attr(int player,VertexSetZlnk * bigA,vector<ConfSet> * ac);
     /**
      * Attractor implementation using a queue to maintain which vertices were attracted and for we consider predecessors
      * Runs in O(n*c^2*e) when configuration sets are explicit and O(n*c^3*e) when configuration sets are symbolic

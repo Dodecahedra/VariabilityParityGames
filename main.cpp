@@ -137,12 +137,12 @@ int main(int argc, char** argv) {
         }
         vector<int> loops = vector<int>();
         if (regulargame) {
-            g.parsePGFromFile(argv[1], false, loops);
+            g.parsePGFromFile(argv[1]);
         } else {
             if (specificconfenabled) {
                 g.parseVPGFromFile(argv[1], specificconf);
             } else {
-                g.parseVPGFromFile(argv[1], false, loops);
+                g.parseVPGFromFile(argv[1]);
             }
         }
         if (projectmode) {

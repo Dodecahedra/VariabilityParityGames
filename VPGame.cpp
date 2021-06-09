@@ -88,7 +88,7 @@ void VPGame::permute(std::vector<int> &mapping) {
     }
 }
 
-void VPGame::elimateSelfLoops(vector<int> &self_loops) {
+void VPGame::elimateSelfLoops() {
 
 }
 
@@ -136,7 +136,7 @@ void VPGame::parseVPGFromFile(const string &filename, const char *specificconf) 
     buildInEdges();
 }
 
-void VPGame::parseVPGFromFile(const string &filename, bool detect_self_loops, vector<int> &loops) {
+void VPGame::parseVPGFromFile(const string &filename) {
     parseVPGFromFile(filename, "");
 }
 
@@ -491,9 +491,9 @@ void VPGame::reindexVertices() {
     delete[] in_edges_old;
 }
 
-void VPGame::parsePGFromFile(const string &filename, bool detect_loops, vector<int> &loops) {
+void VPGame::parsePGFromFile(const string &filename) {
     parsePG = true;
-    parseVPGFromFile(filename, detect_loops, loops);
+    parseVPGFromFile(filename);
 }
 
 void VPGame::writePG(ostream *output) {
