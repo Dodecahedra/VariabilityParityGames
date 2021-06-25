@@ -25,6 +25,7 @@ zlnkVPG::zlnkVPG(VPGame *game) {
 }
 
 zlnkVPG::zlnkVPG(VPGame * game, VertexSetZlnk * bigV, vector<ConfSet> * vc){
+    zlnkVPG::emptyvertexset = VertexSetZlnk(game->n_nodes);
     this->game = game;
     this->bigV = bigV;
     this->vc = vc;
