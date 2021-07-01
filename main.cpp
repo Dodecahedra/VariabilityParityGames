@@ -312,10 +312,14 @@ int main(int argc, char** argv) {
 
 
             auto end = std::chrono::high_resolution_clock::now();
-
+            cout << "Vertices: " << g.n_nodes << endl;
+            cout << "Edges: " << g.edge_guards.size() << endl;
             auto elapsed =
                     std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
-            cout << "Solving time: " << elapsed.count() << " ns";
+            cout << "Solving time: " << elapsed.count() << " ns" << endl;
+            cout << "=<1>=: " << z.first_recursions << endl;
+            cout << "=<2>=: " << z.second_recursions << endl;
+            cout << "=<3>=: " << z.attractions << endl;
             time_t t2 = time(0);
             cout << '[' << t2 << "] Solved\n";
 

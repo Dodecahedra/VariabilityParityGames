@@ -40,8 +40,9 @@ void zlnkVPG::attr(int player, VertexSetZlnk *bigA, vector<ConfSet> *ac) {
 
     auto elapsed =
             std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
-    cout << "Attracting took " << elapsed.count() << "ns";
+    cout << "Attracting took " << elapsed.count() << "ns" << endl;
     attracting += elapsed.count();
+    attractions++;
 }
 
 
@@ -179,6 +180,9 @@ void zlnkVPG::solve(VertexSetZlnk *W0bigV, vector<ConfSet> *W0vc, VertexSetZlnk 
         subgame.solvelocal = -1;
 
     subgame.solve(W0bigV, W0vc, W1bigV, W1vc);
+    first_recursions += subgame.first_recursions + 1;
+    second_recursions += subgame.second_recursions + 1;
+    attractions += subgame.attractions;
     attracting += subgame.attracting;
     cout << "\nUp1\n";
     if(*WOpbigV == zlnkVPG::emptyvertexset){
@@ -227,7 +231,10 @@ void zlnkVPG::solve(VertexSetZlnk *W0bigV, vector<ConfSet> *W0vc, VertexSetZlnk 
                 cout << "\nDown2\n";
                 subgame2.solvelocal = solvelocal;
                 subgame2.solve(W0bigV, W0vc, W1bigV, W1vc);
-                attracting += subgame.attracting;
+                first_recursions += subgame2.first_recursions + 1;
+                second_recursions += subgame2.second_recursions + 1;
+                attractions += subgame.attractions;
+                attracting += subgame2.attracting;
                 cout << "\nUp2\n";
                 unify(WOpbigV, WOpvc, bigA, ac);
             }

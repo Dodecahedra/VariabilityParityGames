@@ -46,7 +46,18 @@ public:
      * Measure time spent in the attractor set calculation
      */
     long attracting = 0;
-
+    /**
+     * Number of first recursins that occur in the algorithm.
+     */
+    int first_recursions = 0;
+    /**
+     * Number of second recursions that occur in the algorithm.
+     */
+    int second_recursions = 0;
+    /**
+     * Total number of attractor sets we have computed
+     */
+    int attractions = 0;
     /**
      * Initialize solved
      * @param game Variability parity game

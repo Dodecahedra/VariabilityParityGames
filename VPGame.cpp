@@ -28,8 +28,20 @@ void VPGame::set_n_nodes(int nodes) {
 
     // Construct vectors containing the winning configurations fow player 0,1.
     winning_0.resize(n_nodes); winning_1.resize(n_nodes);
-}
 
+    reindexedNew.resize(this->n_nodes);
+    reindexedOrg.resize(this->n_nodes);
+    for(int v = 0;v < n_nodes;v++){
+        reindexedOrg[v] = v;
+        reindexedNew[v] = v;
+    }
+
+    orgvertices.resize(n_nodes);
+    for(int i = 0;i < n_nodes;i++) {
+        orgvertices[i].resize(1);
+        orgvertices[i][0] = i;
+    }
+}
 
 VPGame::VPGame() {
 
