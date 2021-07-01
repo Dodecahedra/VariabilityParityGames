@@ -85,6 +85,7 @@ int main(int argc, char** argv) {
         char *metricdir;
         bool projectmode = false;
         char *projectdir;
+        bool elim_loops = false;
         for (int i = 2; i < argc; i++) {
             switch (*argv[i]) {
                 case 'Q':
@@ -130,6 +131,8 @@ int main(int argc, char** argv) {
                     SolveFPIte = true;
                     priocompress = true;
                     break;
+                case 'L':
+                    elim_loops = true;
                 default:
                     cerr << "Unknown parameter: " << argv[i];
                     break;
@@ -297,6 +300,15 @@ int main(int argc, char** argv) {
                 z.solvelocal = 2;
             z.solve(W0BigV, W1BigV);
     #else
+            long elimination_time;
+            if (elim_loops) {
+                auto start = std::chrono::high_resolution_clock::now();
+                g.elimateSelfLoops(); // Solve self-loops.
+                auto end = std::chrono::high_resolution_clock::now();
+                elimination_time =
+                std::chrono::duration_cast<std::chrono::nanoseconds>(end - start)
+                        .count();
+            }
             zlnkVPG::conf_metricoutput = metricoutput;
             zlnkVPG z(&g);
             vector<ConfSet> * W0vc = new vector<ConfSet>(g.n_nodes);
@@ -317,6 +329,7 @@ int main(int argc, char** argv) {
             auto elapsed =
                     std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
             cout << "Solving time: " << elapsed.count() << " ns" << endl;
+            if (elim_loops) cout << "=<0>=: " << elimination_time << endl;
             cout << "=<1>=: " << z.first_recursions << endl;
             cout << "=<2>=: " << z.second_recursions << endl;
             cout << "=<3>=: " << z.attractions << endl;

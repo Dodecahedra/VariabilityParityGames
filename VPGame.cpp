@@ -16,6 +16,7 @@
 #include <algorithm>
 
 #include "VPGame.h"
+#include "Algorithms/zlnkVPG.h"
 #define PARSER_LINE_SIZE  16777216
 
 void VPGame::set_n_nodes(int nodes) {
@@ -101,7 +102,43 @@ void VPGame::permute(std::vector<int> &mapping) {
 }
 
 void VPGame::elimateSelfLoops() {
+    auto* vertices_0 = new VertexSetZlnk(n_nodes);
+    auto* confset_0 = new vector<ConfSet>(n_nodes);
+    auto* vertices_1 = new VertexSetZlnk(n_nodes);
+    auto* confset_1 = new vector<ConfSet>(n_nodes);
 
+    for (int i = 0; i < n_nodes; i++) {
+        for (auto e : out_edges[i]) {
+            int v = target(e);
+            if (v != i) continue;
+            ConfSet guard = edge_guards[edge_index(e)];
+            if (owner[v] != (priority[v]&1)) {
+                for (auto ei : out_edges[v]) {
+                    if (edge_index(ei) != edge_index(e)) {
+                        guard -= edge_guards[edge_index(ei)];
+                    }
+                }
+            }
+            if (priority[v]&1) {
+                (*confset_1)[v] |= guard;
+                if (guard != emptyset) (*vertices_1)[v] = true;
+            } else {
+                (*confset_0)[v] |= guard;
+                if (guard != emptyset) (*vertices_0)[v] = true;
+            }
+        }
+    }
+    zlnkVPG solver(this);
+    solver.attr(0, vertices_0, confset_0);
+    solver.attr(1, vertices_1, confset_1);
+    for(int i = 0; i < n_nodes; i++) {
+        if (vertices_0) {
+            winning_0[i] |= (*confset_0)[i];
+        }
+        if (vertices_1) {
+            winning_1[i] |= (*confset_1)[i];
+        }
+    }
 }
 
 /**
